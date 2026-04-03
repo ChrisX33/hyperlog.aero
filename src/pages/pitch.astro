@@ -1,0 +1,419 @@
+---
+import PitchLayout from '../layouts/PitchLayout.astro';
+---
+
+<PitchLayout>
+
+  <!-- ============================================================
+       SLIDE 1 — COVER
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col items-center justify-center relative bg-surface-base px-8">
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px), repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px);"></div>
+    <div class="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto gap-8">
+      <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-20 h-20 mb-2" />
+      <div class="flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-primary beacon-glow"></span>
+        <span class="section-label text-primary">Trust in Every Entry</span>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.05]">
+        Blockchain Pilot Logbook<br />
+        <span class="text-primary">&amp; Digital Credentials</span><br />
+        Infrastructure
+      </h1>
+      <div class="mt-8 space-y-2">
+        <p class="text-sm font-semibold text-white tracking-wide">JetLink Technologies Ltd</p>
+        <p class="text-xs text-secondary">Company No. 17100204</p>
+        <p class="text-xs text-outline mt-4">April 2026</p>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-px gradient-primary opacity-30"></div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 2 — THE PROBLEM
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-lowest px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-tertiary mb-4">The Problem</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
+        A System Designed<br />for a Paper World.
+      </h2>
+      <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+        Pilot licensing and flight records remain one of the last areas of aviation to resist digital transformation.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-surface-container p-6 border-l-2 border-tertiary/40">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Fragmented Logbooks</p>
+          <p class="text-sm text-secondary leading-relaxed">Pilot logbooks are paper-based or stored in disconnected systems. No single source of truth. Records are subject to loss, damage, and falsification. Nobody signs or verifies logbook entries.</p>
+        </div>
+        <div class="bg-surface-container p-6 border-l-2 border-tertiary/40">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Unverifiable Licences</p>
+          <p class="text-sm text-secondary leading-relaxed">Pilot licences and medical certificates have no machine-verifiable chain of trust. Cross-border validation requires manual letters between authorities taking weeks.</p>
+        </div>
+        <div class="bg-surface-container p-6 border-l-2 border-tertiary/40">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Slow Hiring</p>
+          <p class="text-sm text-secondary leading-relaxed">Airlines spend weeks manually cross-referencing pilot hours during recruitment. No standardised mechanism exists for instant, auditable verification of flight experience.</p>
+        </div>
+        <div class="bg-surface-container p-6 border-l-2 border-tertiary/40">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Ramp Check Limitations</p>
+          <p class="text-sm text-secondary leading-relaxed">Inspectors rely on physical documents and trust without cryptographic proof. No offline digital verification capability exists in production today.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 3 — THE REGULATORY DRIVER
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-base px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-primary mb-4">The Regulatory Driver</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
+        Not a Startup Idea.<br /><span class="text-primary">An ICAO Mandate.</span>
+      </h2>
+      <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+        ICAO is actively building digital trust infrastructure for aviation. HyperLog's credential layer is a private sector response to this mandate. The logbook layer addresses a gap no existing standard covers.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-[10px] font-black tracking-wider text-outline uppercase mb-2">ICAO Trust Framework</p>
+          <p class="text-sm font-bold text-white mb-2">Digital trust infrastructure</p>
+          <p class="text-xs text-secondary leading-relaxed">Policies, procedures, and technical requirements for organisations to share digital information with confidence in its authenticity and integrity.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-[10px] font-black tracking-wider text-outline uppercase mb-2">Amendment 178</p>
+          <p class="text-sm font-bold text-white mb-2">Annex 1 — EPL mandate</p>
+          <p class="text-xs text-secondary leading-relaxed">Drives global Electronic Personnel Licensing standards. EASA transposing via NPA 2024-08. Preferred implementation: Verifiable Credentials in a digital wallet per ISO/IEC 18013-5.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-[10px] font-black tracking-wider text-outline uppercase mb-2">Proven Concept</p>
+          <p class="text-sm font-bold text-white mb-2">SITA &amp; CAAC (2020)</p>
+          <p class="text-xs text-secondary leading-relaxed">SITA proved offline peer-to-peer licence verification with the Civil Aviation Administration of China — the first industry partner to demonstrate this capability.</p>
+        </div>
+      </div>
+      <div class="bg-surface-low p-6 rounded ghost-border">
+        <p class="text-[10px] font-black tracking-wider text-primary uppercase mb-4">ICAO Use Cases Directly Addressed</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm font-bold text-white mb-2">Manage Electronic Pilot Licences</p>
+            <p class="text-xs text-secondary leading-relaxed">A pilot requests a digital licence. Identity is validated via the Trust Framework. A digital credential is created and associated with the pilot's licence.</p>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white mb-2">Ramp Checks</p>
+            <p class="text-xs text-secondary leading-relaxed">Validation of personnel identity and documentation via digital means, within and between states. Offline verification using cached issuer public keys.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 4 — TWO LAYERS OF TRUST
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-lowest px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-primary mb-4">The Solution</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
+        Evidence Below.<br /><span class="text-primary">Credentials Above.</span>
+      </h2>
+      <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+        Two distinct trust models in one system. The blockchain logbook builds trust from the bottom up. Authority-issued credentials provide trust from the top down. The logbook is the evidence base that makes credentials meaningful.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-surface-container p-6 rounded-lg ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-outline mb-3">Evidence Layer — Hyperledger Fabric</p>
+          <h4 class="text-lg font-bold text-white mb-2">Blockchain Logbook</h4>
+          <p class="text-sm text-secondary leading-relaxed mb-4">Immutable flight records with a multi-source verification chain. Pilot-created, independently verified, GDPR-compliant.</p>
+          <p class="text-[10px] text-outline/60 leading-relaxed">No ICAO standard exists for digital logbooks. This is HyperLog's core innovation — creating the verified evidence layer that supports the entire credential stack.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded-lg border border-primary/20">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Credential Layer — W3C Verifiable Credentials</p>
+          <h4 class="text-lg font-bold text-white mb-2">Digital Credentials</h4>
+          <p class="text-sm text-secondary leading-relaxed mb-4">Licences, medicals, and ratings issued by authorities as digitally signed credentials. Held on the pilot's device. Verifiable offline.</p>
+          <p class="text-[10px] text-primary/60 leading-relaxed">Aligned with ICAO Amendment 178 and the Trust Framework. Built on technology proven by SITA's 2020 proof of concept with the CAAC.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 5 — LOGBOOK VERIFICATION SPECTRUM
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-base px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-primary mb-4">The Evidence Layer</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
+        Trust is Earned,<br />Not Claimed.
+      </h2>
+      <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+        Every flight record carries a verification chain showing exactly how it was confirmed. More sources mean higher confidence. The system is transparent about what's verified and what isn't.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 max-w-4xl">
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded ghost-border">
+          <div class="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-black text-primary">1</span></div>
+          <div>
+            <p class="text-sm font-bold text-white">Pilot Signed</p>
+            <p class="text-xs text-secondary mt-1">Cryptographic signature via device biometrics. Immutable on-chain. The pilot's word, backed by PKI.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded ghost-border">
+          <div class="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-black text-primary">2</span></div>
+          <div>
+            <p class="text-sm font-bold text-white">Crew Corroborated</p>
+            <p class="text-xs text-secondary mt-1">Other crew members independently log the same flight via QR code sharing. Handles standard and augmented crew operations.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded ghost-border">
+          <div class="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-black text-primary">3</span></div>
+          <div>
+            <p class="text-sm font-bold text-white">ADS-B Tracked</p>
+            <p class="text-xs text-secondary mt-1">External surveillance data automatically confirms flight route, times, and altitude. Independent of all parties.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded ghost-border">
+          <div class="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-black text-primary">4</span></div>
+          <div>
+            <p class="text-sm font-bold text-white">Airline OPS Verified</p>
+            <p class="text-xs text-secondary mt-1">Airline scheduling system confirms the crew were rostered on this flight. Automated integration with crew management systems.</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-[10px] text-outline/50 mt-6 max-w-2xl">Not every flight achieves all four sources. A single-pilot GA flight with ADS-B scores 2/4. An airline operation with crew corroboration and rostering scores 4/4. Transparency about verification level is a feature, not a limitation.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 6 — DIGITAL CREDENTIALS
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-lowest px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-primary mb-4">The Credential Layer</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
+        Authority-Issued.<br /><span class="text-primary">Pilot-Held. Offline-Verifiable.</span>
+      </h2>
+      <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+        Credentials are issued by regulatory authorities as W3C Verifiable Credentials, signed with the authority's private key. They live on the pilot's device — not on a central server. Verification requires only the issuer's public key, cached on the inspector's device.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-surface-container p-6 rounded-lg ghost-border">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mb-4"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+          <h4 class="text-lg font-bold text-white mb-2">Pilot Licence</h4>
+          <p class="text-xs text-secondary leading-relaxed mb-3">Issued by CAA/NAA. Signed with the authority's private key. Cross-border recognisable. Revocation is instant and globally propagated.</p>
+          <p class="text-[9px] text-primary font-semibold">ICAO Amendment 178 aligned</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded-lg ghost-border">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mb-4"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg>
+          <h4 class="text-lg font-bold text-white mb-2">Medical Certificate</h4>
+          <p class="text-xs text-secondary leading-relaxed mb-3">Signed by an Approved Aviation Medical Examiner. Automated expiry tracking with advance alerts. Airlines see validity status without clinical details.</p>
+          <p class="text-[9px] text-on-surface-variant font-semibold">AME-issued, GDPR-compliant</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded-lg ghost-border">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mb-4"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <h4 class="text-lg font-bold text-white mb-2">Ratings &amp; Type Ratings</h4>
+          <p class="text-xs text-secondary leading-relaxed mb-3">Issued by ATOs and CAAs after proficiency checks. Each rating is a linked credential with revalidation tracking.</p>
+          <p class="text-[9px] text-on-surface-variant font-semibold">ATO/CAA-issued, linked to logbook evidence</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 7 — ARCHITECTURE
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-base px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-secondary mb-4">Architecture</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Multi-Authority Channel Network.</h2>
+      <p class="text-secondary text-base leading-relaxed mb-8 max-w-2xl">
+        Each NAA operates on its own Hyperledger Fabric channel. Personal data stays in Private Data Collections under GDPR. A shared verification channel enables cross-border credential checks. JetLink manages the infrastructure as a service.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="col-span-2 bg-surface-container p-6 rounded ghost-border min-h-[140px] flex flex-col justify-end">
+          <p class="text-[10px] font-black tracking-wider text-outline uppercase mb-2">Logbook Layer</p>
+          <h4 class="text-lg font-bold text-white mb-1">Hyperledger Fabric</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Enterprise permissioned blockchain. NAA-partitioned channels. Private Data Collections for logbook, medical, and training records.</p>
+        </div>
+        <div class="col-span-2 bg-surface-high p-6 rounded ghost-border min-h-[140px] flex flex-col justify-end">
+          <p class="text-[10px] font-black tracking-wider text-outline uppercase mb-2">Credential Layer</p>
+          <h4 class="text-lg font-bold text-white mb-1">W3C Verifiable Credentials</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Authority-signed credentials on pilot's device. Built on technology derived from Hyperledger Aries, proven by SITA with the CAAC.</p>
+        </div>
+        <div class="bg-surface-container p-5 rounded ghost-border flex flex-col justify-between min-h-[120px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <div><h4 class="text-xs font-bold text-white mb-0.5">Private Keys on Device</h4><p class="text-[9px] text-on-surface-variant">Biometric-protected. Never transmitted.</p></div>
+        </div>
+        <div class="bg-surface-container p-5 rounded ghost-border flex flex-col justify-between min-h-[120px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <div><h4 class="text-xs font-bold text-white mb-0.5">Offline Verification</h4><p class="text-[9px] text-on-surface-variant">~193 cached issuer keys. No internet needed.</p></div>
+        </div>
+        <div class="bg-surface-container p-5 rounded ghost-border flex flex-col justify-between min-h-[120px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div><h4 class="text-xs font-bold text-white mb-0.5">ACCP / MAIS Target</h4><p class="text-[9px] text-on-surface-variant">Architecture designed toward ICAO alignment.</p></div>
+        </div>
+        <div class="bg-primary/5 p-5 rounded border border-primary/20 flex flex-col justify-between min-h-[120px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <div><h4 class="text-xs font-bold text-white mb-0.5">GDPR Self-Sovereign</h4><p class="text-[9px] text-on-surface-variant">Pilot controls data access. Revocable, time-limited.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 8 — USE CASES
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-lowest px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-primary mb-4">Use Cases</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 tracking-tight leading-tight">Real-World<br />Applications.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Ramp Checks</p>
+          <p class="text-sm text-secondary leading-relaxed">Inspector verifies pilot credentials offline in seconds. Pilot presents via QR or NFC. Inspector's app checks issuer signature against cached public key. No internet required.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Airline Hiring</p>
+          <p class="text-sm text-secondary leading-relaxed">Pilot grants time-limited, revocable access to their verified logbook. Airline sees the full verification chain — which flights were crew-corroborated, ADS-B tracked, and OPS confirmed.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Cross-Border Recognition</p>
+          <p class="text-sm text-secondary leading-relaxed">Licence validity verified digitally between states via the shared verification channel. No manual validation letters. No weeks of delay.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Automated Logging</p>
+          <p class="text-sm text-secondary leading-relaxed">Flights pre-populated from airline rostering systems. ADS-B auto-verifies times. Pilots confirm with one tap instead of manual entry. Augmented crew control times captured via QR sharing.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Medical Tracking</p>
+          <p class="text-sm text-secondary leading-relaxed">Automated expiry alerts before medical certificate lapses. Airlines always have current validity data. AME signs digital credential directly into the pilot's wallet.</p>
+        </div>
+        <div class="bg-surface-container p-6 rounded ghost-border">
+          <p class="text-xs font-bold tracking-[0.1em] uppercase text-primary mb-3">Licence Conversion</p>
+          <p class="text-sm text-secondary leading-relaxed">New NAA queries verification channel to confirm existing licence. Requests logbook access with pilot's consent to verify hours. Issues new credential. Old records preserved on original channel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 9 — ABOUT JETLINK
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-base px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-secondary mb-4">About</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">JetLink Technologies</h2>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <div class="md:col-span-3">
+          <p class="text-secondary text-base leading-relaxed mb-6">
+            JetLink Technologies Ltd is an aviation-native software company. We are not outside observers building for aviation — we are aviation professionals building the tools we know the industry needs.
+          </p>
+          <p class="text-secondary text-base leading-relaxed mb-8">
+            HyperLog is built by a Boeing 767 First Officer and an engineer. We understand the operational reality of pilot licensing, crew management, and regulatory compliance because we live it every day.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0 beacon-glow"></div>
+              <div>
+                <p class="text-sm font-bold text-white">UK Registered</p>
+                <p class="text-xs text-secondary">Company No. 17100204</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="md:col-span-2 space-y-4">
+          <p class="text-[10px] font-black tracking-wider text-outline uppercase mb-2">Existing Deployments</p>
+          <div class="bg-surface-container p-5 rounded ghost-border">
+            <p class="text-sm font-bold text-white mb-1">Safety &amp; FDM Dashboard</p>
+            <p class="text-xs text-secondary">Deployed at ASL Airlines France</p>
+          </div>
+          <div class="bg-surface-container p-5 rounded ghost-border">
+            <p class="text-sm font-bold text-white mb-1">MOCDEP Fleet Management</p>
+            <p class="text-xs text-secondary">Real-time fleet management for DHL Air UK</p>
+          </div>
+          <div class="bg-surface-low p-5 rounded ghost-border">
+            <p class="text-sm font-bold text-white mb-1">HyperLog</p>
+            <p class="text-xs text-secondary">Blockchain pilot logbook &amp; digital credentials</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 10 — WHERE WE ARE
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col justify-center bg-surface-lowest px-8 md:px-16 py-16">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="section-label text-primary mb-4">Current Status</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">Where We Are.</h2>
+      <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+        We are transparent about our stage. The logbook is built. The credentials layer is in active architecture. We are seeking the right partners to build the rest.
+      </p>
+      <div class="space-y-4 max-w-3xl">
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded ghost-border">
+          <div class="w-8 h-8 bg-green-500/20 flex items-center justify-center rounded shrink-0 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Hyperledger Fabric Backend — Built &amp; Deployed</p>
+            <p class="text-xs text-secondary mt-1">Enterprise blockchain infrastructure with smart contracts for flight records, crew endorsements, and identity management.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded ghost-border">
+          <div class="w-8 h-8 bg-green-500/20 flex items-center justify-center rounded shrink-0 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Mobile Application — In Development</p>
+            <p class="text-xs text-secondary mt-1">Cross-platform app for pilots to log flights, sign entries cryptographically, and manage credentials. Multi-format PDF export.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-surface-container p-5 rounded border border-primary/20">
+          <div class="w-8 h-8 bg-primary/20 flex items-center justify-center rounded shrink-0 mt-0.5">
+            <div class="w-3 h-3 rounded-full border-2 border-primary border-t-transparent animate-spin"></div>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Verifiable Credentials Layer — Architecture Phase</p>
+            <p class="text-xs text-secondary mt-1">W3C VC integration for pilot licences, medical certificates, and ratings. Multi-authority channel network with offline verification. Architecture designed with ACCP and MAIS alignment as the target.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-surface-low p-5 rounded ghost-border">
+          <div class="w-8 h-8 bg-surface-highest flex items-center justify-center rounded shrink-0 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Seeking IATA &amp; CAA Engagement</p>
+            <p class="text-xs text-secondary mt-1">We are seeking engagement with IATA and national aviation authorities to validate alignment with the ICAO Trust Framework and shape the credentials architecture collaboratively.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10 p-6 bg-surface-container rounded ghost-border max-w-3xl">
+        <p class="text-sm text-primary font-semibold italic">"This presentation is the beginning of that conversation."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 11 — CONTACT
+       ============================================================ -->
+  <section class="pitch-slide flex flex-col items-center justify-center bg-surface-base px-8 relative">
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px), repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px);"></div>
+    <div class="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto gap-8">
+      <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-16 h-16" />
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-white">
+        Let's Build the<br /><span class="text-primary">Trust Layer.</span>
+      </h2>
+      <p class="text-secondary text-base leading-relaxed max-w-md">
+        We are ready to engage with IATA, national authorities, and aviation stakeholders to shape the future of pilot credentials.
+      </p>
+      <div class="space-y-3 mt-4">
+        <a href="mailto:info@hyperlog.aero" class="block px-8 py-4 bg-primary text-on-primary font-bold text-sm tracking-widest uppercase rounded-full hover:opacity-90 transition-opacity">info@hyperlog.aero</a>
+        <a href="https://hyperlog.aero" class="block text-sm text-secondary hover:text-white transition-colors">hyperlog.aero</a>
+      </div>
+      <div class="mt-8 space-y-1">
+        <p class="text-xs text-outline">JetLink Technologies Ltd</p>
+        <p class="text-xs text-outline">Company No. 17100204</p>
+      </div>
+    </div>
+  </section>
+
+</PitchLayout>

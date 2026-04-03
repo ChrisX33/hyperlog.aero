@@ -1,0 +1,11 @@
+---
+interface Props {
+  text: string;
+  variant?: 'primary' | 'secondary';
+}
+
+const { text, variant = 'primary' } = Astro.props;
+const colorClass = variant === 'primary' ? 'text-primary' : 'text-secondary';
+---
+
+<p class={`section-label ${colorClass} mb-4`}>{text}</p>

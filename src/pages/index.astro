@@ -1,0 +1,751 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="HyperLog — Trust in Every Entry">
+  <Header />
+
+  <main class="flex-grow pt-16">
+
+    <!-- ============================================================
+         HERO — 60/40 split layout
+         ============================================================ -->
+    <section class="relative min-h-[92vh] flex items-center overflow-hidden">
+      <!-- Background: subtle animated grid -->
+      <div class="absolute inset-0 z-0 bg-surface-lowest">
+        <div class="absolute inset-0 hero-grid"></div>
+        <!-- Radial glow behind the right panel area -->
+        <div class="absolute top-1/2 right-[20%] -translate-y-1/2 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-[120px] hidden lg:block"></div>
+      </div>
+
+      <!-- Content: 60/40 split -->
+      <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-9 gap-10 lg:gap-10 items-center">
+
+        <!-- LEFT 45% — Text content -->
+        <div class="lg:col-span-4 space-y-7 py-16 lg:py-0">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary beacon-glow"></span>
+            <span class="section-label text-primary">Mission Critical Infrastructure</span>
+          </div>
+
+          <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] text-white">
+            Trust in<br />Every Entry
+          </h1>
+
+          <p class="text-lg text-secondary leading-relaxed max-w-lg">
+            Electronic pilot credentials and blockchain logbook infrastructure. One system for the full pilot credential lifecycle.
+          </p>
+
+          <!-- Stat strip -->
+          <div class="flex gap-6 pt-2">
+            <div class="text-center">
+              <p class="text-xl font-extrabold text-white tracking-tight">ICAO</p>
+              <p class="text-[10px] uppercase tracking-[0.15em] text-secondary font-bold mt-1">Compliant</p>
+            </div>
+            <div class="w-px bg-outline-variant/20"></div>
+            <div class="text-center">
+              <p class="text-xl font-extrabold text-white tracking-tight">Offline</p>
+              <p class="text-[10px] uppercase tracking-[0.15em] text-secondary font-bold mt-1">Verification</p>
+            </div>
+            <div class="w-px bg-outline-variant/20"></div>
+            <div class="text-center">
+              <p class="text-xl font-extrabold text-white tracking-tight">Immutable</p>
+              <p class="text-[10px] uppercase tracking-[0.15em] text-secondary font-bold mt-1">Evidence</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
+            <a href="/pitch" class="bg-primary text-on-primary font-bold py-4 rounded-full px-8 flex items-center justify-center gap-3 group">
+              VIEW BRIEFING
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="mailto:info@hyperlog.aero" class="border border-outline-variant/30 text-white font-bold py-4 rounded-full px-8 text-center hover:bg-surface-highest/50 transition-colors">
+              CONTACT US
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT 55% — Logbook verification chain (the hero moment) -->
+        <div class="lg:col-span-5 relative hidden lg:block">
+          <div class="relative hero-panel-float">
+            <div class="absolute -inset-8 bg-primary/[0.04] rounded-3xl blur-2xl"></div>
+
+            <div class="relative">
+
+              <!-- Flight log with verification chain -->
+              <div class="glass-cockpit rounded-xl border border-outline-variant/[0.15] p-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-2">
+                    <img src="/logo/logo-icon.svg" alt="" class="w-5 h-5" />
+                    <span class="text-sm font-bold tracking-tight text-primary">BLOCKCHAIN FLIGHT LOG</span>
+                  </div>
+                  <span class="text-xs font-mono text-outline/40">07 DEC 2026</span>
+                </div>
+
+                <!-- Flight details -->
+                <div class="bg-surface-lowest/80 rounded-lg p-4 border border-outline-variant/10 mb-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="text-2xl font-extrabold text-white tracking-tight">EGLL</span>
+                      <div class="flex items-center gap-0.5 px-1">
+                        <div class="w-5 h-px bg-gradient-to-r from-primary/60 to-primary/20"></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="text-primary/60 -rotate-45"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+                        <div class="w-5 h-px bg-gradient-to-r from-primary/20 to-primary/60"></div>
+                      </div>
+                      <span class="text-2xl font-extrabold text-white tracking-tight">KJFK</span>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-base font-bold text-white font-mono">07:42</p>
+                      <p class="text-[10px] text-outline/40 uppercase">Block Time</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-4 gap-3">
+                    <div>
+                      <p class="text-[10px] font-bold tracking-[0.1em] uppercase text-outline/50">Aircraft</p>
+                      <p class="text-sm text-on-surface-variant font-medium">B737-800</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-bold tracking-[0.1em] uppercase text-outline/50">Reg</p>
+                      <p class="text-sm text-on-surface-variant font-medium">G-HLOG</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-bold tracking-[0.1em] uppercase text-outline/50">Role</p>
+                      <p class="text-sm text-on-surface-variant font-medium">Captain</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-bold tracking-[0.1em] uppercase text-outline/50">Pilot</p>
+                      <p class="text-sm text-on-surface-variant font-medium">E. P. Warner</p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/[0.08] flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary/40"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <p class="text-xs font-mono text-outline/30 tracking-wider">Signed with pilot's private key &bull; immutable on-chain</p>
+                  </div>
+                </div>
+
+                <!-- Verification chain -->
+                <p class="text-xs font-bold tracking-[0.15em] uppercase text-outline/50 mb-2">Verification Chain</p>
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-2.5 bg-surface-lowest/40 rounded px-3 py-2 border border-outline-variant/10">
+                    <div class="w-5 h-5 rounded bg-green-500/15 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <span class="text-sm text-on-surface-variant font-semibold flex-1">Pilot signed entry</span>
+                    <span class="text-xs text-outline/35 font-mono uppercase">PKI biometric</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 bg-surface-lowest/40 rounded px-3 py-2 border border-outline-variant/10">
+                    <div class="w-5 h-5 rounded bg-green-500/15 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <span class="text-sm text-on-surface-variant font-semibold">Crew corroborated</span>
+                      <p class="text-[10px] text-outline/35 mt-0.5">F/O W. Hildred also logged this flight</p>
+                    </div>
+                    <div class="flex -space-x-1.5 shrink-0">
+                      <div class="w-6 h-6 rounded-full bg-primary/20 border border-surface-base flex items-center justify-center"><span class="text-[8px] font-bold text-primary">EW</span></div>
+                      <div class="w-6 h-6 rounded-full bg-primary/20 border border-surface-base flex items-center justify-center"><span class="text-[8px] font-bold text-primary">WH</span></div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2.5 bg-surface-lowest/40 rounded px-3 py-2 border border-outline-variant/10">
+                    <div class="w-5 h-5 rounded bg-green-500/15 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <span class="text-sm text-on-surface-variant font-semibold flex-1">ADS-B flight tracked</span>
+                    <span class="text-xs text-outline/35 font-mono uppercase">confirmed</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 bg-surface-lowest/40 rounded px-3 py-2 border border-outline-variant/10">
+                    <div class="w-5 h-5 rounded bg-green-500/15 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <span class="text-sm text-on-surface-variant font-semibold flex-1">Airline OPS verified</span>
+                    <span class="text-xs text-outline/35 font-mono uppercase">rostered</span>
+                  </div>
+                </div>
+
+                <!-- Trust confidence -->
+                <div class="mt-3 pt-3 border-t border-outline-variant/[0.08]">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[10px] font-bold tracking-[0.1em] uppercase text-outline/40">Trust Confidence</span>
+                    <span class="text-xs font-bold text-green-400/80">4 / 4 sources</span>
+                  </div>
+                  <div class="flex gap-1">
+                    <div class="flex-1 h-1 rounded-full bg-green-400/70"></div>
+                    <div class="flex-1 h-1 rounded-full bg-green-400/70"></div>
+                    <div class="flex-1 h-1 rounded-full bg-green-400/70"></div>
+                    <div class="flex-1 h-1 rounded-full bg-green-400/70"></div>
+                  </div>
+                </div>
+
+                <!-- Authority credentials row (inside same panel) -->
+                <div class="mt-4 pt-4 border-t border-outline-variant/[0.08]">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold tracking-tight text-primary">AUTHORITY-ISSUED CREDENTIALS</span>
+                    <div class="flex items-center gap-1.5 bg-primary/10 px-2.5 py-0.5 rounded">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      <span class="text-[9px] font-bold tracking-wider uppercase text-primary">ICAO Compliant</span>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2">
+                    <div class="bg-surface-lowest/60 rounded p-3 border border-outline-variant/10 flex items-center gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary shrink-0"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+                      <div>
+                        <p class="text-sm font-bold text-white">ATPL(A)</p>
+                        <p class="text-[10px] text-outline/40">UK CAA</p>
+                      </div>
+                      <span class="w-1.5 h-1.5 rounded-full bg-green-400 ml-auto shrink-0"></span>
+                    </div>
+                    <div class="bg-surface-lowest/60 rounded p-3 border border-outline-variant/10 flex items-center gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary shrink-0"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg>
+                      <div>
+                        <p class="text-sm font-bold text-white">Class 1</p>
+                        <p class="text-[10px] text-outline/40">AME</p>
+                      </div>
+                      <span class="w-1.5 h-1.5 rounded-full bg-green-400 ml-auto shrink-0"></span>
+                    </div>
+                    <div class="bg-surface-lowest/60 rounded p-3 border border-outline-variant/10 flex items-center gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary shrink-0"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                      <div>
+                        <p class="text-sm font-bold text-white">B737NG</p>
+                        <p class="text-[10px] text-outline/40">Rating</p>
+                      </div>
+                      <span class="w-1.5 h-1.5 rounded-full bg-green-400 ml-auto shrink-0"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fabric channel footer -->
+              <div class="glass-cockpit rounded-lg border border-outline-variant/[0.15] px-4 py-2 mt-2 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary/50"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+                    <span class="text-xs font-bold tracking-wider text-on-surface-variant uppercase">Hyperledger Fabric</span>
+                  </div>
+                  <span class="text-xs text-outline/25">|</span>
+                  <span class="text-xs text-outline/40 font-mono">UK CAA Channel</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-green-400 beacon-glow-green"></span>
+                  <span class="text-xs text-green-400/60 font-bold uppercase">Online</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom gradient blend -->
+      <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-base to-transparent z-[5] pointer-events-none"></div>
+    </section>
+
+    <!-- Hero animations -->
+    <style>
+      .hero-grid {
+        background-image:
+          repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(178,197,255,0.05) 80px),
+          repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(178,197,255,0.05) 80px);
+        background-size: 80px 80px;
+        animation: gridShift 40s linear infinite;
+      }
+
+      @keyframes gridShift {
+        0% { background-position: 0 0; }
+        100% { background-position: 80px 80px; }
+      }
+
+      .hero-panel-float {
+        animation: panelFloat 10s ease-in-out infinite;
+      }
+
+      @keyframes panelFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      .hero-card-float {
+        animation: cardFloat 8s ease-in-out infinite;
+      }
+
+      @keyframes cardFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+      }
+
+      .beacon-glow-green {
+        box-shadow: 0 0 6px 2px rgba(74, 222, 128, 0.3);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-grid,
+        .hero-panel-float,
+        .hero-card-float {
+          animation: none;
+        }
+      }
+    </style>
+
+    <!-- ============================================================
+         THE PROBLEM
+         ============================================================ -->
+    <section id="problem" class="py-20 px-6 bg-surface-lowest">
+      <div class="max-w-5xl mx-auto">
+        <p class="section-label text-secondary mb-4">The Status Quo</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 tracking-tight leading-tight">
+          Fragmented Records,<br />Verification Delay.
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface-container p-6 border-l-2 border-tertiary/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-tertiary mb-4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Paper Fragility</p>
+            <p class="text-sm text-secondary leading-relaxed">Regulatory compliance still relies on manual entry and physical stamps. Records are subject to loss, damage, and falsification.</p>
+          </div>
+          <div class="bg-surface-container p-6 border-l-2 border-tertiary/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-tertiary mb-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Unverifiable Licences</p>
+            <p class="text-sm text-secondary leading-relaxed">Pilot licences have no machine-verifiable chain of trust. Cross-border verification requires manual letters between authorities taking weeks.</p>
+          </div>
+          <div class="bg-surface-container p-6 border-l-2 border-tertiary/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-tertiary mb-4"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Slow Hiring Verification</p>
+            <p class="text-sm text-secondary leading-relaxed">Pilot hour verification for airlines takes weeks of cross-referencing and manual authority checks before a new hire can begin line operations.</p>
+          </div>
+          <div class="bg-surface-container p-6 border-l-2 border-tertiary/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-tertiary mb-4"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><line x1="12" y1="15" x2="12" y2="17"/></svg>
+            <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">No Digital Trust Layer</p>
+            <p class="text-sm text-secondary leading-relaxed">Ramp checks rely on trust without cryptographic proof. There is no standardised mechanism for digital credential verification in real time.</p>
+          </div>
+          <div class="bg-surface-container p-6 border-l-2 border-tertiary/30 md:col-span-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-tertiary mb-4"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+            <p class="text-xs font-bold tracking-[0.1em] uppercase text-tertiary mb-3">Painful Applications</p>
+            <p class="text-sm text-secondary leading-relaxed">Every airline asks for different hour breakdowns — PIC night, cross-country, time per type, multi-engine IFR. Pilots spend hours manually calculating each combination from their logbook for every application. Then the airline has to independently verify what was self-reported. With HyperLog, the pilot grants access and the airline queries whatever breakdowns they need directly from verified data.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TWO LAYERS OF TRUST
+         ============================================================ -->
+    <section id="solution" class="py-20 px-6 bg-surface-base">
+      <div class="max-w-5xl mx-auto">
+        <p class="section-label text-primary mb-4">Two Layers of Trust</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight leading-tight">
+          Evidence Below.<br />Credentials Above.
+        </h2>
+        <p class="text-secondary text-base leading-relaxed mb-12 max-w-2xl">
+          HyperLog connects two distinct trust models. The blockchain logbook builds trust from the bottom up through independent verification sources. Authority-issued credentials provide trust from the top down. Together they form a complete system — credentials backed by verifiable evidence.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          <!-- LAYER 1: The Evidence Layer -->
+          <div class="p-8 rounded-xl bg-surface-low ghost-border">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="bg-surface-highest p-3 rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-white">The Evidence Layer</h3>
+                <p class="text-[10px] font-bold tracking-[0.1em] text-outline uppercase">Blockchain Logbook &bull; Hyperledger Fabric</p>
+              </div>
+            </div>
+
+            <p class="text-secondary text-sm leading-relaxed mb-6">
+              Flight records are signed by the pilot and progressively verified by independent sources. Trust is earned, not claimed. Each source that confirms a flight adds confidence.
+            </p>
+
+            <div class="space-y-2">
+              <p class="text-[8px] font-bold tracking-[0.15em] uppercase text-outline/50 mb-2">Verification Spectrum</p>
+
+              <div class="flex items-center gap-3 bg-surface-container rounded px-4 py-3">
+                <div class="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0"><span class="text-[9px] font-black text-primary">1</span></div>
+                <div>
+                  <p class="text-sm font-semibold text-white">Pilot Signed</p>
+                  <p class="text-[10px] text-secondary">Cryptographic signature via device biometrics. The pilot's word, backed by PKI.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 bg-surface-container rounded px-4 py-3">
+                <div class="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0"><span class="text-[9px] font-black text-primary">2</span></div>
+                <div>
+                  <p class="text-sm font-semibold text-white">Crew Corroborated</p>
+                  <p class="text-[10px] text-secondary">Other crew members independently log the same flight via QR code sharing.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 bg-surface-container rounded px-4 py-3">
+                <div class="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0"><span class="text-[9px] font-black text-primary">3</span></div>
+                <div>
+                  <p class="text-sm font-semibold text-white">ADS-B Tracked</p>
+                  <p class="text-[10px] text-secondary">External surveillance data confirms the flight route, times, and altitude.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 bg-surface-container rounded px-4 py-3">
+                <div class="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0"><span class="text-[9px] font-black text-primary">4</span></div>
+                <div>
+                  <p class="text-sm font-semibold text-white">Airline OPS Verified</p>
+                  <p class="text-[10px] text-secondary">Airline scheduling system confirms the crew were rostered on this flight.</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-[10px] text-outline/50 mt-4 leading-relaxed">Not every flight achieves all four. A single-pilot GA flight with ADS-B scores 2/4. An airline operation with crew and rostering scores 4/4. The system is transparent about what's verified.</p>
+          </div>
+
+          <!-- LAYER 2: The Credential Layer -->
+          <div class="p-8 rounded-xl bg-surface-low border border-primary/20">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="bg-primary/20 p-3 rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-white">The Credential Layer</h3>
+                <p class="text-[10px] font-bold tracking-[0.1em] text-outline uppercase">Authority-Issued &bull; W3C Verifiable Credentials</p>
+              </div>
+            </div>
+
+            <p class="text-secondary text-sm leading-relaxed mb-6">
+              Licences, medicals, and ratings are issued by regulatory authorities as digitally signed Verifiable Credentials. They live on the pilot's device and can be verified offline — even without internet. This is the layer aligned with ICAO Amendment 178.
+            </p>
+
+            <div class="space-y-3">
+              <div class="bg-surface-container rounded px-4 py-3.5 flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+                <div>
+                  <p class="text-sm font-semibold text-white">Pilot Licence</p>
+                  <p class="text-[10px] text-secondary">Issued by CAA/NAA. Signed with the authority's private key. Verifiable offline by any ramp inspector worldwide using cached issuer public keys.</p>
+                </div>
+              </div>
+
+              <div class="bg-surface-container rounded px-4 py-3.5 flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg>
+                <div>
+                  <p class="text-sm font-semibold text-white">Medical Certificate</p>
+                  <p class="text-[10px] text-secondary">Signed by an Approved Aviation Medical Examiner. Automated expiry tracking. Airlines see validity status without clinical details.</p>
+                </div>
+              </div>
+
+              <div class="bg-surface-container rounded px-4 py-3.5 flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                <div>
+                  <p class="text-sm font-semibold text-white">Ratings &amp; Type Ratings</p>
+                  <p class="text-[10px] text-secondary">Issued by ATOs and CAAs after proficiency checks. Each rating is a linked credential with revalidation tracking.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 p-3 rounded bg-primary/5 border border-primary/10">
+              <p class="text-[10px] text-primary leading-relaxed"><span class="font-bold">Offline verification:</span> Ramp inspectors cache ~193 NAA public keys on their device. When a pilot presents a credential via QR or NFC, the inspector verifies the issuer's signature locally — no internet required. Proven by SITA in a 2020 proof of concept with the CAAC.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Connection between layers -->
+        <div class="mt-8 bg-surface-container rounded-xl ghost-border p-6 flex flex-col md:flex-row items-center gap-6">
+          <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+          </div>
+          <p class="text-sm text-secondary leading-relaxed">
+            <span class="font-bold text-white">The logbook is the evidence base that supports credential issuance.</span> When a pilot applies for a licence, the CAA can verify their flight hours directly from the blockchain logbook — with the full verification chain showing which flights were crew-corroborated, ADS-B tracked, and airline-confirmed. A credential is only as trustworthy as the evidence beneath it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FOR PILOTS / FOR AIRLINES / FOR REGULATORS
+         ============================================================ -->
+    <section class="py-20 bg-surface-base px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- For Pilots -->
+          <div>
+            <p class="section-label text-primary mb-6">For Pilots</p>
+            <h3 class="text-2xl font-bold text-white mb-4">Your Career,<br />Decentralised.</h3>
+            <p class="text-secondary text-sm leading-relaxed mb-4">Own your flight history. Take your verified credentials from one airline to the next without the administrative friction of legacy logbook verification.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span class="text-sm text-on-surface-variant">Self-sovereign identity control</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span class="text-sm text-on-surface-variant">Instant submission to employers</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span class="text-sm text-on-surface-variant">Portable across borders</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- For Airlines -->
+          <div>
+            <p class="section-label text-primary mb-6">For Airlines</p>
+            <h3 class="text-2xl font-bold text-white mb-4">Verified Crew,<br />Instantly.</h3>
+            <p class="text-secondary text-sm leading-relaxed mb-4">Eliminate weeks of manual logbook verification during hiring. Confirm hours, ratings, and medical status in seconds with cryptographic certainty.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span class="text-sm text-on-surface-variant">Real-time credential verification</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="text-sm text-on-surface-variant">Medical expiry alerts</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span class="text-sm text-on-surface-variant">Compliance automation</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- For Regulators -->
+          <div>
+            <p class="section-label text-primary mb-6">For Regulators</p>
+            <h3 class="text-2xl font-bold text-white mb-4">Digital Issuance,<br />Framework Aligned.</h3>
+            <p class="text-secondary text-sm leading-relaxed mb-4">Issue credentials directly into the Trust Framework. Digital ramp checks. Cross-border verification without bilateral agreements.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span class="text-sm text-on-surface-variant">ICAO Trust Framework alignment</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                <span class="text-sm text-on-surface-variant">Direct digital credential issuance</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+                <span class="text-sm text-on-surface-variant">Immutable audit trail</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ICAO & REGULATORY ALIGNMENT
+         ============================================================ -->
+    <section class="py-20 px-6 bg-surface-lowest">
+      <div class="max-w-5xl mx-auto">
+        <p class="section-label text-primary mb-4">Regulatory Alignment</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight leading-tight">
+          ICAO Trust Framework.<br />Built In, Not Bolted On.
+        </h2>
+        <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+          HyperLog's credential layer is designed toward alignment with the ICAO Trust Framework — specifically ICAO Amendment 178 to Annex 1 for Electronic Personnel Licensing. The logbook layer is our own innovation, creating the verified evidence base that no existing standard addresses.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <!-- What ICAO covers -->
+          <div class="bg-surface-container p-6 rounded-lg ghost-border">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="bg-primary/15 px-2.5 py-1 rounded">
+                <span class="text-[8px] font-bold tracking-wider text-primary uppercase">ICAO Aligned</span>
+              </div>
+              <span class="text-xs font-bold text-white">Credential Layer</span>
+            </div>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" class="mt-0.5 shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                Electronic Personnel Licensing via Amendment 178
+              </li>
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" class="mt-0.5 shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                Offline verification proven by SITA PoC with CAAC (2020)
+              </li>
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" class="mt-0.5 shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                Architecture targeting ACCP and MAIS alignment
+              </li>
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" class="mt-0.5 shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                W3C Verifiable Credentials and ISO/IEC 18013-5 digital wallet
+              </li>
+            </ul>
+          </div>
+
+          <!-- What HyperLog adds -->
+          <div class="bg-surface-container p-6 rounded-lg ghost-border">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="bg-surface-highest px-2.5 py-1 rounded">
+                <span class="text-[8px] font-bold tracking-wider text-on-surface-variant uppercase">HyperLog Innovation</span>
+              </div>
+              <span class="text-xs font-bold text-white">Evidence Layer</span>
+            </div>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                Blockchain logbook with multi-source verification chain
+              </li>
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                Automated flight logging from airline rostering systems
+              </li>
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                QR-based crew corroboration for augmented crew operations
+              </li>
+              <li class="flex items-start gap-2 text-sm text-secondary leading-relaxed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                GDPR-compliant data sovereignty — pilot controls access
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-surface-lowest p-4 rounded text-left">
+            <p class="text-[10px] font-black tracking-wider text-outline mb-1 uppercase">Certificate Policy</p>
+            <p class="text-xs font-bold text-white">ACCP</p>
+          </div>
+          <div class="bg-surface-lowest p-4 rounded text-left">
+            <p class="text-[10px] font-black tracking-wider text-outline mb-1 uppercase">Info Security</p>
+            <p class="text-xs font-bold text-white">MAIS</p>
+          </div>
+          <div class="bg-surface-lowest p-4 rounded text-left">
+            <p class="text-[10px] font-black tracking-wider text-outline mb-1 uppercase">Credentials</p>
+            <p class="text-xs font-bold text-white">W3C VC / DID</p>
+          </div>
+          <div class="bg-surface-lowest p-4 rounded text-left">
+            <p class="text-[10px] font-black tracking-wider text-outline mb-1 uppercase">Wallet</p>
+            <p class="text-xs font-bold text-white">ISO 18013-5</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ARCHITECTURE
+         ============================================================ -->
+    <section id="technology" class="py-20 px-6 bg-surface-base">
+      <div class="max-w-5xl mx-auto">
+        <p class="section-label text-secondary mb-4">Architecture</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
+          Multi-Authority<br />Channel Network.
+        </h2>
+        <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+          Each National Aviation Authority operates on its own Hyperledger Fabric channel. Pilot data stays sovereign within the issuing authority's jurisdiction. A shared verification channel enables cross-border credential verification. JetLink manages the network as a service.
+        </p>
+
+        <!-- Channel architecture diagram -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-surface-container p-6 rounded ghost-border">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-8 h-8 rounded bg-primary/15 flex items-center justify-center">
+                <span class="text-[10px] font-black text-primary">UK</span>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-white">UK CAA Channel</p>
+                <p class="text-[9px] text-outline/50">CA: UK Civil Aviation Authority</p>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-[10px] text-secondary">
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/50"></span>Licensing &amp; Ratings</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Logbook (private)</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Medical (private)</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Training (private)</div>
+            </div>
+          </div>
+
+          <div class="bg-surface-container p-6 rounded ghost-border">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-8 h-8 rounded bg-primary/15 flex items-center justify-center">
+                <span class="text-[10px] font-black text-primary">FR</span>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-white">DGAC Channel</p>
+                <p class="text-[9px] text-outline/50">CA: Direction Générale de l'Aviation Civile</p>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-[10px] text-secondary">
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/50"></span>Licensing &amp; Ratings</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Logbook (private)</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Medical (private)</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Training (private)</div>
+            </div>
+          </div>
+
+          <div class="bg-surface-container p-6 rounded ghost-border">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-8 h-8 rounded bg-primary/15 flex items-center justify-center">
+                <span class="text-[10px] font-black text-primary">US</span>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-white">FAA Channel</p>
+                <p class="text-[9px] text-outline/50">CA: Federal Aviation Administration</p>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-[10px] text-secondary">
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/50"></span>Licensing &amp; Ratings</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Logbook (private)</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Medical (private)</div>
+              <div class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-primary/30"></span>Training (private)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shared layer + infrastructure -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-primary/5 p-6 rounded border border-primary/20">
+            <div class="flex items-center gap-3 mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <h4 class="text-sm font-bold text-white">Verification Channel</h4>
+            </div>
+            <p class="text-[10px] text-secondary leading-relaxed mb-3">All NAAs join a shared read-only channel for cross-border verification. Ramp checker apps cache issuer public keys (~193 NAAs) for offline capability.</p>
+            <div class="flex items-center gap-2 text-[9px] text-primary font-semibold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              Offline ramp check verification in seconds
+            </div>
+          </div>
+
+          <div class="bg-surface-container p-6 rounded ghost-border">
+            <div class="flex items-center gap-3 mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <h4 class="text-sm font-bold text-white">Pilot's Device</h4>
+            </div>
+            <p class="text-[10px] text-secondary leading-relaxed mb-3">All credentials live on the pilot's device — private key protected by biometrics. The pilot controls who sees their data and for how long. Revocable, time-limited access for airline hiring.</p>
+            <div class="flex items-center gap-2 text-[9px] text-on-surface-variant font-semibold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              GDPR self-sovereign data control
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="py-20 px-6 bg-surface-container">
+      <div class="max-w-2xl mx-auto text-center space-y-6">
+        <h2 class="text-4xl font-extrabold tracking-tighter text-white">
+          Secure the<br />Future of Flight.
+        </h2>
+        <p class="text-secondary max-w-sm mx-auto">
+          We are engaging with IATA, national authorities, and aviation stakeholders to shape the trust layer for pilot credentials.
+        </p>
+        <div class="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="/pitch" class="px-8 py-4 bg-primary text-on-primary font-black rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity">
+            View Briefing
+          </a>
+          <a href="mailto:info@hyperlog.aero" class="px-8 py-4 border border-outline-variant/30 text-white font-bold rounded-full text-sm tracking-widest uppercase hover:bg-surface-highest/50 transition-colors">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</BaseLayout>

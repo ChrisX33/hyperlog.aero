@@ -1,0 +1,45 @@
+---
+---
+
+<nav class="no-print fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-surface-base/90 backdrop-blur-md border-b border-outline-variant/[0.15]">
+  <a href="/" class="flex items-center gap-3">
+    <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-8 h-8" />
+    <span class="text-xl font-bold tracking-tighter text-primary">HyperLog</span>
+  </a>
+  <div class="hidden md:flex items-center gap-8">
+    <a href="/" class="text-xs font-bold tracking-[0.1em] uppercase text-secondary hover:text-white transition-colors">Home</a>
+    <a href="/about" class="text-xs font-bold tracking-[0.1em] uppercase text-secondary hover:text-white transition-colors">About</a>
+    <a href="/contact" class="text-xs font-bold tracking-[0.1em] uppercase text-secondary hover:text-white transition-colors">Contact</a>
+    <a href="/pitch" class="px-5 py-2 bg-primary text-on-primary font-bold text-xs tracking-widest uppercase rounded-full hover:opacity-90 transition-opacity">View Briefing</a>
+  </div>
+  <button id="mobile-menu-btn" class="md:hidden text-primary" aria-label="Menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div id="mobile-menu" class="no-print fixed inset-0 z-[60] bg-surface-base/95 backdrop-blur-lg flex flex-col items-center justify-center gap-8 hidden">
+  <button id="mobile-menu-close" class="absolute top-6 right-6 text-primary" aria-label="Close menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="/" class="text-lg font-bold tracking-[0.1em] uppercase text-secondary hover:text-white transition-colors mobile-menu-link">Home</a>
+  <a href="/about" class="text-lg font-bold tracking-[0.1em] uppercase text-secondary hover:text-white transition-colors mobile-menu-link">About</a>
+  <a href="/contact" class="text-lg font-bold tracking-[0.1em] uppercase text-secondary hover:text-white transition-colors mobile-menu-link">Contact</a>
+  <a href="/pitch" class="px-8 py-3 bg-primary text-on-primary font-bold text-sm tracking-widest uppercase rounded-full hover:opacity-90 transition-opacity mobile-menu-link">View Briefing</a>
+</div>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const close = document.getElementById('mobile-menu-close');
+  const links = document.querySelectorAll('.mobile-menu-link');
+
+  function toggleMenu() {
+    menu?.classList.toggle('hidden');
+    document.body.classList.toggle('overflow-hidden');
+  }
+
+  btn?.addEventListener('click', toggleMenu);
+  close?.addEventListener('click', toggleMenu);
+  links.forEach(link => link.addEventListener('click', toggleMenu));
+</script>

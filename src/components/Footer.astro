@@ -1,0 +1,60 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="w-full py-12 px-8 bg-surface-lowest">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+      <!-- Logo & tagline -->
+      <div class="flex flex-col gap-3">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-6 h-6" />
+          <span class="text-lg font-black text-primary">HyperLog</span>
+        </a>
+        <p class="text-xs text-secondary">Trust in Every Entry</p>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex flex-col gap-2">
+        <p class="text-[10px] font-bold tracking-[0.15em] uppercase text-outline/50 mb-1">Navigation</p>
+        <a href="/" class="text-xs text-secondary hover:text-white transition-colors">Home</a>
+        <a href="/about" class="text-xs text-secondary hover:text-white transition-colors">About</a>
+        <a href="/contact" class="text-xs text-secondary hover:text-white transition-colors">Contact</a>
+        <a href="/pitch" class="text-xs text-secondary hover:text-white transition-colors">Briefing</a>
+      </div>
+
+      <!-- Contact -->
+      <div class="flex flex-col gap-2">
+        <p class="text-[10px] font-bold tracking-[0.15em] uppercase text-outline/50 mb-1">Contact</p>
+        <a href="mailto:info@hyperlog.aero" class="text-xs text-secondary hover:text-white transition-colors">info@hyperlog.aero</a>
+      </div>
+    </div>
+
+    <!-- Legal links -->
+    <div class="border-t border-outline-variant/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex flex-wrap justify-center md:justify-start gap-4">
+        <a href="/privacy" class="text-[10px] uppercase tracking-[0.1em] text-secondary hover:text-white transition-colors">Privacy Policy</a>
+        <a href="/terms" class="text-[10px] uppercase tracking-[0.1em] text-secondary hover:text-white transition-colors">Terms &amp; Conditions</a>
+        <a href="/cookies" class="text-[10px] uppercase tracking-[0.1em] text-secondary hover:text-white transition-colors">Cookie Policy</a>
+        <button id="cookie-settings-btn" class="text-[10px] uppercase tracking-[0.1em] text-secondary hover:text-white transition-colors cursor-pointer">Cookie Settings</button>
+      </div>
+      <div class="text-center md:text-right">
+        <p class="text-[10px] text-secondary">
+          &copy; {year} JetLink Technologies Ltd. All rights reserved.
+        </p>
+        <p class="text-[10px] text-outline/40 mt-1">
+          <a href="https://find-and-update.company-information.service.gov.uk/company/17100204" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+            Registered in England &amp; Wales &middot; Company No. 17100204
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('cookie-settings-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('cookie-consent');
+    window.location.reload();
+  });
+</script>

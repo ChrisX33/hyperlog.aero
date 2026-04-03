@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* ============================================================
+   HyperLog Design System — "The Digital Flight Deck"
+   Ported from Stitch export DESIGN.md
+   ============================================================ */
+
+@theme {
+  /* Surface hierarchy (deep → raised) */
+  --color-surface-lowest: #030e20;
+  --color-surface-base: #071325;
+  --color-surface-low: #101c2e;
+  --color-surface-container: #142032;
+  --color-surface-high: #1f2a3d;
+  --color-surface-highest: #2a3548;
+
+  /* Primary (periwinkle-silver) */
+  --color-primary: #b2c5ff;
+  --color-primary-container: #5b8cff;
+  --color-on-primary: #002b73;
+  --color-on-primary-container: #002565;
+
+  /* Secondary */
+  --color-secondary: #b4c8e5;
+  --color-secondary-container: #374a63;
+  --color-on-secondary: #1e3249;
+
+  /* Tertiary (warning amber) */
+  --color-tertiary: #ffb598;
+
+  /* On-surface */
+  --color-on-surface: #d7e3fc;
+  --color-on-surface-variant: #c2c6d8;
+
+  /* Outlines */
+  --color-outline: #8c90a1;
+  --color-outline-variant: #424655;
+
+  /* Error */
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+
+  /* Inverse */
+  --color-inverse-surface: #d7e3fc;
+
+  /* Typography */
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Border radius — sharp & architectural */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+/* ============================================================
+   Base styles
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--color-surface-base);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* ============================================================
+   Utility classes
+   ============================================================ */
+
+/* Section label — tracked uppercase (aviation manual style) */
+.section-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Ghost border — 15% opacity outline-variant */
+.ghost-border {
+  border: 1px solid rgb(66 70 85 / 0.15);
+}
+
+/* Glass cockpit effect */
+.glass-cockpit {
+  background: rgb(20 32 50 / 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Beacon glow (cockpit LED effect) */
+.beacon-glow {
+  box-shadow: 0 0 8px 2px rgb(178 197 255 / 0.2);
+}
+
+.beacon-glow-tertiary {
+  box-shadow: 0 0 8px 2px rgb(255 181 152 / 0.2);
+}
+
+/* Ambient shadow (for modals/floating elements) */
+.ambient-shadow {
+  box-shadow: 0 8px 40px rgb(3 14 32 / 0.4);
+}
+
+/* Primary gradient (135 deg, primary to primary-container) */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-container));
+}
+
+/* Hero gradient overlay */
+.gradient-hero-overlay {
+  background: linear-gradient(to top, var(--color-surface-base), rgb(7 19 37 / 0.4), transparent);
+}
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ============================================================
+   Print styles
+   ============================================================ */
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+}

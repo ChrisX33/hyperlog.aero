@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+import CookieBanner from '../components/CookieBanner.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Electronic Pilot Credentials and Blockchain Logbook Infrastructure — by JetLink Technologies Ltd' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Analytics preconnect -->
+  <link rel="dns-prefetch" href="https://analytics.jetlink-tech.com" />
+  <link rel="preconnect" href="https://analytics.jetlink-tech.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <!-- Umami (cookieless) -->
+  <script defer src="https://analytics.jetlink-tech.com/script.js" data-website-id="46ed6cea-63d9-4ff2-937e-e7293eb46334"></script>
+  <title>{title}</title>
+</head>
+<body class="min-h-screen flex flex-col">
+  <slot />
+  <CookieBanner />
+
+  <!-- Google Analytics — consent-based -->
+  <script>
+    function loadGA() {
+      if (document.getElementById('ga-script')) return;
+      const s = document.createElement('script');
+      s.id = 'ga-script';
+      s.async = true;
+      // TODO: Replace with your GA Measurement ID
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPY1K6J3W0';
+      document.head.appendChild(s);
+      s.onload = () => {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
+        gtag('js', new Date());
+        gtag('config', 'G-WPY1K6J3W0'); // TODO: Replace with your GA Measurement ID
+      };
+    }
+
+    if (localStorage.getItem('cookie-consent') === 'accepted') {
+      loadGA();
+    }
+
+    window.addEventListener('cookie-consent-update', (e: any) => {
+      if (e.detail === 'accepted') loadGA();
+    });
+  </script>
+</body>
+</html>
