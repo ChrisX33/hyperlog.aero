@@ -9,9 +9,13 @@ import Footer from '../components/Footer.astro';
 
   <main class="flex-grow pt-24">
 
-    <!-- Logo -->
-    <section class="py-12 px-6 flex justify-center">
-      <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="w-[250px] md:w-[300px]" />
+    <!-- Logo + hero image -->
+    <section class="relative py-24 px-6 flex justify-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="/images/newyork.jpeg" alt="" class="w-full h-full object-cover brightness-[0.3] saturate-75" style="object-position: center 40%;" />
+        <div class="absolute inset-0 bg-surface-base/60"></div>
+      </div>
+      <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="w-[250px] md:w-[300px] relative z-10" />
     </section>
 
     <!-- ============================================================
