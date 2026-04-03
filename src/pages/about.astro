@@ -9,20 +9,20 @@ import Footer from '../components/Footer.astro';
 
   <main class="flex-grow pt-24">
 
-    <!-- Logo + hero image -->
-    <section class="relative py-24 px-6 flex justify-center overflow-hidden">
-      <div class="absolute inset-0 z-0">
-        <img src="/images/newyork.jpeg" alt="" class="w-full h-full object-cover brightness-[0.3] saturate-75" style="object-position: center 40%;" />
-        <div class="absolute inset-0 bg-surface-base/60"></div>
-      </div>
-      <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="w-[250px] md:w-[300px] relative z-10" />
+    <!-- Logo -->
+    <section class="py-12 px-6 flex justify-center">
+      <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="w-[250px] md:w-[300px]" />
     </section>
 
     <!-- ============================================================
          COMPANY STORY
          ============================================================ -->
-    <section class="py-16 px-6 bg-surface-base">
-      <div class="max-w-3xl mx-auto">
+    <section class="py-16 px-6 bg-surface-base relative overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="/images/newyork.jpeg" alt="" class="w-full h-full object-cover brightness-[0.25] saturate-75" style="object-position: center 40%;" />
+        <div class="absolute inset-0 bg-surface-base/70"></div>
+      </div>
+      <div class="max-w-3xl mx-auto relative z-10">
         <p class="section-label text-secondary mb-4">Our Story</p>
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">Aviation Meets Blockchain</h2>
 
