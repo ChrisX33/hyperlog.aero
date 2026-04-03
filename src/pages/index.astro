@@ -333,8 +333,12 @@ import Footer from '../components/Footer.astro';
     <!-- ============================================================
          TWO LAYERS OF TRUST
          ============================================================ -->
-    <section id="solution" class="py-20 px-6 bg-surface-base">
-      <div class="max-w-5xl mx-auto">
+    <section id="solution" class="py-20 px-6 bg-surface-base relative overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="/images/northernlights.jpeg" alt="" class="w-full h-full object-cover brightness-[0.35] saturate-75" />
+        <div class="absolute inset-0 bg-surface-base/70"></div>
+      </div>
+      <div class="max-w-5xl mx-auto relative z-10">
         <p class="section-label text-primary mb-4">Two Layers of Trust</p>
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight leading-tight">
           Evidence Below.<br />Credentials Above.
@@ -464,13 +468,8 @@ import Footer from '../components/Footer.astro';
     <!-- ============================================================
          FOR PILOTS / FOR AIRLINES / FOR REGULATORS
          ============================================================ -->
-    <section class="py-20 bg-surface-base px-6 relative overflow-hidden">
-      <!-- Background: airport at night -->
-      <div class="absolute inset-0 z-0">
-        <img src="/images/northernlights.jpeg" alt="" class="w-full h-full object-cover brightness-[0.35] saturate-75" />
-        <div class="absolute inset-0 bg-surface-base/60"></div>
-      </div>
-      <div class="max-w-5xl mx-auto relative z-10">
+    <section class="py-20 bg-surface-base px-6">
+      <div class="max-w-5xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- For Pilots -->
           <div>
@@ -541,8 +540,12 @@ import Footer from '../components/Footer.astro';
     <!-- ============================================================
          ICAO & REGULATORY ALIGNMENT
          ============================================================ -->
-    <section class="py-20 px-6 bg-surface-lowest">
-      <div class="max-w-5xl mx-auto">
+    <section class="py-20 px-6 bg-surface-lowest relative overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="/images/newyork.jpeg" alt="" class="w-full h-full object-cover brightness-[0.3] saturate-75" />
+        <div class="absolute inset-0 bg-surface-lowest/75"></div>
+      </div>
+      <div class="max-w-5xl mx-auto relative z-10">
         <p class="section-label text-primary mb-4">Regulatory Alignment</p>
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight leading-tight">
           ICAO Trust Framework.<br />Built In, Not Bolted On.
