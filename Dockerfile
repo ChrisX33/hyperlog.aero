@@ -18,7 +18,7 @@ FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
-ENV PORT=3001
+ENV PORT=4000
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 astro
@@ -27,6 +27,6 @@ COPY --from=builder --chown=astro:nodejs /app/dist ./dist
 COPY --from=builder --chown=astro:nodejs /app/node_modules ./node_modules
 
 USER astro
-EXPOSE 3001
+EXPOSE 4000
 
 CMD ["node", "./dist/server/entry.mjs"]

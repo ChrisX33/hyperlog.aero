@@ -1,8 +1,13 @@
 services:
   web:
     build: .
-    ports:
-      - "3001:3001"
+    container_name: hyperlog-website
     env_file:
       - .env
+    networks:
+      - hyperlog_prod
     restart: unless-stopped
+
+networks:
+  hyperlog_prod:
+    external: true
