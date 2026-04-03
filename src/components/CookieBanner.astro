@@ -1,7 +1,7 @@
 ---
 ---
 
-<div id="cookie-banner" class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden">
+<div id="cookie-banner" class="fixed inset-0 z-[100] flex items-center justify-center p-4" style="display: none;">
   <!-- Overlay -->
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
@@ -39,28 +39,28 @@
   </div>
 </div>
 
-<script>
-  const banner = document.getElementById('cookie-banner');
-  const acceptBtn = document.getElementById('cookie-accept');
-  const declineBtn = document.getElementById('cookie-decline');
-  const closeBtn = document.getElementById('cookie-close');
+<script is:inline>
+  (function() {
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
 
-  function hideBanner() {
-    banner?.classList.add('hidden');
-  }
+    var consent = localStorage.getItem('cookie-consent');
+    if (!consent) {
+      banner.style.display = 'flex';
+    }
 
-  function setConsent(value: string) {
-    localStorage.setItem('cookie-consent', value);
-    window.dispatchEvent(new CustomEvent('cookie-consent-update', { detail: value }));
-    hideBanner();
-  }
+    function hideBanner() {
+      banner.style.display = 'none';
+    }
 
-  // Show banner if no preference set
-  if (!localStorage.getItem('cookie-consent')) {
-    banner?.classList.remove('hidden');
-  }
+    function setConsent(value) {
+      localStorage.setItem('cookie-consent', value);
+      window.dispatchEvent(new CustomEvent('cookie-consent-update', { detail: value }));
+      hideBanner();
+    }
 
-  acceptBtn?.addEventListener('click', () => setConsent('accepted'));
-  declineBtn?.addEventListener('click', () => setConsent('declined'));
-  closeBtn?.addEventListener('click', () => setConsent('declined'));
+    document.getElementById('cookie-accept').addEventListener('click', function() { setConsent('accepted'); });
+    document.getElementById('cookie-decline').addEventListener('click', function() { setConsent('declined'); });
+    document.getElementById('cookie-close').addEventListener('click', function() { setConsent('declined'); });
+  })();
 </script>

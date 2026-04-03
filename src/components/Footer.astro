@@ -4,29 +4,24 @@ const year = new Date().getFullYear();
 
 <footer class="w-full py-12 px-8 bg-surface-lowest">
   <div class="max-w-5xl mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
       <!-- Logo & tagline -->
-      <div class="flex flex-col gap-3">
+      <div class="flex items-center gap-3">
         <a href="/" class="flex items-center gap-2">
           <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-6 h-6" />
           <span class="text-lg font-black text-primary">HyperLog</span>
         </a>
+        <span class="text-outline/20">|</span>
         <p class="text-xs text-secondary">Trust in Every Entry</p>
       </div>
 
-      <!-- Navigation -->
-      <div class="flex flex-col gap-2">
-        <p class="text-[10px] font-bold tracking-[0.15em] uppercase text-outline/50 mb-1">Navigation</p>
+      <!-- Navigation + Contact (horizontal) -->
+      <div class="flex flex-wrap justify-center items-center gap-6">
         <a href="/" class="text-xs text-secondary hover:text-white transition-colors">Home</a>
         <a href="/about" class="text-xs text-secondary hover:text-white transition-colors">About</a>
         <a href="/contact" class="text-xs text-secondary hover:text-white transition-colors">Contact</a>
         <a href="/pitch" class="text-xs text-secondary hover:text-white transition-colors">Briefing</a>
-      </div>
-
-      <!-- Contact -->
-      <div class="flex flex-col gap-2">
-        <p class="text-[10px] font-bold tracking-[0.15em] uppercase text-outline/50 mb-1">Contact</p>
-        <a href="mailto:info@hyperlog.aero" class="text-xs text-secondary hover:text-white transition-colors">info@hyperlog.aero</a>
+        <a href="mailto:info@hyperlog.aero" class="text-xs text-primary hover:text-white transition-colors">info@hyperlog.aero</a>
       </div>
     </div>
 
