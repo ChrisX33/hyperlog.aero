@@ -1,7 +1,7 @@
 ---
 ---
 
-<div id="cookie-banner" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+<div id="cookie-banner" class="fixed inset-0 z-[100] items-center justify-center p-4" style="display: flex;">
   <!-- Overlay -->
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
@@ -40,16 +40,24 @@
 </div>
 
 <script is:inline>
+  // Run immediately — no DOMContentLoaded wait
   (function() {
     var banner = document.getElementById('cookie-banner');
     if (!banner) return;
 
+    // Check consent
     var consent = localStorage.getItem('cookie-consent');
     if (consent) {
       banner.style.display = 'none';
+      return; // Already consented, done
     }
 
+    // Banner stays visible (display:flex is in the HTML)
+    // Only hide when user explicitly clicks a button
+    var userClicked = false;
+
     function hideBanner() {
+      userClicked = true;
       banner.style.display = 'none';
     }
 
@@ -59,8 +67,19 @@
       hideBanner();
     }
 
-    document.getElementById('cookie-accept').addEventListener('click', function() { setConsent('accepted'); });
-    document.getElementById('cookie-decline').addEventListener('click', function() { setConsent('declined'); });
-    document.getElementById('cookie-close').addEventListener('click', function() { setConsent('declined'); });
+    var acceptBtn = document.getElementById('cookie-accept');
+    var declineBtn = document.getElementById('cookie-decline');
+    var closeBtn = document.getElementById('cookie-close');
+
+    if (acceptBtn) acceptBtn.addEventListener('click', function(e) { e.stopPropagation(); setConsent('accepted'); });
+    if (declineBtn) declineBtn.addEventListener('click', function(e) { e.stopPropagation(); setConsent('declined'); });
+    if (closeBtn) closeBtn.addEventListener('click', function(e) { e.stopPropagation(); setConsent('declined'); });
+
+    // Safety: if banner gets hidden without user clicking, force it back
+    setInterval(function() {
+      if (!userClicked && !localStorage.getItem('cookie-consent') && banner.style.display === 'none') {
+        banner.style.display = 'flex';
+      }
+    }, 500);
   })();
 </script>
