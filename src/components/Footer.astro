@@ -53,6 +53,7 @@ const year = new Date().getFullYear();
 <script>
   document.getElementById('cookie-settings-btn')?.addEventListener('click', () => {
     localStorage.removeItem('cookie-consent');
-    window.location.reload();
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'flex';
   });
 </script>

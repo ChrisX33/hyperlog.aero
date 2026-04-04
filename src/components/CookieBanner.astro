@@ -1,85 +1,41 @@
 ---
 ---
 
-<div id="cookie-banner" class="fixed inset-0 z-[100] items-center justify-center p-4" style="display: flex;">
+<div id="cookie-banner" style="display:flex;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:1rem;">
   <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);"></div>
 
   <!-- Banner card -->
-  <div class="relative bg-surface-container rounded-xl border border-outline-variant/20 p-8 max-w-md w-full shadow-2xl">
+  <div style="position:relative;background:#142032;border-radius:0.75rem;border:1px solid rgba(66,70,85,0.2);padding:2rem;max-width:28rem;width:100%;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
     <!-- Close button -->
-    <button id="cookie-close" class="absolute top-4 right-4 text-secondary hover:text-white transition-colors" aria-label="Close">
+    <button onclick="document.getElementById('cookie-banner').style.display='none';localStorage.setItem('cookie-consent','declined');window.dispatchEvent(new CustomEvent('cookie-consent-update',{detail:'declined'}))" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#8FA3BF;cursor:pointer;" aria-label="Close">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
 
     <!-- Logo -->
-    <div class="flex items-center gap-2 mb-6">
-      <img src="/logo/logo-icon.svg" alt="" class="w-6 h-6" />
-      <span class="text-sm font-bold text-primary">HyperLog</span>
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;">
+      <img src="/logo/logo-icon.svg" alt="" style="width:1.5rem;height:1.5rem;" />
+      <span style="font-size:0.875rem;font-weight:700;color:#b2c5ff;">HyperLog</span>
     </div>
 
-    <h3 class="text-lg font-bold text-white mb-3">Cookie Preferences</h3>
-    <p class="text-sm text-secondary leading-relaxed mb-4">
+    <h3 style="font-size:1.125rem;font-weight:700;color:#fff;margin-bottom:0.75rem;">Cookie Preferences</h3>
+    <p style="font-size:0.875rem;color:#b4c8e5;line-height:1.625;margin-bottom:1rem;">
       We use cookies to understand how visitors use our website. Analytics cookies are only used with your consent. You can change your preferences at any time.
     </p>
 
-    <div class="flex gap-3 mb-4">
-      <a href="/privacy" class="text-xs text-primary hover:text-white transition-colors">Privacy Policy</a>
-      <a href="/cookies" class="text-xs text-primary hover:text-white transition-colors">Cookie Policy</a>
+    <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
+      <a href="/privacy" style="font-size:0.75rem;color:#b2c5ff;text-decoration:none;">Privacy Policy</a>
+      <a href="/cookies" style="font-size:0.75rem;color:#b2c5ff;text-decoration:none;">Cookie Policy</a>
     </div>
 
-    <div class="flex gap-3">
-      <button id="cookie-decline" class="flex-1 py-3 border border-outline-variant/30 text-white font-bold text-sm rounded-full hover:bg-surface-highest/50 transition-colors cursor-pointer">
+    <div style="display:flex;gap:0.75rem;">
+      <button onclick="document.getElementById('cookie-banner').style.display='none';localStorage.setItem('cookie-consent','declined');window.dispatchEvent(new CustomEvent('cookie-consent-update',{detail:'declined'}))" style="flex:1;padding:0.75rem;border:1px solid rgba(66,70,85,0.3);background:none;color:#fff;font-weight:700;font-size:0.875rem;border-radius:9999px;cursor:pointer;">
         Decline
       </button>
-      <button id="cookie-accept" class="flex-1 py-3 bg-primary text-on-primary font-bold text-sm rounded-full hover:opacity-90 transition-opacity cursor-pointer">
+      <button onclick="document.getElementById('cookie-banner').style.display='none';localStorage.setItem('cookie-consent','accepted');window.dispatchEvent(new CustomEvent('cookie-consent-update',{detail:'accepted'}))" style="flex:1;padding:0.75rem;border:none;background:#b2c5ff;color:#002b73;font-weight:700;font-size:0.875rem;border-radius:9999px;cursor:pointer;">
         Accept
       </button>
     </div>
   </div>
 </div>
-
-<script is:inline>
-  // Run immediately — no DOMContentLoaded wait
-  (function() {
-    var banner = document.getElementById('cookie-banner');
-    if (!banner) return;
-
-    // Check consent
-    var consent = localStorage.getItem('cookie-consent');
-    if (consent) {
-      banner.style.display = 'none';
-      return; // Already consented, done
-    }
-
-    // Banner stays visible (display:flex is in the HTML)
-    // Only hide when user explicitly clicks a button
-    var userClicked = false;
-
-    function hideBanner() {
-      userClicked = true;
-      banner.style.display = 'none';
-    }
-
-    function setConsent(value) {
-      localStorage.setItem('cookie-consent', value);
-      window.dispatchEvent(new CustomEvent('cookie-consent-update', { detail: value }));
-      hideBanner();
-    }
-
-    var acceptBtn = document.getElementById('cookie-accept');
-    var declineBtn = document.getElementById('cookie-decline');
-    var closeBtn = document.getElementById('cookie-close');
-
-    if (acceptBtn) acceptBtn.addEventListener('click', function(e) { e.stopPropagation(); setConsent('accepted'); });
-    if (declineBtn) declineBtn.addEventListener('click', function(e) { e.stopPropagation(); setConsent('declined'); });
-    if (closeBtn) closeBtn.addEventListener('click', function(e) { e.stopPropagation(); setConsent('declined'); });
-
-    // Safety: if banner gets hidden without user clicking, force it back
-    setInterval(function() {
-      if (!userClicked && !localStorage.getItem('cookie-consent') && banner.style.display === 'none') {
-        banner.style.display = 'flex';
-      }
-    }, 500);
-  })();
-</script>
+<script is:inline>if(localStorage.getItem('cookie-consent'))document.getElementById('cookie-banner').style.display='none';</script>
