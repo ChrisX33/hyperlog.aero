@@ -1,7 +1,7 @@
 ---
 ---
 
-<div id="cookie-banner" class="fixed inset-0 z-[100] flex items-center justify-center p-4" style="display: none;">
+<div id="cookie-banner" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
   <!-- Overlay -->
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
@@ -45,17 +45,8 @@
     if (!banner) return;
 
     var consent = localStorage.getItem('cookie-consent');
-    if (!consent) {
-      banner.style.display = 'flex';
-      // Prevent anything else from hiding the banner
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(m) {
-          if (banner.style.display === 'none' && !localStorage.getItem('cookie-consent')) {
-            banner.style.display = 'flex';
-          }
-        });
-      });
-      observer.observe(banner, { attributes: true, attributeFilter: ['style'] });
+    if (consent) {
+      banner.style.display = 'none';
     }
 
     function hideBanner() {
