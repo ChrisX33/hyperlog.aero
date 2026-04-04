@@ -47,6 +47,15 @@
     var consent = localStorage.getItem('cookie-consent');
     if (!consent) {
       banner.style.display = 'flex';
+      // Prevent anything else from hiding the banner
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          if (banner.style.display === 'none' && !localStorage.getItem('cookie-consent')) {
+            banner.style.display = 'flex';
+          }
+        });
+      });
+      observer.observe(banner, { attributes: true, attributeFilter: ['style'] });
     }
 
     function hideBanner() {
