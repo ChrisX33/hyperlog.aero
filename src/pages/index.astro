@@ -15,7 +15,7 @@ import Footer from '../components/Footer.astro';
     <section class="relative min-h-[92vh] flex items-center overflow-hidden">
       <!-- Background: cockpit image + grid overlay -->
       <div class="absolute inset-0 z-0">
-        <img src="/images/cockpit1.jpeg" alt="" class="w-full h-full object-cover brightness-[0.55] contrast-110 saturate-80" />
+        <img src="/images/cockpit1.jpeg" alt="" class="w-full h-full object-cover brightness-[0.55] contrast-110 saturate-80 object-[15%_center] md:object-center" />
         <div class="absolute inset-0 bg-surface-base/45"></div>
         <div class="absolute inset-0 hero-grid"></div>
         <div class="absolute top-1/2 right-[20%] -translate-y-1/2 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-[120px] hidden lg:block"></div>
@@ -25,9 +25,9 @@ import Footer from '../components/Footer.astro';
       <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-9 gap-10 lg:gap-10 items-center">
 
         <!-- LEFT 45% - Text content -->
-        <div class="lg:col-span-4 space-y-7 py-16 lg:py-0">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-primary beacon-glow"></span>
+        <div class="lg:col-span-4 space-y-7 py-16 lg:py-0 landscape:text-center landscape:mx-auto landscape:py-10 landscape:space-y-5 lg:landscape:text-left lg:landscape:mx-0 lg:landscape:py-0 lg:landscape:space-y-7">
+          <div class="flex items-center gap-2 landscape:justify-center lg:landscape:justify-start">
+            <span class="w-2 h-2 rounded-full bg-green-400 beacon-glow-green"></span>
             <span class="section-label text-primary">Mission Critical Infrastructure</span>
           </div>
 
@@ -35,34 +35,34 @@ import Footer from '../components/Footer.astro';
             Trust in<br />Every Entry
           </h1>
 
-          <p class="text-lg text-secondary leading-relaxed max-w-lg">
+          <p class="text-lg text-secondary leading-relaxed max-w-lg landscape:mx-auto lg:landscape:mx-0">
             Electronic pilot credentials and blockchain logbook infrastructure. One system for the full pilot credential lifecycle.
           </p>
 
           <!-- Stat strip -->
-          <div class="flex gap-6 pt-2">
+          <div class="flex gap-4 md:gap-6 pt-2 landscape:justify-center lg:landscape:justify-start">
             <div class="text-center">
-              <p class="text-xl font-extrabold text-white tracking-tight">ICAO</p>
+              <p class="text-lg md:text-xl font-extrabold text-white tracking-tight">ICAO</p>
               <p class="text-xs uppercase tracking-[0.15em] text-secondary font-bold mt-1">Compliant</p>
             </div>
             <div class="w-px bg-outline-variant/20"></div>
             <div class="text-center">
-              <p class="text-xl font-extrabold text-white tracking-tight">Offline</p>
+              <p class="text-lg md:text-xl font-extrabold text-white tracking-tight">Offline</p>
               <p class="text-xs uppercase tracking-[0.15em] text-secondary font-bold mt-1">Verification</p>
             </div>
             <div class="w-px bg-outline-variant/20"></div>
             <div class="text-center">
-              <p class="text-xl font-extrabold text-white tracking-tight">Immutable</p>
+              <p class="text-lg md:text-xl font-extrabold text-white tracking-tight">Immutable</p>
               <p class="text-xs uppercase tracking-[0.15em] text-secondary font-bold mt-1">Evidence</p>
             </div>
           </div>
 
-          <div class="flex flex-col sm:flex-row gap-3 pt-4">
-            <a href="/pitch" class="bg-primary text-on-primary font-bold py-4 rounded-full px-8 flex items-center justify-center gap-3 group">
+          <div class="flex flex-col sm:flex-row gap-3 pt-4 landscape:justify-center lg:landscape:justify-start">
+            <a href="/pitch" class="bg-primary text-on-primary font-bold py-3 md:py-4 landscape:py-2 lg:landscape:py-4 rounded-full px-6 md:px-8 text-sm flex items-center justify-center gap-3 group">
               VIEW BRIEFING
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="mailto:info@hyperlog.aero" class="border border-outline-variant/30 text-white font-bold py-4 rounded-full px-8 text-center hover:bg-surface-highest/50 transition-colors">
+            <a href="mailto:info@hyperlog.aero" class="border border-outline-variant/30 text-white font-bold py-3 md:py-4 landscape:py-2 lg:landscape:py-4 rounded-full px-6 md:px-8 text-sm text-center hover:bg-surface-highest/50 transition-colors">
               CONTACT US
             </a>
           </div>
@@ -731,10 +731,10 @@ import Footer from '../components/Footer.astro';
           We are engaging with IATA, national authorities, and aviation stakeholders to shape the trust layer for pilot credentials.
         </p>
         <div class="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="/pitch" class="px-8 py-4 bg-primary text-on-primary font-black rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity">
+          <a href="/pitch" class="px-6 md:px-8 py-3 md:py-4 bg-primary text-on-primary font-black rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity">
             View Briefing
           </a>
-          <a href="mailto:info@hyperlog.aero" class="px-8 py-4 border border-outline-variant/30 text-white font-bold rounded-full text-sm tracking-widest uppercase hover:bg-surface-highest/50 transition-colors">
+          <a href="mailto:info@hyperlog.aero" class="px-6 md:px-8 py-3 md:py-4 border border-outline-variant/30 text-white font-bold rounded-full text-sm tracking-widest uppercase hover:bg-surface-highest/50 transition-colors">
             Get in Touch
           </a>
         </div>
