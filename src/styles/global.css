@@ -146,3 +146,32 @@ body {
     display: block !important;
   }
 }
+
+/* ============================================================
+   Pitch deck print — must be AFTER Tailwind to win cascade
+   ============================================================ */
+
+@media print {
+  .pitch-slide {
+    display: block !important;
+    flex-direction: unset !important;
+    align-items: unset !important;
+    justify-content: unset !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 210mm !important;
+    max-height: 210mm !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    padding: 10mm 14mm !important;
+    position: relative !important;
+    margin: 0 !important;
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  .pitch-slide:first-child {
+    page-break-before: auto !important;
+    break-before: auto !important;
+  }
+}

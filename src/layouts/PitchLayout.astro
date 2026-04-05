@@ -14,122 +14,35 @@ import '../styles/global.css';
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <title>HyperLog - IATA Briefing</title>
   <style>
-    /* Print: each slide = one A4 landscape page */
     @media print {
       @page {
         size: 297mm 210mm;
         margin: 0;
       }
 
-      *, *::before, *::after {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
       html, body {
         margin: 0 !important;
         padding: 0 !important;
-        width: 297mm !important;
-        display: block !important;
-        overflow: visible !important;
         font-size: 80%;
       }
 
-      /* Force each slide onto its own page */
-      .pitch-slide {
-        display: block !important;
-        float: none !important;
-        width: 297mm !important;
-        height: 210mm !important;
-        overflow: hidden !important;
-        box-sizing: border-box !important;
-        padding: 10mm 14mm !important;
-        position: relative !important;
-        margin: 0 !important;
-        page-break-before: always !important;
-      }
-
-      /* First slide: no page break before */
-      .pitch-slide:first-child {
-        page-break-before: auto !important;
-      }
-
-      .no-print {
-        display: none !important;
-      }
-
-      /* Re-enable flex for slide content layout via inner wrapper */
-      .pitch-slide > div {
-        display: flex;
-        flex-direction: column;
-      }
-
       /* Tighten spacing for print */
-      .pitch-slide .mb-10 {
-        margin-bottom: 1rem !important;
-      }
-
-      .pitch-slide .mb-8 {
-        margin-bottom: 0.75rem !important;
-      }
-
-      .pitch-slide .mb-6 {
-        margin-bottom: 0.5rem !important;
-      }
-
-      .pitch-slide .py-16 {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-      }
-
-      .pitch-slide .gap-8 {
-        gap: 0.6rem !important;
-      }
-
-      .pitch-slide .gap-6 {
-        gap: 0.5rem !important;
-      }
-
-      .pitch-slide .gap-4 {
-        gap: 0.35rem !important;
-      }
-
-      .pitch-slide .space-y-4 > * + * {
-        margin-top: 0.3rem !important;
-      }
-
-      .pitch-slide .space-y-3 > * + * {
-        margin-top: 0.2rem !important;
-      }
-
-      .pitch-slide p {
-        line-height: 1.35 !important;
-      }
-
-      .pitch-slide .p-6 {
-        padding: 0.6rem !important;
-      }
-
-      .pitch-slide .p-5 {
-        padding: 0.5rem !important;
-      }
-
-      .pitch-slide .p-8 {
-        padding: 0.6rem !important;
-      }
-
-      .pitch-slide .px-8 {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-
-      .pitch-slide .md\:px-16 {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
+      .pitch-slide .mb-10 { margin-bottom: 1rem !important; }
+      .pitch-slide .mb-8 { margin-bottom: 0.75rem !important; }
+      .pitch-slide .mb-6 { margin-bottom: 0.5rem !important; }
+      .pitch-slide .py-16 { padding-top: 0 !important; padding-bottom: 0 !important; }
+      .pitch-slide .gap-8 { gap: 0.6rem !important; }
+      .pitch-slide .gap-6 { gap: 0.5rem !important; }
+      .pitch-slide .gap-4 { gap: 0.35rem !important; }
+      .pitch-slide .space-y-4 > * + * { margin-top: 0.3rem !important; }
+      .pitch-slide .space-y-3 > * + * { margin-top: 0.2rem !important; }
+      .pitch-slide p { line-height: 1.35 !important; }
+      .pitch-slide .p-6 { padding: 0.6rem !important; }
+      .pitch-slide .p-5 { padding: 0.5rem !important; }
+      .pitch-slide .p-8 { padding: 0.6rem !important; }
+      .pitch-slide .px-8 { padding-left: 0 !important; padding-right: 0 !important; }
     }
 
-    /* Screen: scrollable slides */
     @media screen {
       .pitch-slide {
         min-height: 100vh;
