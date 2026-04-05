@@ -102,7 +102,7 @@ export const POST: APIRoute = async ({ request }) => {
       from: `"HyperLog Whitepaper" <${smtpFrom}>`,
       to: contactEmail,
       replyTo: email,
-      subject: `Whitepaper Request: ${name}`,
+      subject: `[HyperLog] Whitepaper Request: ${name}`,
       text: [
         `Whitepaper request (fallback - not stored in admin database):`,
         '',

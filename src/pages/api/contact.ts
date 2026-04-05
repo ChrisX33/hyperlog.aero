@@ -76,7 +76,7 @@ export const POST: APIRoute = async ({ request }) => {
       from: `"HyperLog Enquiry" <${smtpFrom}>`,
       to: contactEmail,
       replyTo: email,
-      subject: `New Contact: ${name}${company ? ` (${company})` : ''}`,
+      subject: `[HyperLog] New Contact: ${name}${company ? ` (${company})` : ''}`,
       text: textBody,
     });
 
