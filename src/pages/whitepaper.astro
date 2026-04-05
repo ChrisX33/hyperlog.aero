@@ -25,12 +25,12 @@ import Footer from '../components/Footer.astro';
           Our technical whitepaper provides a comprehensive overview of HyperLog's architecture, covering the blockchain logbook, digital credentials infrastructure, and regulatory alignment.
         </p>
 
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch">
 
           <!-- LEFT: Request Form -->
-          <div class="lg:col-span-3">
-            <div class="bg-surface-container rounded-xl border border-primary/20 p-3 sm:p-5 md:p-8">
-              <form id="wp-form" class="space-y-5">
+          <div class="lg:col-span-3 flex">
+            <div class="bg-surface-container rounded-xl border border-primary/20 p-3 sm:p-5 md:p-8 flex-1 flex flex-col">
+              <form id="wp-form" class="space-y-5 flex-1 flex flex-col">
                 <div>
                   <label for="name" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">Name *</label>
                   <input type="text" id="name" name="name" required maxlength="100" class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="Your full name" />
@@ -46,9 +46,9 @@ import Footer from '../components/Footer.astro';
                   <input type="url" id="linkedin" name="linkedin" required class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="https://linkedin.com/in/your-profile" />
                 </div>
 
-                <div>
+                <div class="flex-1 flex flex-col">
                   <label for="reason" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">Reason for Request</label>
-                  <textarea id="reason" name="reason" rows="3" maxlength="500" class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="Tell us why you're interested in the whitepaper"></textarea>
+                  <textarea id="reason" name="reason" rows="3" maxlength="500" class="w-full flex-1 min-h-[80px] bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="Tell us why you're interested in the whitepaper"></textarea>
                 </div>
 
                 <!-- Cloudflare Turnstile -->
