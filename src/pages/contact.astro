@@ -26,8 +26,8 @@ import Footer from '../components/Footer.astro';
 
           <!-- LEFT: Contact Form -->
           <div class="lg:col-span-3">
-            <div class="bg-surface-container rounded-xl border border-primary/20 p-5 md:p-8">
-              <form id="contact-form" class="space-y-5 overflow-hidden">
+            <div class="bg-surface-container rounded-xl border border-primary/20 p-3 sm:p-5 md:p-8">
+              <form id="contact-form" class="space-y-5">
                 <div>
                   <label for="name" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">Name *</label>
                   <input type="text" id="name" name="name" required maxlength="100" class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="Your full name" />
@@ -49,8 +49,8 @@ import Footer from '../components/Footer.astro';
                 </div>
 
                 <!-- Cloudflare Turnstile -->
-                <div class="w-full">
-                  <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
+                <div class="w-full overflow-hidden [&_iframe]:!w-full [&_iframe]:!max-w-full [&_.cf-turnstile]:!w-full">
+                  <div id="turnstile-container" class="cf-turnstile w-full" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
                 </div>
 
                 <button type="submit" id="contact-submit" disabled class="w-full bg-primary text-on-primary font-bold py-3.5 rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed">
