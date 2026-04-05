@@ -48,6 +48,13 @@ import Footer from '../components/Footer.astro';
                   <textarea id="message" name="message" required rows="4" minlength="10" maxlength="2000" class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="Tell us about your interest in HyperLog - are you a pilot, airline, regulator, or flight school?"></textarea>
                 </div>
 
+                <div class="flex items-start gap-3">
+                  <input type="checkbox" id="privacy" name="privacy" required class="mt-1 shrink-0 accent-primary cursor-pointer" />
+                  <label for="privacy" class="text-xs text-secondary leading-relaxed cursor-pointer">
+                    I have read and accept the <a href="/privacy" target="_blank" class="text-primary hover:text-white transition-colors underline">Privacy Policy</a>
+                  </label>
+                </div>
+
                 <!-- Cloudflare Turnstile -->
                 <div id="turnstile-wrapper" class="w-full overflow-hidden">
                   <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
