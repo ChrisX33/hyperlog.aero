@@ -178,7 +178,7 @@ import PitchLayout from '../layouts/PitchLayout.astro';
           </div>
         </div>
       </div>
-      <p class="text-xs text-outline/50 mt-6 max-w-2xl">Not every flight achieves all four sources. A single-pilot GA flight with ADS-B scores 2/4. An airline operation with crew corroboration and rostering scores 4/4. Transparency about verification level is a feature, not a limitation.</p>
+      <p class="text-xs text-outline/50 mt-6 max-w-2xl">Not every flight achieves all four sources. A private pilot flying their own aircraft may only achieve 1/4 - pilot-signed. A single-pilot commercial operation with ADS-B and rostering can reach 3/4. A two-pilot airline operation with crew corroboration achieves 4/4. Transparency about verification level is a feature, not a limitation.</p>
     </div>
   </section>
 
@@ -359,8 +359,8 @@ import PitchLayout from '../layouts/PitchLayout.astro';
           </div>
         </div>
         <div class="flex items-start gap-4 bg-surface-container p-5 rounded border border-primary/20">
-          <div class="w-8 h-8 bg-green-500/20 flex items-center justify-center rounded shrink-0 mt-0.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <div class="w-8 h-8 bg-primary/20 flex items-center justify-center rounded shrink-0 mt-0.5">
+            <div class="w-3 h-3 rounded-full border-2 border-primary border-t-transparent animate-spin"></div>
           </div>
           <div>
             <p class="text-sm font-bold text-white">Mobile Application - In Development</p>
@@ -373,7 +373,7 @@ import PitchLayout from '../layouts/PitchLayout.astro';
           </div>
           <div>
             <p class="text-sm font-bold text-white">Verifiable Credentials Layer - Architecture Phase</p>
-            <p class="text-xs text-secondary mt-1">W3C VC integration for pilot licences, medical certificates, and ratings. Multi-authority channel network with offline verification. Architecture designed with ACCP and MAIS alignment as the target.</p>
+            <p class="text-xs text-secondary mt-1">W3C VC integration for pilot licences, medical certificates, and ratings. Offline verification using cached issuer public keys. Architecture designed with ACCP and MAIS alignment as the target.</p>
           </div>
         </div>
         <div class="flex items-start gap-4 bg-surface-low p-5 rounded border border-primary/20">
@@ -409,7 +409,8 @@ import PitchLayout from '../layouts/PitchLayout.astro';
         <a href="mailto:info@hyperlog.aero" class="block px-8 py-4 bg-primary text-on-primary font-bold text-sm tracking-widest uppercase rounded-full hover:opacity-90 transition-opacity">info@hyperlog.aero</a>
         <a href="https://hyperlog.aero" class="block text-sm text-secondary hover:text-white transition-colors">hyperlog.aero</a>
       </div>
-      <div class="mt-8 space-y-1">
+      <p class="text-xs text-outline mt-4">Technical whitepaper available on request at hyperlog.aero/whitepaper</p>
+      <div class="mt-6 space-y-1">
         <p class="text-xs text-outline">JetLink Technologies Ltd</p>
         <p class="text-xs text-outline">Company No. 17100204</p>
       </div>
