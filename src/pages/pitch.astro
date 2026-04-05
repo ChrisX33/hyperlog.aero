@@ -10,7 +10,10 @@ import PitchLayout from '../layouts/PitchLayout.astro';
   <section class="pitch-slide flex flex-col items-center justify-center relative bg-surface-base px-8">
     <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px), repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px);"></div>
     <div class="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto gap-8">
-      <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-20 h-20 mb-2" />
+      <div class="flex items-center gap-4">
+        <img src="/logo/logo-icon.svg" alt="" class="w-16 h-16" />
+        <span class="text-4xl font-extrabold tracking-tight text-primary">HyperLog</span>
+      </div>
       <div class="flex items-center gap-3">
         <span class="w-2 h-2 rounded-full bg-primary beacon-glow"></span>
         <span class="section-label text-primary">Trust in Every Entry</span>
@@ -26,7 +29,7 @@ import PitchLayout from '../layouts/PitchLayout.astro';
         <p class="text-xs text-outline mt-4">April 2026</p>
       </div>
     </div>
-    <div class="absolute bottom-0 left-0 right-0 h-px gradient-primary opacity-30"></div>
+    <div class="absolute bottom-6 left-0 right-0 h-px gradient-primary opacity-30"></div>
   </section>
 
   <!-- ============================================================

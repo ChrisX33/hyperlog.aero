@@ -14,41 +14,51 @@ import '../styles/global.css';
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <title>HyperLog - IATA Briefing</title>
   <style>
-    /* Print: each slide becomes one page */
+    /* Print: each slide becomes one A4 landscape page */
     @media print {
       @page {
         size: 297mm 210mm;
-        margin: 10mm 14mm;
+        margin: 0;
       }
 
-      html, body {
+      *, *::before, *::after {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+      }
+
+      html {
         margin: 0 !important;
         padding: 0 !important;
-        width: 100%;
       }
 
       body {
-        font-size: 85%;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 297mm;
+        font-size: 80%;
+        display: block !important;
       }
 
       .pitch-slide {
-        break-after: page;
-        break-inside: avoid;
-        page-break-after: always;
-        page-break-inside: avoid;
-        height: 190mm;
-        max-height: 190mm;
-        width: 269mm;
-        overflow: hidden;
-        box-sizing: border-box;
+        display: flex !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        min-height: 210mm !important;
+        max-height: 210mm !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        padding: 10mm 14mm !important;
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+        break-after: page !important;
+        break-inside: avoid !important;
         position: relative;
+        margin: 0 !important;
       }
 
       .pitch-slide:last-child {
-        break-after: auto;
-        page-break-after: auto;
+        page-break-after: auto !important;
+        break-after: auto !important;
       }
 
       .no-print {
@@ -57,11 +67,15 @@ import '../styles/global.css';
 
       /* Tighten spacing for print */
       .pitch-slide .mb-10 {
-        margin-bottom: 1.25rem !important;
+        margin-bottom: 1rem !important;
       }
 
       .pitch-slide .mb-8 {
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.75rem !important;
+      }
+
+      .pitch-slide .mb-6 {
+        margin-bottom: 0.5rem !important;
       }
 
       .pitch-slide .py-16 {
@@ -70,7 +84,7 @@ import '../styles/global.css';
       }
 
       .pitch-slide .gap-8 {
-        gap: 0.75rem !important;
+        gap: 0.6rem !important;
       }
 
       .pitch-slide .gap-6 {
@@ -82,19 +96,37 @@ import '../styles/global.css';
       }
 
       .pitch-slide .space-y-4 > * + * {
-        margin-top: 0.35rem !important;
+        margin-top: 0.3rem !important;
+      }
+
+      .pitch-slide .space-y-3 > * + * {
+        margin-top: 0.2rem !important;
       }
 
       .pitch-slide p {
-        line-height: 1.4 !important;
+        line-height: 1.35 !important;
       }
 
       .pitch-slide .p-6 {
-        padding: 0.75rem !important;
+        padding: 0.6rem !important;
       }
 
       .pitch-slide .p-5 {
+        padding: 0.5rem !important;
+      }
+
+      .pitch-slide .p-8 {
         padding: 0.6rem !important;
+      }
+
+      .pitch-slide .px-8 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      .pitch-slide .md\:px-16 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
       }
     }
 
