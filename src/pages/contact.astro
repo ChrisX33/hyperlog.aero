@@ -49,8 +49,10 @@ import Footer from '../components/Footer.astro';
                 </div>
 
                 <!-- Cloudflare Turnstile -->
-                <div class="w-full flex justify-center">
-                  <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="normal"></div>
+                <div class="w-full flex justify-center overflow-hidden">
+                  <div class="max-w-full [&>iframe]:max-w-full [&>div]:max-w-full scale-[0.85] sm:scale-100 origin-center">
+                    <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="normal"></div>
+                  </div>
                 </div>
 
                 <button type="submit" id="contact-submit" disabled class="w-full bg-primary text-on-primary font-bold py-3.5 rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed">
