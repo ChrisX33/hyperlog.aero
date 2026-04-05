@@ -175,38 +175,39 @@ import Footer from '../components/Footer.astro';
       observer.observe(container, { childList: true, subtree: true, attributes: true });
     }
 
-    // Scale Turnstile to fit container width
+    // Scale Turnstile widget to fit container on small screens.
+    // Flexible mode has a 300px minimum width that can overflow narrow containers.
+    const TURNSTILE_MIN_WIDTH = 300;
+
     function scaleTurnstile() {
       const wrapper = document.getElementById('turnstile-wrapper');
       const container = document.getElementById('turnstile-container');
       if (!wrapper || !container) return;
-      // Reset transform to measure natural size
-      container.style.transform = '';
-      container.style.transformOrigin = '';
-      wrapper.style.height = '';
-      // The iframe or inner widget has a fixed minimum width (300px)
-      const iframe = container.querySelector('iframe') as HTMLElement | null;
-      const naturalWidth = iframe ? iframe.offsetWidth : container.scrollWidth;
+
       const availableWidth = wrapper.clientWidth;
-      if (naturalWidth > 0 && naturalWidth > availableWidth) {
-        const scale = availableWidth / naturalWidth;
+      if (availableWidth < TURNSTILE_MIN_WIDTH) {
+        const scale = availableWidth / TURNSTILE_MIN_WIDTH;
         container.style.transformOrigin = 'left top';
         container.style.transform = `scale(${scale})`;
-        const naturalHeight = iframe ? iframe.offsetHeight : container.offsetHeight;
-        wrapper.style.height = `${naturalHeight * scale}px`;
+        // Turnstile widget height is ~65px
+        wrapper.style.height = `${65 * scale}px`;
+      } else {
+        container.style.transform = '';
+        container.style.transformOrigin = '';
+        wrapper.style.height = '';
       }
     }
 
-    // Watch for Turnstile to render, then scale
+    // Run once Turnstile iframe appears, and on resize
     const scaleObserver = new MutationObserver(() => {
       const iframe = document.querySelector('#turnstile-wrapper iframe');
       if (iframe) {
-        setTimeout(scaleTurnstile, 300);
+        scaleTurnstile();
         scaleObserver.disconnect();
       }
     });
-    const wrapper = document.getElementById('turnstile-wrapper');
-    if (wrapper) scaleObserver.observe(wrapper, { childList: true, subtree: true });
+    const wrapperEl = document.getElementById('turnstile-wrapper');
+    if (wrapperEl) scaleObserver.observe(wrapperEl, { childList: true, subtree: true });
     window.addEventListener('resize', scaleTurnstile);
 
     // Form submission
