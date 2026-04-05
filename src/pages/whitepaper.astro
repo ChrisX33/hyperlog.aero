@@ -46,6 +46,11 @@ import Footer from '../components/Footer.astro';
                   <input type="url" id="linkedin" name="linkedin" required class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="https://linkedin.com/in/your-profile" />
                 </div>
 
+                <div>
+                  <label for="reason" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">Reason for Request</label>
+                  <textarea id="reason" name="reason" rows="3" maxlength="500" class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="Tell us why you're interested in the whitepaper"></textarea>
+                </div>
+
                 <!-- Cloudflare Turnstile -->
                 <div id="turnstile-wrapper" class="w-full overflow-hidden">
                   <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
@@ -66,39 +71,48 @@ import Footer from '../components/Footer.astro';
           </div>
 
           <!-- RIGHT: What's Inside + Why We Ask -->
-          <div class="lg:col-span-2 space-y-6">
+          <div class="lg:col-span-2 flex flex-col gap-6">
 
             <!-- What's Inside -->
-            <div class="bg-surface-container rounded-xl border border-primary/20 p-8">
+            <div class="bg-surface-container rounded-xl border border-primary/20 p-8 flex-1">
               <h3 class="text-lg font-bold text-white mb-6">What's Inside</h3>
-              <div class="space-y-4">
+              <p class="text-xs text-secondary mb-4">24 sections covering:</p>
+              <div class="space-y-3">
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">Hyperledger Fabric channel architecture</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Multi-authority channel architecture</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">Logbook verification spectrum</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Logbook verification spectrum & crew flows</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">W3C Verifiable Credentials lifecycle</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Credential lifecycle & offline verification</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">Data sovereignty & GDPR model</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Data sovereignty, GDPR & audit trail</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">Crew flows & automation levels</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Security model & threat analysis</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">ICAO regulatory alignment</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Identity proofing & key lifecycle</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                  <span class="text-sm text-on-surface-variant">Development roadmap</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Scalability, governance & NAA onboarding</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Revenue model & development roadmap</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">ICAO regulatory alignment & recognition</span>
                 </div>
               </div>
             </div>
@@ -194,6 +208,7 @@ import Footer from '../components/Footer.astro';
             name: formData.get('name'),
             email: formData.get('email'),
             linkedin: formData.get('linkedin'),
+            reason: formData.get('reason') || '',
             turnstileToken: turnstileResponse?.value || '',
           }),
         });
