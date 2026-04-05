@@ -49,8 +49,8 @@ import Footer from '../components/Footer.astro';
                 </div>
 
                 <!-- Cloudflare Turnstile -->
-                <div class="w-full overflow-hidden [&_iframe]:!w-full [&_iframe]:!max-w-full [&_.cf-turnstile]:!w-full">
-                  <div id="turnstile-container" class="cf-turnstile w-full" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
+                <div id="turnstile-wrapper" class="w-full">
+                  <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
                 </div>
 
                 <button type="submit" id="contact-submit" disabled class="w-full bg-primary text-on-primary font-bold py-3.5 rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed">
@@ -174,6 +174,40 @@ import Footer from '../components/Footer.astro';
     if (container) {
       observer.observe(container, { childList: true, subtree: true, attributes: true });
     }
+
+    // Scale Turnstile to match container width
+    function scaleTurnstile() {
+      const wrapper = document.getElementById('turnstile-wrapper');
+      if (!wrapper) return;
+      const inner = wrapper.querySelector('div > iframe, div > div') as HTMLElement | null;
+      if (!inner) return;
+      const widgetEl = inner.closest('.cf-turnstile') as HTMLElement || inner.parentElement as HTMLElement;
+      // Reset any previous transform to measure natural width
+      widgetEl.style.transform = '';
+      widgetEl.style.transformOrigin = '';
+      const naturalWidth = widgetEl.scrollWidth || widgetEl.offsetWidth;
+      const availableWidth = wrapper.offsetWidth;
+      if (naturalWidth > 0 && naturalWidth > availableWidth) {
+        const scale = availableWidth / naturalWidth;
+        widgetEl.style.transformOrigin = 'left top';
+        widgetEl.style.transform = `scale(${scale})`;
+        wrapper.style.height = `${(widgetEl.offsetHeight || 65) * scale}px`;
+        wrapper.style.overflow = 'hidden';
+      }
+    }
+
+    // Watch for Turnstile to render, then scale
+    const scaleObserver = new MutationObserver(() => {
+      const iframe = document.querySelector('#turnstile-wrapper iframe');
+      if (iframe) {
+        // Small delay to let Turnstile finish rendering
+        setTimeout(scaleTurnstile, 200);
+        scaleObserver.disconnect();
+      }
+    });
+    const wrapper = document.getElementById('turnstile-wrapper');
+    if (wrapper) scaleObserver.observe(wrapper, { childList: true, subtree: true });
+    window.addEventListener('resize', scaleTurnstile);
 
     // Form submission
     const form = document.getElementById('contact-form') as HTMLFormElement;
