@@ -6,8 +6,11 @@ services:
       - .env
     networks:
       - hyperlog_prod
+      - jetlink_internal
     restart: unless-stopped
 
 networks:
   hyperlog_prod:
+    external: true
+  jetlink_internal:
     external: true

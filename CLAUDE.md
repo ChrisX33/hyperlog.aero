@@ -37,6 +37,7 @@ HyperLog marketing website and briefing materials for hyperlog.aero. Built with 
 - `src/pages/pitch.astro` — 11-slide briefing/pitch deck (printable as PDF via PitchLayout)
 - `src/pages/about.astro` — About JetLink, founder profiles
 - `src/pages/contact.astro` — Contact form with Cloudflare Turnstile CAPTCHA
+- `src/pages/whitepaper.astro` — Whitepaper request form (name, email, LinkedIn). Requests stored in JetLink admin DB via internal API call. Whitepaper document itself lives behind JetLink admin auth.
 - `src/pages/privacy.astro` — Privacy policy
 - `src/pages/terms.astro` — Terms & conditions
 - `src/pages/cookies.astro` — Cookie policy
@@ -61,10 +62,11 @@ ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226 "cd ~/hyperlog.aero && git 
 
 ## Key Integrations
 
-- **Cloudflare Turnstile:** Site key `0x4AAAAAAC0RLz9YOUx_4VYY` on contact form (uses `data-size="flexible"` + JS transform scaling for mobile)
+- **Cloudflare Turnstile:** Site key `0x4AAAAAAC0RLz9YOUx_4VYY` on contact + whitepaper forms (uses `data-size="flexible"` + JS `scale()` transform for screens narrower than 300px)
 - **Google Analytics:** Consent-based loading via cookie banner
 - **Google Maps:** Embedded on contact page
 - **SMTP:** Contact form posts to `/api/contact`, emails to info@hyperlog.aero
+- **JetLink Admin API:** Whitepaper requests forward to JetLink admin via internal Docker network (`http://jetlink-web:3000/api/admin/hyperlog-wp/requests`). Auth via `X-Internal-Key` header. Env vars: `JETLINK_API_URL`, `JETLINK_INTERNAL_KEY`
 
 ---
 
@@ -159,10 +161,24 @@ Even at Level 4, augmented crew control times still need pilot input — this ca
 
 **Licence conversion:** New NAA queries verification channel to confirm old licence -> requests logbook access with pilot consent -> issues new VC -> old records preserved on original channel.
 
+### Dual-Store Data Model
+
+The logbook uses a dual-store model — neither copy is "the cache":
+
+- **PDC on Fabric peers (authoritative):** Full logbook data in Private Data Collections, managed by JetLink. Survives device loss. Enables regulatory access and data recovery.
+- **Pilot's device (synchronised copy):** Full logbook data cached locally. Enables offline access. Pilot controls who sees their data.
+
+**Recovery:** If a pilot loses their phone, logbook data is restored from the PDC.
+
+**Accident investigation (tiered access):**
+- CAA has standing read access to their own NAA channel's PDCs (they are channel members with their own Certificate Authority). No pilot consent required for investigation access.
+- For cross-border investigations, JetLink facilitates inter-channel access on formal regulatory request.
+
 ### What Lives Where
 
-- **Pilot's device:** Private key, all VCs (licence, medical, ratings), logbook cache. Pilot controls access. Private key protected by biometrics, never transmitted.
-- **Blockchain:** Hashes, issuance records, revocation registries, issuer public keys. NOT the credentials themselves. NOT personal data.
+- **Pilot's device:** Private key, all VCs (licence, medical, ratings), synchronised logbook copy. Pilot controls access. Private key protected by biometrics, never transmitted.
+- **Fabric peers (PDCs):** Full logbook records (authoritative), medical records, training records. Access controlled by PDC membership. Personal data encrypted, never on the main ledger.
+- **Blockchain main ledger:** Hashes only, issuance records, revocation registries, issuer public keys. NOT personal data.
 - **Ramp checker's app:** Cached issuer public keys (~193 NAAs) + revocation lists. All offline-capable.
 
 ### SITA China PoC — The Precedent

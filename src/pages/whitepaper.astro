@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Whitepaper - HyperLog">
+  <Header />
+
+  <main class="flex-grow pt-24">
+
+    <!-- Logo -->
+    <section class="pt-6 pb-12 px-6 flex justify-center bg-surface-base">
+      <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="w-[250px] md:w-[300px]" />
+    </section>
+
+    <!-- ============================================================
+         WHITEPAPER REQUEST
+         ============================================================ -->
+    <section class="py-16 px-6 bg-surface-base">
+      <div class="max-w-5xl mx-auto">
+        <p class="section-label text-primary mb-4">Technical Whitepaper</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Request the Whitepaper</h2>
+        <p class="text-secondary text-base leading-relaxed mb-10 max-w-2xl">
+          Our technical whitepaper provides a comprehensive overview of HyperLog's architecture, covering the blockchain logbook, digital credentials infrastructure, and regulatory alignment.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+          <!-- LEFT: Request Form -->
+          <div class="lg:col-span-3">
+            <div class="bg-surface-container rounded-xl border border-primary/20 p-3 sm:p-5 md:p-8">
+              <form id="wp-form" class="space-y-5">
+                <div>
+                  <label for="name" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">Name *</label>
+                  <input type="text" id="name" name="name" required maxlength="100" class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="Your full name" />
+                </div>
+
+                <div>
+                  <label for="email" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">Email *</label>
+                  <input type="email" id="email" name="email" required class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="you@example.com" />
+                </div>
+
+                <div>
+                  <label for="linkedin" class="block text-xs font-bold tracking-[0.1em] uppercase text-secondary mb-2">LinkedIn Profile *</label>
+                  <input type="url" id="linkedin" name="linkedin" required class="w-full bg-surface-low border border-outline-variant/20 rounded-lg px-4 py-3 text-sm text-white placeholder-outline/40 focus:outline-none focus:border-primary/50 transition-colors" placeholder="https://linkedin.com/in/your-profile" />
+                </div>
+
+                <!-- Cloudflare Turnstile -->
+                <div id="turnstile-wrapper" class="w-full overflow-hidden">
+                  <div id="turnstile-container" class="cf-turnstile" data-sitekey="0x4AAAAAAC0RLz9YOUx_4VYY" data-theme="dark" data-size="flexible"></div>
+                </div>
+
+                <button type="submit" id="wp-submit" disabled class="w-full bg-primary text-on-primary font-bold py-3.5 rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed">
+                  Request Whitepaper
+                </button>
+              </form>
+
+              <!-- Success state (hidden by default) -->
+              <div id="wp-success" class="hidden text-center py-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" class="mx-auto mb-4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h3 class="text-xl font-bold text-white mb-2">Request Received</h3>
+                <p class="text-sm text-secondary">We'll review your request and send the whitepaper to your email.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: What's Inside + Why We Ask -->
+          <div class="lg:col-span-2 space-y-6">
+
+            <!-- What's Inside -->
+            <div class="bg-surface-container rounded-xl border border-primary/20 p-8">
+              <h3 class="text-lg font-bold text-white mb-6">What's Inside</h3>
+              <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Hyperledger Fabric channel architecture</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Logbook verification spectrum</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">W3C Verifiable Credentials lifecycle</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Data sovereignty & GDPR model</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Crew flows & automation levels</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">ICAO regulatory alignment</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  <span class="text-sm text-on-surface-variant">Development roadmap</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Why We Ask -->
+            <div class="bg-surface-container rounded-xl border border-primary/20 p-8">
+              <h3 class="text-lg font-bold text-white mb-3">Why We Ask</h3>
+              <p class="text-xs text-secondary leading-relaxed">
+                We share our technical whitepaper with aviation professionals, regulators, and potential partners. Your LinkedIn profile helps us verify your background so we can provide the most relevant information for your role.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+  <!-- Cloudflare Turnstile script -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <script>
+    // Watch for Turnstile success via MutationObserver
+    const observer = new MutationObserver(() => {
+      const response = document.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement;
+      const btn = document.getElementById('wp-submit') as HTMLButtonElement;
+      if (response?.value && btn) {
+        btn.disabled = false;
+      }
+    });
+
+    const container = document.getElementById('turnstile-container');
+    if (container) {
+      observer.observe(container, { childList: true, subtree: true, attributes: true });
+    }
+
+    // Scale Turnstile widget to fit container on small screens
+    const TURNSTILE_MIN_WIDTH = 300;
+
+    function scaleTurnstile() {
+      const wrapper = document.getElementById('turnstile-wrapper');
+      const container = document.getElementById('turnstile-container');
+      if (!wrapper || !container) return;
+
+      const availableWidth = wrapper.clientWidth;
+      if (availableWidth < TURNSTILE_MIN_WIDTH) {
+        const scale = availableWidth / TURNSTILE_MIN_WIDTH;
+        container.style.transformOrigin = 'left top';
+        container.style.transform = `scale(${scale})`;
+        wrapper.style.height = `${65 * scale}px`;
+      } else {
+        container.style.transform = '';
+        container.style.transformOrigin = '';
+        wrapper.style.height = '';
+      }
+    }
+
+    const scaleObserver = new MutationObserver(() => {
+      const iframe = document.querySelector('#turnstile-wrapper iframe');
+      if (iframe) {
+        scaleTurnstile();
+        scaleObserver.disconnect();
+      }
+    });
+    const wrapperEl = document.getElementById('turnstile-wrapper');
+    if (wrapperEl) scaleObserver.observe(wrapperEl, { childList: true, subtree: true });
+    window.addEventListener('resize', scaleTurnstile);
+
+    // Form submission
+    const form = document.getElementById('wp-form') as HTMLFormElement;
+    const success = document.getElementById('wp-success');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('wp-submit') as HTMLButtonElement;
+      if (btn) {
+        btn.textContent = 'REQUESTING...';
+        btn.disabled = true;
+      }
+
+      const formData = new FormData(form);
+      const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement;
+
+      try {
+        const res = await fetch('/api/whitepaper-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.get('name'),
+            email: formData.get('email'),
+            linkedin: formData.get('linkedin'),
+            turnstileToken: turnstileResponse?.value || '',
+          }),
+        });
+
+        if (res.ok) {
+          form.classList.add('hidden');
+          success?.classList.remove('hidden');
+        } else {
+          const data = await res.json();
+          alert(data.error || 'Failed to submit request. Please try again.');
+          if (btn) {
+            btn.textContent = 'REQUEST WHITEPAPER';
+            btn.disabled = false;
+          }
+        }
+      } catch (err) {
+        alert('Failed to submit request. Please try again.');
+        if (btn) {
+          btn.textContent = 'REQUEST WHITEPAPER';
+          btn.disabled = false;
+        }
+      }
+    });
+  </script>
+</BaseLayout>
