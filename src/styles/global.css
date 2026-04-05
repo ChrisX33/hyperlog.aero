@@ -123,12 +123,6 @@ body {
   background: linear-gradient(to top, var(--color-surface-base), rgb(7 19 37 / 0.4), transparent);
 }
 
-/* Constrain Turnstile widget on small screens */
-#turnstile-wrapper .cf-turnstile,
-#turnstile-wrapper .cf-turnstile iframe {
-  max-width: 100% !important;
-}
-
 /* No scrollbar utility */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
