@@ -14,7 +14,7 @@ import '../styles/global.css';
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <title>HyperLog - IATA Briefing</title>
   <style>
-    /* Print: each slide becomes one A4 landscape page */
+    /* Print: each slide = one A4 landscape page */
     @media print {
       @page {
         size: 297mm 210mm;
@@ -26,43 +26,42 @@ import '../styles/global.css';
         print-color-adjust: exact !important;
       }
 
-      html {
+      html, body {
         margin: 0 !important;
         padding: 0 !important;
-      }
-
-      body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 297mm;
-        font-size: 80%;
+        width: 297mm !important;
         display: block !important;
+        overflow: visible !important;
+        font-size: 80%;
       }
 
+      /* Force each slide onto its own page */
       .pitch-slide {
-        display: flex !important;
+        display: block !important;
+        float: none !important;
         width: 297mm !important;
         height: 210mm !important;
-        min-height: 210mm !important;
-        max-height: 210mm !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
         padding: 10mm 14mm !important;
-        page-break-after: always !important;
-        page-break-inside: avoid !important;
-        break-after: page !important;
-        break-inside: avoid !important;
-        position: relative;
+        position: relative !important;
         margin: 0 !important;
+        page-break-before: always !important;
       }
 
-      .pitch-slide:last-child {
-        page-break-after: auto !important;
-        break-after: auto !important;
+      /* First slide: no page break before */
+      .pitch-slide:first-child {
+        page-break-before: auto !important;
       }
 
       .no-print {
         display: none !important;
+      }
+
+      /* Re-enable flex for slide content layout via inner wrapper */
+      .pitch-slide > div {
+        display: flex;
+        flex-direction: column;
       }
 
       /* Tighten spacing for print */
