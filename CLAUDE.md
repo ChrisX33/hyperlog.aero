@@ -62,6 +62,7 @@ ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226 "cd ~/hyperlog.aero && git 
 - **Google Maps:** Embedded on contact page (filter: invert + hue-rotate for dark theme, saturate 0.5 / brightness 0.7 for pin visibility)
 - **SMTP:** Contact form posts to `/api/contact`, emails to contact@jetlink-tech.com with `[HyperLog]` subject prefix. Uses `christian@jetlink-tech.com` SMTP credentials via Gmail.
 - **JetLink Admin API:** Whitepaper requests forward to JetLink admin via internal Docker network (`http://jetlink-web:3000/api/admin/hyperlog-wp/requests`). Auth via `X-Internal-Key` header. Env vars: `JETLINK_API_URL`, `JETLINK_INTERNAL_KEY`
+- **SEO:** @astrojs/sitemap (auto-generated), robots.txt, canonical URLs, Open Graph + Twitter Card tags, JSON-LD Organization schema, unique meta descriptions per page, og-image.png (1200x630), favicon.ico fallback
 
 ---
 
@@ -145,17 +146,22 @@ Neither copy is "the cache" — synchronised, each serving a distinct purpose:
 - **PDC on Fabric peers (authoritative):** Survives device loss. Enables regulatory access and data recovery.
 - **Pilot's device (synchronised copy):** Enables offline access. Pilot controls sharing.
 
-**Account recovery:** Email + password login, 2FA or passport verification, new key pair generated automatically, old certificate revoked, logbook restored from PDC.
+**Multi-device support:** Pilots can use multiple devices concurrently (phone + tablet). Each device gets its own key pair and certificate. Old device keys are NOT automatically revoked when a new device is added. Revocation only occurs when a pilot reports a device as lost or stolen.
+
+**Account recovery:** Email + password login, 2FA or passport verification, new key pair generated on new device, logbook restored from PDC.
 
 **Investigation access (tiered):**
 - CAA standing access on own channel (GDPR Article 6(1)(c) legal obligation + 6(1)(e) public interest)
-- Cross-border: JetLink facilitates inter-channel access on formal regulatory request
+- Cross-border: JetLink facilitates inter-channel access on formal regulatory request. No NAA can access another's channel without explicit authorisation from the data-owning authority.
 
-**Data residency:** Peer nodes hosted in any location required by NAA's data residency regulations. Multi-region or NAA self-hosting.
+**Data residency:** NAAs are encouraged to host their own peer nodes within their jurisdiction, ensuring genuine data sovereignty. JetLink provides deployment support and manages the ordering service.
+
+**JetLink data access (honest):** JetLink currently has infrastructure-level access as the managed service provider. As NAAs onboard and self-host their own peers, JetLink's access to pilot data is progressively eliminated. PDC collection policies enforce access control at the application layer. TLS provides encryption in transit.
 
 ### Amendment Model
 
 Append-only chain — original entry never modified:
+- 24-hour grace period before on-chain commit (allows matching mechanism and crew agreement on times)
 - Only pilot can initiate amendments (their personal data)
 - Automatic reconciliation: roster data takes precedence for times (QAR), ADS-B and pilot's original entry preserved
 - No time limit on amendments — but all are timestamped and visible in audit trail
@@ -179,8 +185,9 @@ On-chain audit log (same Fabric ledger, tamper-evident):
 ### Crew Flows
 
 - **Standard two-pilot:** PIC logs → QR → F/O scans → auto-populates → signs (~10 sec)
+- **Automatic flight matching:** When crew log the same flight independently (without QR), matching mechanism identifies overlapping flights (same route, aircraft, block times within 15-minute tolerance) and links them automatically.
 - **Augmented crew (3-4 pilots):** PIC enters sector breakdown (PF/PM per segment), shares QR, each crew sees pre-calculated control time, reviews and signs. Discrepancies visible. Data never reliably captured before.
-- **Single pilot:** Pilot-signed + ADS-B only. Still better than paper.
+- **Single pilot:** Pilot-signed + ADS-B only. Provides non-repudiation — pilot cannot later deny having logged the flight.
 - **Simulator sessions:** Separate entry type, no ADS-B. ATO endorses via Training PDC. Records device type (FFS/FNPT/FSTD), qualification level, programme.
 
 ### Flight Time Categories (20 captured per entry)
@@ -197,7 +204,9 @@ Even at Level 4, augmented crew control times require pilot input.
 
 Threat analysis covers: key compromise, forged logbook entries, replay attacks, rogue peer nodes, data exfiltration, credential forgery, revocation evasion. All mitigated at infrastructure, protocol, and application levels.
 
-**GDPR right to erasure:** PDC data deleted, DID disassociated from identity at CA level, on-chain hashes become anonymous (no longer personal data).
+**GDPR right to erasure:** PDC data (stored off-ledger on peer nodes) is purged. DID disassociated from identity at CA level. Ledger entries (hashes only) remain permanently but are no longer resolvable to any person.
+
+**PDC access model:** Access-restricted by collection policy (not encrypted at rest). TLS provides encryption in transit. PDC collection policies enforce access control at the infrastructure level.
 
 ### Governance
 
@@ -209,13 +218,24 @@ Three-phase evolution: Foundation (JetLink sole operator) → Council Formation 
 
 ### Revenue Model
 
-Institutional, not consumer-driven. Pilots are users, not customers.
-- Free pilot app (growth driver)
-- Premium pilot tier (advanced features, analytics)
-- Flight school licensing (per-school)
+Priced competitively with existing digital logbook solutions.
+- Pilot logbook (competitive pricing, full blockchain verification included)
+- Flight school students (free — go-to-market strategy)
+- Flight school licensing (per-school, instructor tools)
 - Airline API access (verified hiring data)
 - NAA infrastructure (per-authority service fee)
 - Consulting & integration
+
+### Transaction Flow (Vincent-corrected)
+
+App prepares flight data → API constructs transaction proposal (Fabric SDK) → app signs with pilot's private key → API submits endorsed transaction to peers.
+
+### NAA Onboarding Notes
+
+- In EASA member states, channels provisioned at national authority level (DGAC, UK CAA), not supranational (EASA)
+- Pilot identity verified by NAA or training organisation (not just licence number — supports student pilots)
+- Pilots initially enrolled under JetLink org are migrated to NAA channel when that authority joins. Flight history preserved.
+- Every onboarding starts with a sandbox test environment
 
 ### Scalability
 
@@ -240,7 +260,7 @@ Sandbox environment → channel provisioning → CA setup → chaincode deployme
 **Framing:** "architecture designed with ACCP/MAIS alignment as the target" — never claim compliance.
 **Engagement:** NAAs implement and mandate. IATA advocates. ICAO sets the framework we align with.
 
-**Why blockchain (not a central database):** Data sovereignty (no single entity controls all data), tamper-evidence (append-only ledger), decentralised trust (each NAA verifies cryptographic signatures), survives operator failure, GDPR via channel partitioning. Existing digital logbooks (LogTen Pro, ForeFlight, mccPILOTLOG) digitise the logbook — HyperLog digitises the trust.
+**Why blockchain (not a central database):** No centralised government database exists for pilot logbooks because no single state wants another state or private company controlling their pilot data. Data sovereignty is the fundamental reason a distributed architecture is required. HyperLog provides everything existing logbook apps (LogTen Pro, ForeFlight, mccPILOTLOG) offer, plus blockchain-backed verification that no other product can match.
 
 ## IATA Context
 
