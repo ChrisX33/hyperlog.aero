@@ -10,8 +10,12 @@ import PitchLayout from '../layouts/PitchLayout.astro';
   <section class="pitch-slide flex flex-col items-center justify-center relative bg-surface-base px-8 pt-20">
     <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px), repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(178,197,255,0.3) 80px);"></div>
     <div class="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto gap-8">
-      <div class="flex items-center gap-4">
-        <img src="/logo/logo-icon.svg" alt="" class="w-16 h-16" />
+      <a href="/" class="flex items-center gap-4 no-print">
+        <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-16 h-16" />
+        <span class="text-4xl font-extrabold tracking-tight text-primary">HyperLog</span>
+      </a>
+      <div class="flex items-center gap-4 print-only hidden">
+        <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-16 h-16" />
         <span class="text-4xl font-extrabold tracking-tight text-primary">HyperLog</span>
       </div>
       <div class="flex items-center gap-3">
