@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<BaseLayout title="HyperLog - Trust in Every Entry">
+<BaseLayout title="HyperLog - Blockchain Pilot Logbook & Digital Credentials" description="Tamper-evident blockchain pilot logbook with multi-source verification. Electronic pilot credentials aligned with the ICAO Trust Framework. Built by JetLink Technologies.">
   <Header />
 
   <main class="flex-grow pt-16">
@@ -15,7 +15,7 @@ import Footer from '../components/Footer.astro';
     <section class="relative min-h-[92vh] flex items-center overflow-hidden">
       <!-- Background: cockpit image + grid overlay -->
       <div class="absolute inset-0 z-0">
-        <img src="/images/cockpit1.jpeg" alt="" class="w-full h-full object-cover brightness-[0.55] contrast-110 saturate-80 object-[15%_center] md:object-center" />
+        <img src="/images/cockpit1.jpeg" alt="Aircraft cockpit flight deck" class="w-full h-full object-cover brightness-[0.55] contrast-110 saturate-80 object-[15%_center] md:object-center" loading="eager" />
         <div class="absolute inset-0 bg-surface-base/45"></div>
         <div class="absolute inset-0 hero-grid"></div>
         <div class="absolute top-1/2 right-[20%] -translate-y-1/2 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-[120px] hidden lg:block"></div>
@@ -80,7 +80,7 @@ import Footer from '../components/Footer.astro';
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-4">
                   <div class="flex items-center gap-2">
-                    <img src="/logo/logo-icon.svg" alt="" class="w-5 h-5" />
+                    <img src="/logo/logo-icon.svg" alt="HyperLog" class="w-5 h-5" />
                     <span class="text-sm font-bold tracking-tight text-primary">BLOCKCHAIN FLIGHT LOG</span>
                   </div>
                   <span class="text-xs font-mono text-secondary/70">07 DEC 2026</span>
@@ -720,7 +720,7 @@ import Footer from '../components/Footer.astro';
     <section class="py-20 px-6 relative overflow-hidden">
       <!-- Background: aircraft on tarmac at night -->
       <div class="absolute inset-0 z-0">
-        <img src="/images/cockpit.jpeg" alt="" class="w-full h-full object-cover brightness-[0.45] saturate-80" />
+        <img src="/images/cockpit.jpeg" alt="Aircraft on tarmac at night" class="w-full h-full object-cover brightness-[0.45] saturate-80" loading="lazy" />
         <div class="absolute inset-0 bg-surface-base/45"></div>
       </div>
       <div class="max-w-2xl mx-auto text-center space-y-6 relative z-10">

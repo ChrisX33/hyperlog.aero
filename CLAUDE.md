@@ -2,25 +2,20 @@
 
 ## Project Overview
 
-HyperLog marketing website and briefing materials for hyperlog.aero. Built with Astro + Tailwind CSS.
+HyperLog marketing website, brochure, and whitepaper for hyperlog.aero. Built with Astro + Tailwind CSS.
 
 **Product:** HyperLog — blockchain pilot logbook & digital credentials infrastructure
 **Company:** JetLink Technologies Ltd (Company No. 17100204)
 **Domain:** hyperlog.aero
-**Contact:** info@hyperlog.aero
+**Contact:** info@hyperlog.aero (form emails go to contact@jetlink-tech.com with [HyperLog] subject prefix)
 **Tagline:** Trust in Every Entry
 **Office:** Level 9, Berkeley Square House, Berkeley Square, London W1J 6BY
 
 ### The People
 
-- **Christian Charalambous** — CEO/co-founder, Boeing 767 First Officer
-- **Vincent Malterre** — CTO/co-founder, engineer
-
-### Existing JetLink Deployments
-
-- Safety & FDM Dashboard — deployed at ASL Airlines France
-- MOCDEP — real-time fleet management built for DHL Air UK
-- HyperLog — blockchain pilot logbook & digital credentials (this project)
+- **Christian Charalambous** — CEO/co-founder, Boeing 767 pilot, First Class Honours in Air Transport Operations, 4 years leading Web3/IoT/AI consultancy
+- **Vincent Malterre** — CTO/co-founder, Boeing 737 pilot, creator of FlightFile (500+ pilots), decade of software engineering, French textile company background
+- Both are active airline pilots and experienced software engineers who have worked together since FlightFile (Norwegian Airlines). 40 years combined aviation experience, 20 years collective software engineering.
 
 ---
 
@@ -34,10 +29,10 @@ HyperLog marketing website and briefing materials for hyperlog.aero. Built with 
 ## Pages
 
 - `src/pages/index.astro` — Home (hero, problem, solution, evidence layer, credential layer, architecture, CTA)
-- `src/pages/pitch.astro` — 11-slide briefing/pitch deck (printable as PDF via PitchLayout)
+- `src/pages/pitch.astro` — 11-slide brochure (printable as PDF via PitchLayout). Previously called "briefing" — now called "brochure" everywhere.
 - `src/pages/about.astro` — About JetLink, founder profiles
-- `src/pages/contact.astro` — Contact form with Cloudflare Turnstile CAPTCHA
-- `src/pages/whitepaper.astro` — Whitepaper request form (name, email, LinkedIn). Requests stored in JetLink admin DB via internal API call. Whitepaper document itself lives behind JetLink admin auth.
+- `src/pages/contact.astro` — Contact form with Cloudflare Turnstile CAPTCHA + privacy policy checkbox
+- `src/pages/whitepaper.astro` — Whitepaper request form (name, email, LinkedIn, reason). Requests stored in JetLink admin DB via internal API call. Whitepaper document itself lives behind JetLink admin auth at `/admin/hyperlog-wp/document`.
 - `src/pages/privacy.astro` — Privacy policy
 - `src/pages/terms.astro` — Terms & conditions
 - `src/pages/cookies.astro` — Cookie policy
@@ -54,7 +49,7 @@ npm run build      # Build for production
 
 **VPS:** 46.224.186.226 (Hetzner — JetLink VPS)
 **SSH:** `ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226`
-**Container:** `hyperlog-website` on port 4000, behind nginx on the `hyperlog_prod` Docker network
+**Container:** `hyperlog-website` on port 4000, on `hyperlog_prod` + `jetlink_internal` Docker networks
 
 ```bash
 ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226 "cd ~/hyperlog.aero && git pull && docker compose up -d --build"
@@ -62,17 +57,36 @@ ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226 "cd ~/hyperlog.aero && git 
 
 ## Key Integrations
 
-- **Cloudflare Turnstile:** Site key `0x4AAAAAAC0RLz9YOUx_4VYY` on contact + whitepaper forms (uses `data-size="flexible"` + JS `scale()` transform for screens narrower than 300px)
+- **Cloudflare Turnstile:** Site key `0x4AAAAAAC0RLz9YOUx_4VYY` on contact + whitepaper forms (uses `data-size="flexible"` + JS `scale()` transform for screens narrower than 300px). Privacy policy checkbox required on both forms.
 - **Google Analytics:** Consent-based loading via cookie banner
-- **Google Maps:** Embedded on contact page
-- **SMTP:** Contact form posts to `/api/contact`, emails to info@hyperlog.aero
+- **Google Maps:** Embedded on contact page (filter: invert + hue-rotate for dark theme, saturate 0.5 / brightness 0.7 for pin visibility)
+- **SMTP:** Contact form posts to `/api/contact`, emails to contact@jetlink-tech.com with `[HyperLog]` subject prefix. Uses `christian@jetlink-tech.com` SMTP credentials via Gmail.
 - **JetLink Admin API:** Whitepaper requests forward to JetLink admin via internal Docker network (`http://jetlink-web:3000/api/admin/hyperlog-wp/requests`). Auth via `X-Internal-Key` header. Env vars: `JETLINK_API_URL`, `JETLINK_INTERNAL_KEY`
 
 ---
 
-## HyperLog Architecture — IMPORTANT CONTEXT
+## Three-Document System
 
-This section is the authoritative reference for all content. The website and pitch as they exist now are the source of truth. Any new pages (whitepaper, brochure) must be consistent with this.
+The website, brochure, and whitepaper serve three levels of the same funnel:
+
+1. **Website** (hyperlog.aero) — 2 minutes, anyone, public
+2. **Brochure** (/pitch) — 10 minutes, downloadable PDF, presentation-ready
+3. **Whitepaper** (JetLink admin /admin/hyperlog-wp/document) — 45+ minutes, gated behind request form, comprehensive technical detail
+
+All three must be consistent. The brochure is a higher-level public document aligned with the website. The whitepaper is the detailed technical reference shared only on request after LinkedIn verification. When updating one, check the others for alignment.
+
+**Terminology rules across all three:**
+- Use "tamper-evident" not "immutable" (entries can be amended via append-only chain)
+- Use "permanent" for on-chain data
+- Use "brochure" not "briefing"
+- NAAs first, IATA second in engagement text ("engage with national aviation authorities, IATA, and aviation stakeholders — aligned with the ICAO Trust Framework")
+- Use "all participating NAAs" not "~193 NAAs" (aspirational vs realistic)
+
+---
+
+## HyperLog Architecture — AUTHORITATIVE REFERENCE
+
+This section is the authoritative reference for all content. The whitepaper is the most detailed source. The website and brochure must be consistent with this at a higher level.
 
 ### Two Layers, One Platform
 
@@ -82,121 +96,134 @@ Pilot creates flight records, trust builds through independent verification sour
 **Credential Layer — W3C Verifiable Credentials / Aries-derived (top-down trust):**
 Authority issues credentials (licence, medical, ratings), trust comes from the issuer's digital signature. ICAO-aligned via Amendment 178.
 
-**The logbook is the evidence base that supports credential issuance.** A licence is only meaningful if the flight hours behind it are real. Both layers live in one system.
+**The logbook is the evidence base that supports credential issuance.** A licence is only meaningful if the flight hours behind it are real.
 
-### Logbook Verification Spectrum (NOT three tiers — a spectrum)
+### Logbook Verification Spectrum (5 levels, Level 5 aspirational)
 
-1. **Pilot signed** — cryptographic signature via device biometrics (always available)
+1. **Pilot signed** — ECDSA P-256 signature via device biometrics (always available)
 2. **Crew corroborated** — other pilot(s) independently log the same flight via QR code sharing
-3. **ADS-B tracked** — external surveillance confirms the flight happened
+3. **ADS-B tracked** — Flightradar24 (primary) + FlightAware (secondary), both via Aireon satellite ADS-B on Iridium constellation. Logbook verification accuracy (minutes, not seconds).
 4. **Airline OPS verified** — rostering system confirms crew were assigned
-5. **Authority certified** — ASPIRATIONAL ONLY. CAAs do not currently sign logbook entries. Do not imply this is near-term.
+5. **Authority certified** — ASPIRATIONAL ONLY. CAAs do not currently sign logbook entries.
 
-**Important framing:** Not every flight gets all sources. The system is honest about what's verified:
-- **Private owner** flying their own aircraft: only gets pilot-signed (1 source). No crew, no airline OPS, no guaranteed ADS-B. But even that single cryptographic signature on the blockchain is still more trustworthy than a paper logbook entry.
-- **Single pilot commercial ops** (e.g. cargo, small charter): pilot-signed + ADS-B + airline OPS possible (up to 3 sources), but no crew corroboration.
-- **Two-pilot airline operation:** can achieve all 4 real sources (4/4).
-- **Augmented crew (3-4 pilots):** can achieve all 4 real sources. This is where HyperLog captures data that has NEVER been reliably captured before — who was actually at the controls when.
-
-### Crew Flows
-
-**Standard two-pilot:** PIC logs flight -> generates QR -> F/O scans -> auto-populates their entry with adjusted role -> F/O signs. ~10 seconds.
-
-**Augmented crew (3-4 pilots) — the hard problem:** Airline systems DON'T know who was at the controls when. The relief plan is decided informally by the crew on the day.
-- PIC fills in the sector breakdown (who was PF/PM when)
-- Shares QR with all crew
-- Each crew member sees their pre-calculated control time
-- Each reviews and signs independently
-- Discrepancies are visible on the record
-- This data has NEVER been reliably captured before in aviation
-
-**Single pilot:** Only pilot-signed + ADS-B (if available). Still better than paper.
-
-### Automation Levels
-
-1. **Manual** — pilot types everything (current state)
-2. **Roster pre-populated** — import from airline crew management, confirm & sign
-3. **Roster + ADS-B** — auto-generated with actual times, one-tap confirm
-4. **Fully automated** — airline OPS pushes data, ADS-B confirms, pilot just signs
-
-Even at Level 4, augmented crew control times still need pilot input — this can't be automated.
+**Website/brochure show 4 levels** (omit Level 5). **Whitepaper shows all 5** with Level 5 clearly marked aspirational.
 
 ### Channel Architecture (Hyperledger Fabric)
 
-**NAA Channels — one per National Aviation Authority (e.g. UK CAA, FAA, DGAC):**
-- Issuance records (proof credential was issued)
-- Revocation registry (suspended/revoked credentials)
-- Private Data Collections:
-  - Logbook PDC (pilot + airline with consent + CAA)
-  - Medical PDC (AME + CAA only)
-  - Training PDC (ATO + CAA only)
-- Each NAA controls its own Certificate Authority (who gets enrolled)
-- All personal data in PDCs — main ledger holds ONLY hashes
+**NAA Channel (one per authority — standard template):**
+- On-chain: credential issuance records, revocation registry, logbook entry hashes (SHA-256)
+- Private Data Collections (PDCs):
+  - Logbook PDC (write: pilot/airline, read: pilot/airline with consent/CAA)
+  - Medical PDC (write: AME, read: AME/CAA only)
+  - Training PDC (write: ATO/instructor, read: ATO/CAA only)
+- Each NAA controls its own MSP / Certificate Authority
+- Peer nodes: JetLink-managed or NAA self-hosted
 
-**Verification Channel — shared by ALL NAAs:**
-- All ~193 NAAs join this channel
-- Holds issuer public keys (cached by ramp checker apps)
-- Revocation registry references (synced periodically)
-- Enables cross-border credential verification
-- Any NAA can verify a licence issued by any other NAA
-- Enables licence conversion — new NAA queries to confirm existing licence validity
+**Verification Channel (shared by all participating NAAs):**
+- Issuer public keys (cached by ramp checker apps)
+- Revocation registry references (synced periodically, 1-24h configurable)
+- Cross-border queries for licence conversion
+- Read-only for verification consumers, writable by NAAs
 
-**Infrastructure:**
-- Orderer: managed by JetLink Technologies
-- Peers: managed by JetLink as a service (NAAs could run own peers later)
-- Flight schools DON'T need nodes — they operate under an NAA channel, just need instructor accounts and the app
+**Ordering Service:**
+- 5-node Raft cluster (fail-operational, tolerates 2 simultaneous failures)
+- Managed by JetLink Technologies
+- Orderer cannot read or modify transaction content — only orders into blocks
 
-### Credential Flows
+### Cryptographic Architecture
 
-**Credentials (licence, medical, ratings) are DIFFERENT from logbook entries:**
-- Licence: issued by CAA/NAA. ICAO Amendment 178 aligned.
-- Medical: signed off by AME (Approved Aviation Medical Examiner). Currently paper.
-- Ratings: issued by ATOs / CAA after proficiency checks.
-
-**Issuance:** CAA signs credential with private key -> VC goes to pilot's wallet (device) -> issuance record on-chain -> public key on verification channel
-
-**Ramp check (offline):** Pilot presents VC via QR/NFC -> checker verifies issuer signature against cached public key -> checks cached revocation list -> valid/invalid in seconds. No internet needed.
-
-**Hiring (online, consent-based):** Pilot presents VCs + grants time-limited revocable access to logbook PDC -> airline sees flight records with full verification chain -> pilot revokes access after process.
-
-**Licence conversion:** New NAA queries verification channel to confirm old licence -> requests logbook access with pilot consent -> issues new VC -> old records preserved on original channel.
+- **Fabric network identity:** X.509 certificates, ECDSA P-256
+- **Pilot device key:** ECDSA P-256, generated in secure enclave (iOS/Android), biometric-protected, never transmitted
+- **Logbook entry hash:** SHA-256 of canonical JSON
+- **VC signatures:** ECDSA P-256 (aligned with ICAO recommended algorithms)
+- **DID methods:** did:web for NAA issuers, did:key for pilots
+- **ICAO PKD compatibility:** verification channel designed for future integration with ICAO Public Key Directory
 
 ### Dual-Store Data Model
 
-The logbook uses a dual-store model — neither copy is "the cache":
+Neither copy is "the cache" — synchronised, each serving a distinct purpose:
+- **PDC on Fabric peers (authoritative):** Survives device loss. Enables regulatory access and data recovery.
+- **Pilot's device (synchronised copy):** Enables offline access. Pilot controls sharing.
 
-- **PDC on Fabric peers (authoritative):** Full logbook data in Private Data Collections, managed by JetLink. Survives device loss. Enables regulatory access and data recovery.
-- **Pilot's device (synchronised copy):** Full logbook data cached locally. Enables offline access. Pilot controls who sees their data.
+**Account recovery:** Email + password login, 2FA or passport verification, new key pair generated automatically, old certificate revoked, logbook restored from PDC.
 
-**Recovery:** If a pilot loses their phone, logbook data is restored from the PDC.
+**Investigation access (tiered):**
+- CAA standing access on own channel (GDPR Article 6(1)(c) legal obligation + 6(1)(e) public interest)
+- Cross-border: JetLink facilitates inter-channel access on formal regulatory request
 
-**Accident investigation (tiered access):**
-- CAA has standing read access to their own NAA channel's PDCs (they are channel members with their own Certificate Authority). No pilot consent required for investigation access.
-- For cross-border investigations, JetLink facilitates inter-channel access on formal regulatory request.
+**Data residency:** Peer nodes hosted in any location required by NAA's data residency regulations. Multi-region or NAA self-hosting.
 
-### What Lives Where
+### Amendment Model
 
-- **Pilot's device:** Private key, all VCs (licence, medical, ratings), synchronised logbook copy. Pilot controls access. Private key protected by biometrics, never transmitted.
-- **Fabric peers (PDCs):** Full logbook records (authoritative), medical records, training records. Access controlled by PDC membership. Personal data encrypted, never on the main ledger.
-- **Blockchain main ledger:** Hashes only, issuance records, revocation registries, issuer public keys. NOT personal data.
-- **Ramp checker's app:** Cached issuer public keys (~193 NAAs) + revocation lists. All offline-capable.
+Append-only chain — original entry never modified:
+- Only pilot can initiate amendments (their personal data)
+- Automatic reconciliation: roster data takes precedence for times (QAR), ADS-B and pilot's original entry preserved
+- No time limit on amendments — but all are timestamped and visible in audit trail
+- NAAs can flag entries for review but cannot modify pilot data
 
-### SITA China PoC — The Precedent
+### Audit Trail
 
-SITA proved offline EPL verification with the Civil Aviation Administration of China (CAAC) in 2020 — the first industry partner to demonstrate this. Peer-to-peer, blockchain-anchored, no central database. ICAO mandated offline capability as a core requirement.
+On-chain audit log (same Fabric ledger, tamper-evident):
+- Events: logbook entries, amendments, credential issuance/revocation, PDC access grants, verification events, identity events, regulatory notes
+- Visibility: pilot sees own, CAA sees all on channel, airline sees only granted-access pilots
 
-**JetLink vs SITA positioning:** SITA is an industry-owned consortium that works at massive scale on standardisation. SITA won't build bespoke solutions for individual regulators. JetLink fills that gap — bespoke implementation for specific NAAs. SITA proved the concept; JetLink builds the implementations.
+### Credential Flows
 
-### Hyperledger Aries Status
+- **Issuance:** CAA signs with ECDSA P-256 → VC delivered via DIDComm → issuance record on-chain → public key on verification channel
+- **Ramp check (offline):** QR/NFC → verify against cached public key → check cached revocation list → result in seconds. No internet needed.
+- **Hiring (online):** Pilot grants time-limited revocable PDC access → airline sees verification chain → pilot revokes after process
+- **Licence conversion:** New NAA queries verification channel → requests logbook access with consent → issues new VC under own CA → old records preserved
+- **Revocation:** Authority updates registry → propagated to verification channel → ramp checkers sync within configurable interval (1-24h)
+- **Medical privacy:** Medical VC shows class + validity only. Clinical data stays in Medical PDC (AME + CAA only). Airlines never access clinical details.
 
-Aries as a Hyperledger project has been archived — but this is a sign of maturity, not failure. Core frameworks moved to OpenWallet Foundation (ACA-Py, Credo-TS, VCX, Bifold Wallet). DIDComm specs moved to DIF. W3C VC standard is more active than ever. Frame as: "the frameworks graduated into independent, actively maintained projects."
+### Crew Flows
 
-### Go-to-Market
+- **Standard two-pilot:** PIC logs → QR → F/O scans → auto-populates → signs (~10 sec)
+- **Augmented crew (3-4 pilots):** PIC enters sector breakdown (PF/PM per segment), shares QR, each crew sees pre-calculated control time, reviews and signs. Discrepancies visible. Data never reliably captured before.
+- **Single pilot:** Pilot-signed + ADS-B only. Still better than paper.
+- **Simulator sessions:** Separate entry type, no ADS-B. ATO endorses via Training PDC. Records device type (FFS/FNPT/FSTD), qualification level, programme.
 
-- Flight schools first — students start from hour one, free logbook until they leave
-- Schools operate under an NAA channel, just need instructor accounts and the app
-- Legacy data imported as self-attested; HyperLog fixes the future not the past
-- Don't put legacy data concerns on the public site — keep as conversation-ready answer
+### Flight Time Categories (20 captured per entry)
+
+Total flight time, PIC, SIC, SPIC/P1U/S, Dual (instruction received), Instructor (instruction given), Multi-engine, Single-engine, Multi-pilot (MCC), Night, Instrument actual IMC, Instrument simulated/hood, Cross-country, Pilot Flying, Pilot Monitoring, Type-specific hours, Landings day, Landings night, Simulator time per device, FSTD/FFS/FNPT type
+
+### Automation Levels
+
+1. Manual (current), 2. Roster pre-populated (near-term), 3. Roster + ADS-B (medium-term), 4. Fully automated (end state)
+
+Even at Level 4, augmented crew control times require pilot input.
+
+### Security Model
+
+Threat analysis covers: key compromise, forged logbook entries, replay attacks, rogue peer nodes, data exfiltration, credential forgery, revocation evasion. All mitigated at infrastructure, protocol, and application levels.
+
+**GDPR right to erasure:** PDC data deleted, DID disassociated from identity at CA level, on-chain hashes become anonymous (no longer personal data).
+
+### Governance
+
+Three-phase evolution: Foundation (JetLink sole operator) → Council Formation (NAA representatives) → Decentralised Governance (JetLink as technical service provider). One vote per NAA, JetLink non-voting advisory seat. Majority quorum. Deadlock = status quo.
+
+**Business continuity:** Open-source Fabric, distributed peer nodes, orderer transferable. JetLink protected by long-term service agreements.
+
+**SLA:** 99.9% ordering service uptime, 4-hour RTO. Pilot app works offline.
+
+### Revenue Model
+
+Institutional, not consumer-driven. Pilots are users, not customers.
+- Free pilot app (growth driver)
+- Premium pilot tier (advanced features, analytics)
+- Flight school licensing (per-school)
+- Airline API access (verified hiring data)
+- NAA infrastructure (per-authority service fee)
+- Consulting & integration
+
+### Scalability
+
+Fabric benchmarks: 1,000-3,000 TPS. Peak global utilisation: <10%. Storage: ~1-2 GB/year per million transactions. Channel partitioning distributes load.
+
+### NAA Onboarding
+
+Sandbox environment → channel provisioning → CA setup → chaincode deployment → verification channel integration → pilot enrolment → system integration (optional, RESTful APIs). Every engagement starts with a dedicated test environment.
 
 ---
 
@@ -206,13 +233,18 @@ Aries as a Hyperledger project has been archived — but this is a sign of matur
 - **Amendment 178 to Annex 1** — drives global EPL standards
 - **EASA NPA 2024-08** — transposing Amendment 178 in Europe
 - **ISO/IEC 18013-5** — preferred VC implementation standard (digital wallet)
+- **W3C VC / DIF DIDComm** — open web standards for credentials and identity
 - **SITA/CAAC PoC (2020)** — proved offline peer-to-peer licence verification
+- **ICAO PKD** — existing Public Key Directory for ePassports; future integration target
 
-HyperLog's architecture is designed toward ACCP/MAIS alignment — but do NOT claim full compliance. The correct framing is always: "architecture designed with ACCP/MAIS alignment as the target."
+**Framing:** "architecture designed with ACCP/MAIS alignment as the target" — never claim compliance.
+**Engagement:** NAAs implement and mandate. IATA advocates. ICAO sets the framework we align with.
+
+**Why blockchain (not a central database):** Data sovereignty (no single entity controls all data), tamper-evidence (append-only ledger), decentralised trust (each NAA verifies cryptographic signatures), survives operator failure, GDPR via channel partitioning. Existing digital logbooks (LogTen Pro, ForeFlight, mccPILOTLOG) digitise the logbook — HyperLog digitises the trust.
 
 ## IATA Context
 
-Dejan Damjanovic (founder of The FANS Group, senior ICAO AIM working group member, ex-Jeppesen Director of Flight Deck Applications at Boeing) offered to introduce Christian to IATA colleagues focused on pilot licensing. The pitch at /pitch was created as the briefing document for this introduction.
+Dejan Damjanovic (founder of The FANS Group, senior ICAO AIM working group member, ex-Jeppesen Director of Flight Deck Applications at Boeing) offered to introduce Christian to IATA colleagues focused on pilot licensing.
 
 ---
 
@@ -224,28 +256,20 @@ Dejan Damjanovic (founder of The FANS Group, senior ICAO AIM working group membe
 - Never imply CAAs will sign logbook entries in the near term (authority certification is aspirational).
 - Always distinguish logbook verification (spectrum, mostly automated, no ICAO guidance) from credential issuance (authority-issued, ICAO-aligned).
 - Be honest about what is built (logbook MVP, Fabric backend) and what is in architecture phase (credentials layer).
+- Use "tamper-evident" not "immutable". Use "permanent" for on-chain. Use "append-only" for the ledger model.
+- No em dashes in the whitepaper.
 - The audience is IATA licensing experts and ICAO working group members — they will see through any overclaiming.
 
 ## Current Status (as of April 2026)
 
 - Hyperledger Fabric backend: **Built & deployed**
-- Mobile app: **In development**
+- Mobile app: **In development** (Flutter)
 - Verifiable credentials layer: **Architecture phase**
-- Seeking IATA & CAA engagement
-
-## TODO — Next Session
-
-- Review briefing (/pitch) content for accuracy against architecture
-- Build whitepaper — comprehensive technical architecture document covering:
-  - Hyperledger Fabric channel architecture (NAA channels, verification channel, PDCs)
-  - Verifiable Credentials layer (issuance, offline verification, SITA model)
-  - Logbook verification spectrum (pilot signed -> crew -> ADS-B -> airline OPS)
-  - Credential flows (licence, medical, ratings — who issues, where it lives)
-  - Crew flows (QR sharing, augmented crew, single pilot, automated logging)
-  - GDPR and data sovereignty model
-  - Ramp check offline verification flow
-  - Licence conversion cross-border flow
-  - Architecture diagrams
+- Website: **Live at hyperlog.aero**
+- Brochure: **Live at hyperlog.aero/pitch** (11 slides, print-to-PDF)
+- Whitepaper: **Complete, 24 sections** (behind JetLink admin auth at /admin/hyperlog-wp/document)
+- Whitepaper request system: **Live** (form at /whitepaper, admin management at JetLink /admin/hyperlog-wp)
+- Seeking NAA & IATA engagement
 
 ## Reference Repos (READ ONLY — do not push changes)
 
@@ -256,3 +280,4 @@ Dejan Damjanovic (founder of The FANS Group, senior ICAO AIM working group membe
 ## Reference Documents
 
 - `C:\Dev\Hyperlog\Documents\SP02-ICAO-TFP-Activities.pdf` — ICAO Trust Framework document (sent by Dejan Damjanovic)
+- Christian's article: https://www.aerotime.aero/articles/digital-wings-breaking-aviations-bureaucratic-barriers-with-technology (Brexit licence crisis, SITA/CAAC PoC, EPL context)

@@ -5,9 +5,16 @@ import CookieBanner from '../components/CookieBanner.astro';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'Electronic Pilot Credentials and Blockchain Logbook Infrastructure - by JetLink Technologies Ltd' } = Astro.props;
+const {
+  title,
+  description = 'Blockchain pilot logbook and digital credentials infrastructure. Tamper-evident flight records with multi-source verification. Built by JetLink Technologies.',
+  ogImage = '/og-image.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
@@ -16,18 +23,78 @@ const { title, description = 'Electronic Pilot Credentials and Blockchain Logboo
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
+  <meta name="author" content="JetLink Technologies Ltd" />
+  <link rel="canonical" href={canonicalURL.toString()} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL.toString()} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta property="og:site_name" content="HyperLog" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
   <!-- Analytics preconnect -->
   <link rel="dns-prefetch" href="https://analytics.jetlink-tech.com" />
   <link rel="preconnect" href="https://analytics.jetlink-tech.com" crossorigin />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+
   <!-- Umami (cookieless) -->
   <script defer src="https://analytics.jetlink-tech.com/script.js" data-website-id="46ed6cea-63d9-4ff2-937e-e7293eb46334"></script>
+
   <title>{title}</title>
+
+  <!-- JSON-LD Organization -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "JetLink Technologies Ltd",
+    "url": "https://hyperlog.aero",
+    "logo": "https://hyperlog.aero/logo/logo-icon.svg",
+    "description": "Aviation-native software company building blockchain pilot logbook and digital credentials infrastructure.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Level 9, Berkeley Square House, Berkeley Square",
+      "addressLocality": "London",
+      "postalCode": "W1J 6BY",
+      "addressCountry": "GB"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@hyperlog.aero",
+      "contactType": "General Enquiry"
+    },
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Christian Charalambous",
+        "jobTitle": "CEO & Co-Founder"
+      },
+      {
+        "@type": "Person",
+        "name": "Vincent Malterre",
+        "jobTitle": "CTO & Co-Founder"
+      }
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/christiancharalambous/",
+      "https://www.linkedin.com/in/vincent-malterre-805845124/"
+    ]
+  })} />
 </head>
 <body class="min-h-screen flex flex-col">
   <slot />
@@ -40,14 +107,13 @@ const { title, description = 'Electronic Pilot Credentials and Blockchain Logboo
       const s = document.createElement('script');
       s.id = 'ga-script';
       s.async = true;
-      // TODO: Replace with your GA Measurement ID
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPY1K6J3W0';
       document.head.appendChild(s);
       s.onload = () => {
         (window as any).dataLayer = (window as any).dataLayer || [];
         function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
         gtag('js', new Date());
-        gtag('config', 'G-WPY1K6J3W0'); // TODO: Replace with your GA Measurement ID
+        gtag('config', 'G-WPY1K6J3W0');
       };
     }
 
