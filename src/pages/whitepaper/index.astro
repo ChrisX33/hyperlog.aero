@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 ---
 
 <BaseLayout title="Technical Whitepaper - HyperLog" description="Request HyperLog's technical whitepaper covering blockchain logbook architecture, verifiable credentials, channel design, security model, and ICAO regulatory alignment.">
@@ -56,6 +56,94 @@ import Footer from '../components/Footer.astro';
                   <label for="privacy" class="text-xs text-secondary leading-relaxed cursor-pointer">
                     I have read and accept the <a href="/privacy" target="_blank" class="text-primary hover:text-white transition-colors underline">Privacy Policy</a>
                   </label>
+                </div>
+
+                <!-- NDA Modal -->
+                <div id="nda-modal" class="fixed inset-0 z-50 hidden">
+                  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="nda-backdrop"></div>
+                  <div class="relative flex items-center justify-center min-h-full p-4">
+                    <div class="bg-surface-container border border-primary/20 rounded-xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl">
+                      <!-- Modal header -->
+                      <div class="p-6 pb-4 border-b border-outline-variant/15 relative">
+                        <button type="button" id="nda-close" class="absolute top-4 right-4 p-1.5 rounded-lg text-secondary hover:text-white hover:bg-surface-high transition-colors cursor-pointer" title="Close">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                        <h3 class="text-lg font-bold text-white pr-8">Non-Disclosure Agreement</h3>
+                        <p class="text-xs text-secondary mt-1">By requesting this whitepaper, you agree to the following terms:</p>
+                      </div>
+
+                      <!-- Modal body -->
+                      <div class="p-6 overflow-y-auto flex-1 space-y-4">
+                        <div class="flex items-start gap-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                          <div>
+                            <p class="text-sm font-medium text-white">Confidentiality</p>
+                            <p class="text-xs text-secondary mt-0.5">The whitepaper and its contents are confidential and proprietary to JetLink Technologies Ltd.</p>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                          <div>
+                            <p class="text-sm font-medium text-white">No Distribution</p>
+                            <p class="text-xs text-secondary mt-0.5">You may not forward, share, or distribute the document to any third party without prior written consent from JetLink Technologies.</p>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                          <div>
+                            <p class="text-sm font-medium text-white">No Reproduction</p>
+                            <p class="text-xs text-secondary mt-0.5">You may not reproduce, extract, or repurpose the technical content, architectural designs, or proprietary methodologies described in the document.</p>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                          <div>
+                            <p class="text-sm font-medium text-white">Permitted Use</p>
+                            <p class="text-xs text-secondary mt-0.5">The document is provided solely for your personal evaluation and internal business assessment.</p>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          <div>
+                            <p class="text-sm font-medium text-white">Return / Destroy</p>
+                            <p class="text-xs text-secondary mt-0.5">Upon request by JetLink Technologies, you will delete all copies of the document in your possession.</p>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary mt-0.5 shrink-0"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                          <div>
+                            <p class="text-sm font-medium text-white">Duration</p>
+                            <p class="text-xs text-secondary mt-0.5">These obligations remain in effect for 3 years from the date of acceptance.</p>
+                          </div>
+                        </div>
+
+                        <a href="/whitepaper/nda" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-primary hover:text-white transition-colors mt-2">
+                          Read the full Non-Disclosure Agreement
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </a>
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="p-6 pt-4 border-t border-outline-variant/15 space-y-3">
+                        <!-- Declined message (hidden by default) -->
+                        <div id="nda-declined-msg" class="hidden text-center py-2">
+                          <p class="text-xs text-tertiary leading-relaxed">Unfortunately, we are unable to share the whitepaper without agreement to the Non-Disclosure Agreement.</p>
+                        </div>
+                        <p class="text-xs text-secondary text-center leading-relaxed">A copy of this agreement will be emailed to you for your records.</p>
+                        <button type="button" id="nda-accept" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full text-sm tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer">
+                          I Agree
+                        </button>
+                        <button type="button" id="nda-decline" class="w-full bg-surface-low text-secondary font-bold py-3 rounded-full text-sm tracking-widest uppercase hover:text-white hover:bg-surface-high transition-colors cursor-pointer">
+                          I Disagree
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Cloudflare Turnstile -->
@@ -146,6 +234,40 @@ import Footer from '../components/Footer.astro';
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <script>
+    // NDA modal elements
+    const ndaModal = document.getElementById('nda-modal');
+    const ndaBackdrop = document.getElementById('nda-backdrop');
+    const ndaAccept = document.getElementById('nda-accept');
+    const ndaDecline = document.getElementById('nda-decline');
+    const ndaDeclinedMsg = document.getElementById('nda-declined-msg');
+
+    function openNdaModal() {
+      ndaDeclinedMsg?.classList.add('hidden');
+      ndaModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeNdaModal() {
+      ndaModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    const ndaClose = document.getElementById('nda-close');
+
+    ndaBackdrop?.addEventListener('click', closeNdaModal);
+    ndaClose?.addEventListener('click', closeNdaModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !ndaModal?.classList.contains('hidden')) {
+        closeNdaModal();
+      }
+    });
+
+    // Decline: show message, stay on modal
+    ndaDecline?.addEventListener('click', () => {
+      ndaDeclinedMsg?.classList.remove('hidden');
+    });
+
     // Watch for Turnstile success via MutationObserver
     const observer = new MutationObserver(() => {
       const response = document.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement;
@@ -192,12 +314,11 @@ import Footer from '../components/Footer.astro';
     if (wrapperEl) scaleObserver.observe(wrapperEl, { childList: true, subtree: true });
     window.addEventListener('resize', scaleTurnstile);
 
-    // Form submission
+    // Form submission — intercept to show NDA modal first
     const form = document.getElementById('wp-form') as HTMLFormElement;
     const success = document.getElementById('wp-success');
 
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    async function submitRequest() {
       const btn = document.getElementById('wp-submit') as HTMLButtonElement;
       if (btn) {
         btn.textContent = 'REQUESTING...';
@@ -216,6 +337,7 @@ import Footer from '../components/Footer.astro';
             email: formData.get('email'),
             linkedin: formData.get('linkedin'),
             reason: formData.get('reason') || '',
+            ndaAcceptedAt: new Date().toISOString(),
             turnstileToken: turnstileResponse?.value || '',
           }),
         });
@@ -238,6 +360,18 @@ import Footer from '../components/Footer.astro';
           btn.disabled = false;
         }
       }
+    }
+
+    // Submit button opens NDA modal instead of submitting directly
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      openNdaModal();
+    });
+
+    // Agree button in modal: close modal and submit the request
+    ndaAccept?.addEventListener('click', () => {
+      closeNdaModal();
+      submitRequest();
     });
   </script>
 </BaseLayout>

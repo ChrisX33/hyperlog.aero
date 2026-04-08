@@ -6,7 +6,7 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { name, email, linkedin, turnstileToken } = body;
+    const { name, email, linkedin, ndaAcceptedAt, turnstileToken } = body;
 
     // Validate required fields
     if (!name || !email || !linkedin) {
@@ -56,7 +56,7 @@ export const POST: APIRoute = async ({ request }) => {
             'Content-Type': 'application/json',
             'X-Internal-Key': jetlinkInternalKey,
           },
-          body: JSON.stringify({ name, email, linkedin }),
+          body: JSON.stringify({ name, email, linkedin, ndaAcceptedAt }),
         });
 
         if (jetlinkRes.ok) {
