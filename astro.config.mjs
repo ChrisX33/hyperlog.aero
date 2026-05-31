@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hyperlog.aero',
-  output: 'static',
+  output: 'server',
   adapter: node({
     mode: 'standalone',
   }),
