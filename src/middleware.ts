@@ -5,12 +5,18 @@ const MAINTENANCE_FILE = '/tmp/hyperlog-maintenance';
 
 export const onRequest = defineMiddleware((context, next) => {
   const url = new URL(context.request.url);
+  const maintenance = existsSync(MAINTENANCE_FILE);
 
-  if (url.pathname === '/maintenance' || url.pathname.startsWith('/api/')) {
+  if (url.pathname.startsWith('/api/')) {
     return next();
   }
 
-  if (existsSync(MAINTENANCE_FILE)) {
+  if (url.pathname === '/maintenance') {
+    if (!maintenance) return context.redirect('/', 302);
+    return next();
+  }
+
+  if (maintenance) {
     return context.redirect('/maintenance', 302);
   }
 
