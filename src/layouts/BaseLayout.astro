@@ -94,6 +94,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <slot />
   <CookieBanner />
 
+  <!-- Poll for maintenance turning ON — reload when state changes -->
+  <script>
+    setInterval(function() {
+      fetch('/api/maintenance')
+        .then(function(r) { return r.json(); })
+        .then(function(d) { if (d.maintenance) location.reload(); })
+        .catch(function() {});
+    }, 5000);
+  </script>
+
   <!-- Google Analytics - consent-based -->
   <script>
     function loadGA() {
