@@ -95,5 +95,13 @@ export const prerender = false;
     <p>HyperLog is currently undergoing maintenance. We will be back online shortly.</p>
     <div class="divider"></div>
   </div>
+  <script>
+    setInterval(function() {
+      fetch('/api/maintenance')
+        .then(function(r) { return r.json(); })
+        .then(function(d) { if (!d.maintenance) location.reload(); })
+        .catch(function() {});
+    }, 5000);
+  </script>
 </body>
 </html>
