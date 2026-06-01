@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import CookieBanner from '../components/CookieBanner.astro';
+import { existsSync } from 'fs';
 
 interface Props {
   title: string;
@@ -13,6 +14,9 @@ const {
   description = 'Blockchain pilot logbook and digital credentials infrastructure. Tamper-evident flight records with multi-source verification. Built by JetLink Technologies.',
   ogImage = '/og-image.png',
 } = Astro.props;
+
+const MAINTENANCE_FILE = '/tmp/hyperlog-maintenance';
+const maintenance = existsSync(MAINTENANCE_FILE);
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -57,7 +61,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <!-- Umami (cookieless) -->
   <script defer src="https://analytics.jetlink-tech.com/script.js" data-website-id="46ed6cea-63d9-4ff2-937e-e7293eb46334"></script>
 
-  <title>{title}</title>
+  <title>{maintenance ? 'HyperLog — Maintenance' : title}</title>
 
   <!-- JSON-LD Organization -->
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -90,35 +94,106 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       "https://www.linkedin.com/in/christiancharalambous/"
     ]
   })} />
+
+  {maintenance && (
+    <style>{`
+      body { margin: 0; background: #0d0d14; font-family: 'Inter', sans-serif; color: #e8e8f0; }
+      .hl-maint {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .hl-maint__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 480px;
+        width: 100%;
+      }
+      .hl-maint__logo { width: 180px; display: block; margin-bottom: 40px; }
+      .hl-maint__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(6,182,212,0.1);
+        border: 1px solid rgba(6,182,212,0.3);
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #06b6d4;
+        margin-bottom: 32px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .hl-maint__dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #06b6d4; flex-shrink: 0;
+        animation: hl-pulse 2s infinite;
+      }
+      @keyframes hl-pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+      .hl-maint h1 { font-size: 2rem; font-weight: 700; color: #fff; margin: 0 0 16px; letter-spacing: -0.02em; }
+      .hl-maint p { font-size: 1rem; color: #8888a0; line-height: 1.6; margin: 0 0 40px; }
+      .hl-maint__divider { width: 40px; height: 2px; background: rgba(6,182,212,0.4); }
+    `}</style>
+  )}
 </head>
 <body class="min-h-screen flex flex-col">
-  <slot />
-  <CookieBanner />
+  {maintenance ? (
+    <div class="hl-maint">
+      <div class="hl-maint__inner">
+        <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="hl-maint__logo" />
+        <div class="hl-maint__badge">
+          <div class="hl-maint__dot"></div>
+          Scheduled Maintenance
+        </div>
+        <h1>Back Shortly</h1>
+        <p>HyperLog is currently undergoing maintenance. We will be back online shortly.</p>
+        <div class="hl-maint__divider"></div>
+      </div>
+    </div>
+  ) : (
+    <>
+      <slot />
+      <CookieBanner />
+    </>
+  )}
+
+  <!-- Poll for maintenance status changes — reload when state flips -->
+  <script define:vars={{ maintenance }}>
+    setInterval(function() {
+      fetch('/api/maintenance')
+        .then(function(r) { return r.json(); })
+        .then(function(d) { if (Boolean(d.maintenance) !== Boolean(maintenance)) location.reload(); })
+        .catch(function() {});
+    }, 5000);
+  </script>
 
   <!-- Google Analytics - consent-based -->
-  <script>
-    function loadGA() {
-      if (document.getElementById('ga-script')) return;
-      const s = document.createElement('script');
-      s.id = 'ga-script';
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPY1K6J3W0';
-      document.head.appendChild(s);
-      s.onload = () => {
-        (window as any).dataLayer = (window as any).dataLayer || [];
-        function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
-        gtag('js', new Date());
-        gtag('config', 'G-WPY1K6J3W0');
-      };
-    }
-
-    if (localStorage.getItem('cookie-consent') === 'accepted') {
-      loadGA();
-    }
-
-    window.addEventListener('cookie-consent-update', (e: any) => {
-      if (e.detail === 'accepted') loadGA();
-    });
-  </script>
+  {!maintenance && (
+    <script>
+      function loadGA() {
+        if (document.getElementById('ga-script')) return;
+        const s = document.createElement('script');
+        s.id = 'ga-script';
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPY1K6J3W0';
+        document.head.appendChild(s);
+        s.onload = () => {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
+          gtag('js', new Date());
+          gtag('config', 'G-WPY1K6J3W0');
+        };
+      }
+      if (localStorage.getItem('cookie-consent') === 'accepted') loadGA();
+      window.addEventListener('cookie-consent-update', (e: any) => {
+        if (e.detail === 'accepted') loadGA();
+      });
+    </script>
+  )}
 </body>
 </html>
