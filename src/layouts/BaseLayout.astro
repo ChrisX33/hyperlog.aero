@@ -97,63 +97,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   {maintenance && (
     <style>{`
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { background: #0d0d14; font-family: 'Inter', sans-serif; color: #e8e8f0; }
-      .hl-maint {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-      }
-      .hl-maint__inner {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        max-width: 480px;
-        width: 100%;
-      }
-      .hl-maint__logo { width: 180px; height: auto; display: block; margin-bottom: 40px; }
-      .hl-maint__badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(6,182,212,0.1);
-        border: 1px solid rgba(6,182,212,0.3);
-        border-radius: 999px;
-        padding: 6px 14px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #06b6d4;
-        margin-bottom: 32px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-      .hl-maint__dot {
-        width: 6px; height: 6px; border-radius: 50%;
-        background: #06b6d4; flex-shrink: 0;
-        animation: hl-pulse 2s infinite;
-      }
       @keyframes hl-pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-      .hl-maint h1 { font-size: 2rem; font-weight: 700; color: #fff; margin: 0 0 16px; letter-spacing: -0.02em; }
-      .hl-maint p { font-size: 1rem; color: #8888a0; line-height: 1.6; margin: 0 0 40px; }
-      .hl-maint__divider { width: 40px; height: 2px; background: rgba(6,182,212,0.4); }
     `}</style>
   )}
 </head>
 <body class={maintenance ? '' : 'min-h-screen flex flex-col'}>
   {maintenance ? (
-    <div class="hl-maint">
-      <div class="hl-maint__inner">
-        <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" class="hl-maint__logo" />
-        <div class="hl-maint__badge">
-          <div class="hl-maint__dot"></div>
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#0d0d14;font-family:'Inter',sans-serif;">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;max-width:480px;width:100%;">
+        <img src="/logo/logo-full-on-dark.svg" alt="HyperLog" style="width:180px;height:auto;display:block;margin-bottom:40px;flex-shrink:0;" />
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:500;color:#06b6d4;margin-bottom:32px;letter-spacing:0.05em;text-transform:uppercase;">
+          <div style="width:6px;height:6px;border-radius:50%;background:#06b6d4;flex-shrink:0;animation:hl-pulse 2s infinite;"></div>
           Scheduled Maintenance
         </div>
-        <h1>Back Shortly</h1>
-        <p>HyperLog is currently undergoing maintenance. We will be back online shortly.</p>
-        <div class="hl-maint__divider"></div>
+        <h1 style="font-size:2rem;font-weight:700;color:#ffffff;margin:0 0 16px;letter-spacing:-0.02em;line-height:1.2;">Back Shortly</h1>
+        <p style="font-size:1rem;color:#8888a0;line-height:1.6;margin:0 0 40px;">HyperLog is currently undergoing maintenance. We will be back online shortly.</p>
+        <div style="width:40px;height:2px;background:rgba(6,182,212,0.4);"></div>
       </div>
     </div>
   ) : (
