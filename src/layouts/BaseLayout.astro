@@ -111,13 +111,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       const s = document.createElement('script');
       s.id = 'ga-script';
       s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPY1K6J3W0';
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-P81GCGVF23';
       document.head.appendChild(s);
       s.onload = () => {
         (window as any).dataLayer = (window as any).dataLayer || [];
         function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
         gtag('js', new Date());
-        gtag('config', 'G-WPY1K6J3W0');
+        gtag('config', 'G-P81GCGVF23');
       };
     }
     if (localStorage.getItem('cookie-consent') === 'accepted') loadGA();
