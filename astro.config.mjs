@@ -8,6 +8,10 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://hyperlog.aero',
   output: 'server',
+  devToolbar: { enabled: false },
+  security: {
+    checkOrigin: false,
+  },
   adapter: node({
     mode: 'standalone',
   }),
