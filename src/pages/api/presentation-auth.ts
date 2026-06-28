@@ -5,7 +5,7 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
   const password = formData.get('password') as string;
-  const expectedPassword = import.meta.env.PRESENTATION_PASSWORD;
+  const expectedPassword = process.env.PRESENTATION_PASSWORD;
 
   if (!expectedPassword || password !== expectedPassword) {
     return new Response(null, {
