@@ -1,0 +1,763 @@
+---
+export const prerender = false;
+
+import '../../styles/global.css';
+
+const authCookie = Astro.cookies.get('presentation_auth');
+const isAuthenticated = authCookie?.value === '1';
+const hasError = Astro.url.searchParams.get('error') === '1';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <title>HyperLog - ALPA Briefing</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <style>
+    /* ── Slide container ── */
+    #pres-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+      width: 100vw;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    #pres-container::-webkit-scrollbar { display: none; }
+
+    /* ── Each slide ── */
+    .pres-slide {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* ── Top accent bar ── */
+    .pres-slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #1e40af, #2563eb, #60a5fa);
+      z-index: 10;
+    }
+
+    /* ── Navigation controls ── */
+    .pres-nav {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+      background: none;
+      border: none;
+      border-radius: 999px;
+      padding: 0.5rem 1.25rem;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .pres-nav-btn {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.12);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      color: #0f172a;
+      backdrop-filter: blur(8px);
+    }
+    .pres-nav-btn:hover { background: #1e40af; border-color: #1e40af; color: #fff; }
+    .pres-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .pres-nav-btn:disabled:hover { background: rgba(255,255,255,0.55); border-color: rgba(15,23,42,0.12); color: #0f172a; }
+
+    .pres-counter {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.05em;
+      min-width: 3.5rem;
+      text-align: center;
+    }
+
+    .pres-dots {
+      display: flex;
+      gap: 0.375rem;
+      align-items: center;
+    }
+    .pres-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      transition: background 0.2s, width 0.2s;
+      cursor: pointer;
+    }
+    .pres-dot.active {
+      background: #1e40af;
+      width: 20px;
+      border-radius: 3px;
+    }
+
+    /* ── Slide content helpers ── */
+    .slide-label {
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+    .slide-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .slide-body {
+      font-size: clamp(0.8rem, 1.1vw, 0.9375rem);
+      color: #475569;
+      line-height: 1.65;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+    }
+    .card-accent {
+      border-left: 3px solid #1e40af;
+    }
+    .card-warn {
+      border-left: 3px solid #b45309;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .badge-blue { background: #eff6ff; color: #1e40af; }
+    .badge-green { background: #f0fdf4; color: #15803d; }
+    .badge-amber { background: #fffbeb; color: #b45309; }
+    .badge-slate { background: #f8fafc; color: #475569; }
+
+    .step-circle {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .check-circle {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: #f0fdf4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .spin-circle {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .slide-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 2rem 3rem;
+    }
+
+    @media (max-width: 1024px) {
+      .slide-content { padding: 1.5rem 2rem; }
+    }
+
+    /* Cover slide special */
+    .cover-slide { background: #f8fafc; }
+    .cover-slide::before { background: linear-gradient(90deg, #1e40af, #2563eb, #60a5fa); }
+
+    /* ── PDF button ── */
+    .pdf-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.4rem 0.875rem;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(15,23,42,0.12);
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #0f172a;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .pdf-btn:hover { background: #1e40af; border-color: #1e40af; color: #fff; }
+
+    @page {
+      size: landscape;
+      margin: 0;
+    }
+
+    @media print {
+      .pres-nav { display: none !important; }
+      .pdf-btn { display: none !important; }
+      body { background: white; }
+      #pres-container {
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: auto !important;
+        scroll-snap-type: none !important;
+      }
+      .pres-slide {
+        width: 100vw !important;
+        height: 100vh !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        overflow: visible !important;
+        scroll-snap-align: none !important;
+        position: relative !important;
+      }
+      .pres-slide:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; font-family: 'Inter', system-ui, sans-serif; background: #f0f4f8;">
+
+{!isAuthenticated ? (
+  <!-- ═══════════════════════════════════════════════════════
+       PASSWORD GATE
+       ═══════════════════════════════════════════════════════ -->
+  <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:#0f172a; padding:2rem;">
+    <div style="width:100%; max-width:400px; text-align:center;">
+      <img src="/logo/logo-icon.svg" alt="HyperLog" style="width:56px; height:56px; margin:0 auto 1.5rem;" />
+      <p style="font-size:1.5rem; font-weight:800; color:#ffffff; letter-spacing:-0.02em; margin-bottom:0.5rem;">HyperLog</p>
+      <p style="font-size:0.75rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#b2c5ff; margin-bottom:2rem;">ALPA Briefing</p>
+
+      {hasError && (
+        <div style="background:rgba(220,38,38,0.1); border:1px solid rgba(220,38,38,0.3); border-radius:0.5rem; padding:0.75rem 1rem; margin-bottom:1.5rem;">
+          <p style="font-size:0.8125rem; color:#fca5a5; font-weight:500;">Incorrect password. Please try again.</p>
+        </div>
+      )}
+
+      <form action="/api/presentation-auth" method="POST">
+        <input type="hidden" name="next" value="/presentation/alpa" />
+        <div style="margin-bottom:1rem;">
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            autocomplete="current-password"
+            required
+            style="width:100%; box-sizing:border-box; padding:0.875rem 1rem; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:0.5rem; color:#ffffff; font-size:0.9375rem; font-family:inherit; outline:none;"
+          />
+        </div>
+        <button
+          type="submit"
+          style="width:100%; padding:0.875rem; background:#1e40af; color:#ffffff; font-weight:700; font-size:0.875rem; letter-spacing:0.05em; text-transform:uppercase; border:none; border-radius:0.5rem; cursor:pointer; font-family:inherit;"
+        >
+          Continue
+        </button>
+      </form>
+
+      <p style="margin-top:2rem; font-size:0.6875rem; color:#475569;">
+        This presentation is confidential and intended for authorised recipients only.
+      </p>
+    </div>
+  </div>
+) : (
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDES
+       ═══════════════════════════════════════════════════════ -->
+  <div id="pres-container">
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 1 - COVER
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide cover-slide" style="align-items:center; text-align:center;">
+      <div style="position:absolute; inset:0; opacity:0.025; background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(30,64,175,0.6) 80px), repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(30,64,175,0.6) 80px);"></div>
+      <div style="position:relative; z-index:1; max-width:640px; margin:0 auto; padding:2rem;">
+        <img src="/logo/logo-icon.svg" alt="HyperLog" style="width:56px; height:56px; margin:0 auto 1rem;" />
+        <p style="font-size:1.875rem; font-weight:800; color:#1e40af; letter-spacing:-0.02em; margin-bottom:0.25rem;">HyperLog</p>
+        <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#64748b; margin-bottom:2rem;">Trust in Every Entry</p>
+
+        <h1 style="font-size:clamp(1.5rem, 3vw, 2.25rem); font-weight:800; color:#0f172a; line-height:1.15; letter-spacing:-0.02em; margin-bottom:0.75rem;">
+          Trust Infrastructure for<br />Aviation Credentials
+        </h1>
+        <p style="font-size:0.9375rem; color:#334155; margin-bottom:0.5rem;">Electronic Personnel Licence - issuance and offline verification</p>
+        <p style="font-size:0.8125rem; color:#64748b; margin-bottom:2.5rem;">Exploratory briefing - Air Line Pilots Association</p>
+
+        <div style="border-top:1px solid rgba(15,23,42,0.1); padding-top:1.75rem; display:flex; flex-direction:column; gap:0.375rem; align-items:center;">
+          <p style="font-size:0.875rem; font-weight:600; color:#0f172a;">JetLink Technologies Ltd</p>
+          <p style="font-size:0.75rem; color:#64748b;">29 June 2026</p>
+        </div>
+
+        <div style="margin-top:1.75rem; padding:0.625rem 1.25rem; background:rgba(220,38,38,0.06); border:1px solid rgba(220,38,38,0.15); border-radius:0.375rem; display:inline-block;">
+          <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#991b1b;">Confidential</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 2 - THE PROBLEM
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#f0f4f8;">
+      <div class="slide-content">
+        <p class="slide-label">The Problem</p>
+        <h2 class="slide-title">A system still built<br />for a paper world</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.875rem; margin-top:1.25rem;">
+          <div class="card card-warn">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b45309; margin-bottom:0.5rem;">Unverifiable licences</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">A paper licence - or a scan of one - can be forged or altered. Most checks rely on a document looking genuine, not on cryptographic proof of issuer.</p>
+          </div>
+          <div class="card card-warn">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b45309; margin-bottom:0.5rem;">Ramp-check limitations</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">An inspector facing a foreign-issued licence has no real-time way to confirm it is genuine, current, or unsuspended - short of telephoning the issuing authority.</p>
+          </div>
+          <div class="card card-warn">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b45309; margin-bottom:0.5rem;">Slow hiring verification</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Pilots moving between airlines or across borders spend weeks waiting on manual confirmation of their own logbook totals and credentials - the delay falls on the pilot, not just the employer.</p>
+          </div>
+          <div class="card card-warn">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b45309; margin-bottom:0.5rem;">No cross-border channel</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">No neutral, interoperable infrastructure lets a licence issued by one State be verified by another to a common standard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 3 - THE REGULATORY MOMENT
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#ffffff;">
+      <div class="slide-content">
+        <p class="slide-label">The Regulatory Moment</p>
+        <h2 class="slide-title">Digital credentials are<br />coming, with or without input</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.25rem;">
+          <div style="display:flex; flex-direction:column; gap:0;">
+            <div class="card" style="border-color:#fde68a; border-left:3px solid #b45309; border-radius:0.5rem 0.5rem 0 0; border-bottom:none; padding:1.25rem; flex:1; display:flex; flex-direction:column;">
+              <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b45309; margin-bottom:0.625rem;">HR 2247 - Airmen Certificate Accessibility Act</p>
+              <p style="font-size:0.9rem; font-weight:700; color:#0f172a; margin-bottom:0.625rem;">Passed the U.S. House 24 March 2026</p>
+              <ul style="font-size:0.8rem; color:#334155; line-height:1.65; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.375rem;">
+                <li style="display:flex; gap:0.5rem;"><span style="color:#b45309; flex-shrink:0;">-</span>Would require the FAA to accept digital airmen certificates</li>
+                <li style="display:flex; gap:0.5rem;"><span style="color:#b45309; flex-shrink:0;">-</span>Directs the FAA to establish methods for authentication and verification</li>
+                <li style="display:flex; gap:0.5rem;"><span style="color:#b45309; flex-shrink:0;">-</span>Implementing final rule due by 30 November 2028</li>
+              </ul>
+              <div style="flex:1; display:flex; align-items:center; justify-content:center; padding-top:1rem;">
+                <img src="/images/faa-seal.png" alt="FAA Seal" style="width:7rem; height:7rem; object-fit:contain; opacity:0.18;" />
+              </div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-top:none; border-radius:0 0 0.5rem 0.5rem; padding:0.875rem 1.25rem;">
+              <p style="font-size:0.8125rem; font-style:italic; color:#92400e; line-height:1.55;">"An image of a certificate cannot be authenticated."</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.75rem;">
+            <div class="card card-accent">
+              <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.375rem;">S. 4256</p>
+              <p style="font-size:0.8rem; color:#334155; line-height:1.55;">Senate companion bill introduced 26 March 2026, before Senate Commerce, Science &amp; Transportation - same objective.</p>
+            </div>
+            <div class="card card-accent">
+              <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.375rem;">HR 6267</p>
+              <p style="font-size:0.8rem; color:#334155; line-height:1.55;">Aviation Supply Chain digitisation act: directs GAO to study digital authentication and recommend FAA adoption; DOT to respond within 120 days.</p>
+            </div>
+            <div class="card card-accent">
+              <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.375rem;">Global</p>
+              <p style="font-size:0.8rem; color:#334155; line-height:1.55;">ICAO Annex 1 Amendment 178 in force since 2022. EASA transposing. India's DGCA issuing production EPLs since February 2025 - the transition is already underway.</p>
+            </div>
+          </div>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-left:3px solid #1e40af; border-radius:0.5rem; padding:0.875rem 1.25rem; margin-top:0.875rem;">
+          <p style="font-size:0.8125rem; color:#334155; line-height:1.6;"><strong style="color:#1e40af;">Why this matters to ALPA now:</strong> the technical standard for how a pilot's credential is authenticated is being written into rulemaking on a 2028 horizon. If that standard is set without pilot-representative input, ALPA is negotiating implementation later instead of shaping design now.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 4 - WHAT HYPERLOG IS
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#f0f4f8;">
+      <div class="slide-content">
+        <p class="slide-label">What HyperLog Is</p>
+        <h2 class="slide-title">The verification layer<br />that mandate requires</h2>
+        <p class="slide-body" style="margin-top:0.75rem; margin-bottom:1.25rem; max-width:700px;">Two layers, each using the technology appropriate to its job. They are independent - the credential layer is useful on its own.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+          <div class="card" style="border-top:3px solid #1e40af;">
+            <div class="badge badge-blue" style="margin-bottom:0.75rem;">Layer 1 - EPL Credential Layer</div>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65; margin-bottom:0.875rem;">Each authority signs a W3C Verifiable Credential with its own key. Pilots hold it in a wallet; inspectors verify the signature offline against a cached public key. Standard PKI - no ledger on the verification path.</p>
+            <div style="background:#eff6ff; border-radius:0.375rem; padding:0.625rem 0.875rem;">
+              <p style="font-size:0.75rem; font-weight:600; color:#1e40af;">Built for HR 2247 - proves issuer + integrity, offline</p>
+            </div>
+          </div>
+          <div class="card" style="border-top:3px solid #64748b;">
+            <div class="badge badge-slate" style="margin-bottom:0.75rem;">Layer 2 - Pilot Logbook Layer</div>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65; margin-bottom:0.875rem;">A permissioned, multi-party record of flight time. Each entry can be corroborated by crew, airline systems and independent surveillance - tamper-evident, with original data always preserved.</p>
+            <div style="background:#f8fafc; border-radius:0.375rem; padding:0.625rem 0.875rem;">
+              <p style="font-size:0.75rem; font-weight:600; color:#64748b;">Optional, later phase - verifiable flight-hour evidence</p>
+            </div>
+          </div>
+        </div>
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:0.5rem; padding:1rem 1.25rem; display:flex; align-items:center; gap:1rem;">
+          <div style="width:2.5rem; height:2.5rem; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1e40af" stroke-width="2"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+          </div>
+          <p style="font-size:0.875rem; color:#334155; line-height:1.55;">
+            <strong style="color:#0f172a;">The two layers share one connection: the pilot's Decentralised Identifier.</strong> The same identity used in the EPL credential also signs logbook records, creating a cryptographic link between the licence and the flight hours that qualify it - controlled throughout by the pilot, not by an employer or a central registry.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 5 - THE LOGBOOK LAYER
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#ffffff;">
+      <div class="slide-content">
+        <p class="slide-label">The Logbook Layer</p>
+        <h2 class="slide-title">Evidence that licences<br />mean something</h2>
+        <p class="slide-body" style="margin-top:0.5rem; margin-bottom:1rem; max-width:720px;">No ICAO standard exists for digital pilot logbooks. HyperLog defines one - multi-party attestation, tamper-evident append-only records, pilot-controlled access. Each verification level adds an independent source of truth.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:0.75rem; margin-bottom:0.875rem;">
+          {[
+            {
+              n: '1',
+              label: 'Pilot signed',
+              sub: 'Always available',
+              body: 'ECDSA P-256 via device biometrics, generated in a hardware secure enclave - non-exportable. Non-repudiation: the pilot cannot later deny the flight.',
+            },
+            {
+              n: '2',
+              label: 'Crew corroborated',
+              sub: '~10 seconds per crew',
+              body: 'PIC and F/O independently log the same flight via QR code. Each signs with their own private key. Discrepancies between entries are visible on the record.',
+            },
+            {
+              n: '3',
+              label: 'ADS-B tracked',
+              sub: 'Independent surveillance',
+              body: 'Route, times and altitude confirmed via Flightradar24 and FlightAware on Aireon satellite ADS-B over the Iridium constellation. Global including oceanic.',
+            },
+            {
+              n: '4',
+              label: 'Airline OPS verified',
+              sub: 'Rostering system API',
+              body: 'Airline scheduling system confirms crew were rostered on this flight. Automated API integration - institutional confirmation from the operator\'s own records.',
+            },
+          ].map(s => (
+            <div class="card" style="display:flex; flex-direction:column; gap:0.5rem;">
+              <div style="display:flex; align-items:center; gap:0.625rem; margin-bottom:0.25rem;">
+                <div class="step-circle">{s.n}</div>
+                <p style="font-size:0.875rem; font-weight:700; color:#0f172a; line-height:1.2;">{s.label}</p>
+              </div>
+              <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#1e40af;">{s.sub}</p>
+              <p style="font-size:0.775rem; color:#475569; line-height:1.6;">{s.body}</p>
+            </div>
+          ))}
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.875rem;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:3px solid #64748b; border-radius:0.5rem; padding:1rem 1.125rem;">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#64748b; margin-bottom:0.5rem;">Privacy model</p>
+            <p style="font-size:0.8rem; color:#334155; line-height:1.65;">Pilot controls access. Airlines query logbook data only with explicit, time-limited, revocable consent. Medical detail stays in a restricted collection accessible only to the AME and the authority - airlines never see clinical data. Original entries are never modified: amendments create a new on-chain record, with the original permanently preserved.</p>
+          </div>
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">Why distributed, not a central database</p>
+            <p style="font-size:0.8rem; color:#334155; line-height:1.65;">No single state wants another state - or a private company - holding its pilots' records on a server it does not control. Each participating authority runs its own channel on the permissioned ledger; pilot data stays within the issuing jurisdiction. JetLink operates the ordering service only. It does not custody pilot data.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 6 - HOW IT FITS EXISTING SYSTEMS
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#ffffff;">
+      <div class="slide-content">
+        <p class="slide-label">How It Fits Existing Systems</p>
+        <h2 class="slide-title">Complements the Airmen Registry -<br />does not replace it</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.25rem; margin-bottom:0.875rem;">
+          <div class="card" style="border-color:#e2e8f0;">
+            <p style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#64748b; margin-bottom:0.75rem;">FAA Airmen Registry</p>
+            <p style="font-size:0.875rem; font-weight:700; color:#0f172a; margin-bottom:0.875rem;">The authoritative system of record.</p>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+              {[
+                'Authenticates the record held on the server',
+                'Cannot authenticate the artifact a pilot physically presents',
+                'Cannot be queried where there is no connectivity',
+                'Cannot be reached by a foreign authority',
+              ].map(l => (
+                <div style="display:flex; gap:0.625rem; align-items:flex-start;">
+                  <span style="color:#94a3b8; font-weight:700; flex-shrink:0; margin-top:0.1rem;">✕</span>
+                  <p style="font-size:0.8rem; color:#64748b; line-height:1.55;">{l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="card" style="border-color:#bfdbfe; border-top:3px solid #1e40af;">
+            <p style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#1e40af; margin-bottom:0.75rem;">HyperLog</p>
+            <p style="font-size:0.875rem; font-weight:700; color:#0f172a; margin-bottom:0.875rem;">The presentation-and-verification layer on top.</p>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+              {[
+                'A signed credential that proves its own issuer + integrity',
+                'Verifiable offline, anywhere - no live query needed',
+                'Verifiable by a foreign authority to a common standard',
+                'Registry stays the source of truth beneath it',
+              ].map(l => (
+                <div style="display:flex; gap:0.625rem; align-items:flex-start;">
+                  <span style="color:#15803d; font-weight:700; flex-shrink:0; margin-top:0.1rem;">✓</span>
+                  <p style="font-size:0.8rem; color:#334155; line-height:1.55;">{l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-left:3px solid #1e40af; border-radius:0.5rem; padding:1rem 1.25rem;">
+          <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">
+            <strong style="color:#1e40af;">Delivered over the issuing authority's own infrastructure:</strong> each authority operates its own certificate authority, peer node and - at its election - ordering service. JetLink supplies tooling, wallet, ramp-checker app and onboarding support. <strong style="color:#1e40af;">No custody of pilot data.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 7 - WHAT THIS MEANS FOR PILOTS
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#f0f4f8;">
+      <div class="slide-content">
+        <p class="slide-label">For Pilots</p>
+        <h2 class="slide-title">Pilot-controlled,<br />not pilot-surveilled</h2>
+        <p class="slide-body" style="margin-top:0.5rem; margin-bottom:1.25rem; max-width:740px;">A system that permanently records flight activity has to earn a pilot's trust before it earns a regulator's. These are the safeguards as designed - and the open questions we want ALPA's input on before any of this is built.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.875rem; margin-bottom:0.875rem;">
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">You control access</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Airlines and authorities cannot pull a pilot's logbook data at will. Every query requires the pilot's explicit, time-limited, revocable consent - there is no standing access.</p>
+          </div>
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">Medical data walled off</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Clinical detail sits in a restricted collection visible only to the AME and the issuing authority. Airlines see certification status, never the underlying medical record.</p>
+          </div>
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">Nothing is silently altered</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Original entries are permanent. An employer or authority cannot revise a pilot's record after the fact - amendments create a new entry alongside the original, both visible.</p>
+          </div>
+          <div class="card card-warn">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b45309; margin-bottom:0.5rem;">Open question: governance</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Who can request pilot data, under what conditions, with what oversight - and whether this should be used punitively - are not decided. We want that designed with ALPA, not for ALPA.</p>
+          </div>
+        </div>
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-left:3px solid #64748b; border-radius:0.5rem; padding:1rem 1.25rem;">
+          <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">
+            <strong style="color:#0f172a;">The intent:</strong> a verification tool that protects pilots from disputed hours and unverifiable credentials, built on the same non-punitive, just-culture principle that underpins ASAP and ASRS - not a surveillance layer on career and flight activity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 8 - WHERE WE ARE
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#ffffff;">
+      <div class="slide-content">
+        <p class="slide-label">Where We Are</p>
+        <h2 class="slide-title">Design stage - engaging early,<br />openly, honestly</h2>
+        <div class="card" style="margin-top:1rem; margin-bottom:1.25rem;">
+          <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">No component is deployed. HyperLog is a technical proposal at the design and research stage. We are seeking regulatory engagement, evaluation and partnership to build it well - and that includes pilot-representative input before anything touches member data.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">
+          <div class="card" style="border-top:3px solid #1e40af;">
+            <div class="badge badge-blue" style="margin-bottom:0.75rem;">Now - 2026</div>
+            <p style="font-size:0.875rem; font-weight:700; color:#0f172a; margin-bottom:0.625rem;">Design &amp; engagement</p>
+            <p style="font-size:0.8rem; color:#475569; line-height:1.6;">Architecture design, regulatory alignment, NAA / FAA dialogue, grant and sandbox pursuit.</p>
+          </div>
+          <div class="card" style="border-top:3px solid #64748b;">
+            <div class="badge badge-slate" style="margin-bottom:0.75rem;">Next - 2027</div>
+            <p style="font-size:0.875rem; font-weight:700; color:#0f172a; margin-bottom:0.625rem;">Phase 1 build</p>
+            <p style="font-size:0.8rem; color:#475569; line-height:1.6;">Core EPL infrastructure: issuance with photograph, pilot wallet, inspector offline verification, revocation - with an anchor authority.</p>
+          </div>
+          <div class="card" style="border-top:3px solid #94a3b8;">
+            <div class="badge" style="background:#f8fafc; color:#94a3b8; margin-bottom:0.75rem;">Horizon - 2028</div>
+            <p style="font-size:0.875rem; font-weight:700; color:#0f172a; margin-bottom:0.625rem;">Reference case</p>
+            <p style="font-size:0.8rem; color:#475569; line-height:1.6;">Live verification with a first authority; logbook layer in development; positioned to the HR 2247 final-rule horizon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────
+         SLIDE 9 - THE ASK
+         ──────────────────────────────────────────────────── -->
+    <section class="pres-slide" style="background:#f0f4f8;">
+      <div class="slide-content">
+        <p class="slide-label">The Ask</p>
+        <h2 class="slide-title">An exploratory conversation</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.875rem; margin-top:1.25rem; margin-bottom:1rem;">
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">Member data protections</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Work with ALPA to define the consent, access and audit model before any deployment touches member data - designed with pilot input, not presented as a fait accompli.</p>
+          </div>
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">Governance input</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">A seat at the table on how logbook data is governed: who can request it, under what conditions, with what oversight, and what non-punitive use looks like in practice.</p>
+          </div>
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">Pilot-facing UX review</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Early access for ALPA members to test the pilot wallet and consent flow, and flag concerns before any wider rollout is considered.</p>
+          </div>
+          <div class="card card-accent">
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1e40af; margin-bottom:0.5rem;">A voice in the standard</p>
+            <p style="font-size:0.8125rem; color:#334155; line-height:1.65;">Where appropriate, ALPA's position on pilot data protections carried into HyperLog's engagement with FAA rulemaking and ICAO working groups on digital credentials.</p>
+          </div>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-left:3px solid #1e40af; border-radius:0.5rem; padding:1rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:2rem;">
+          <div>
+            <p style="font-size:0.625rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#1e40af; margin-bottom:0.375rem;">Trust in Every Entry</p>
+            <p style="font-size:0.75rem; color:#64748b;">Technical whitepaper available at hyperlog.aero/whitepaper</p>
+          </div>
+          <div style="text-align:right; flex-shrink:0;">
+            <p style="font-size:1rem; font-weight:700; color:#0f172a;">info@hyperlog.aero</p>
+            <p style="font-size:0.75rem; color:#64748b;">hyperlog.aero &bull; JetLink Technologies Ltd</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── Save as PDF ── -->
+  <button class="pdf-btn" id="pdf-btn" onclick="window.print()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Save as PDF
+  </button>
+
+  <!-- ── Navigation ── -->
+  <nav class="pres-nav" id="pres-nav">
+    <button class="pres-nav-btn" id="prev-btn" disabled aria-label="Previous slide">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0.3rem;">
+      <span class="pres-counter" id="pres-counter">1 / 9</span>
+      <div class="pres-dots" id="pres-dots"></div>
+    </div>
+    <button class="pres-nav-btn" id="next-btn" aria-label="Next slide">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </nav>
+)}
+
+<style>
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+{isAuthenticated && (
+  <script>
+    const container = document.getElementById('pres-container');
+    const counter = document.getElementById('pres-counter');
+    const dotsContainer = document.getElementById('pres-dots');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const slides = document.querySelectorAll('.pres-slide');
+    const total = slides.length;
+    let current = 0;
+
+    // Build dots
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'pres-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    function update(index) {
+      current = index;
+      counter.textContent = `${index + 1} / ${total}`;
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === total - 1;
+      document.querySelectorAll('.pres-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+    }
+
+    function goTo(index) {
+      if (index < 0 || index >= total) return;
+      slides[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      update(index);
+    }
+
+    // Track scroll
+    container.addEventListener('scroll', () => {
+      const index = Math.round(container.scrollLeft / container.clientWidth);
+      if (index !== current) update(index);
+    }, { passive: true });
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    });
+
+    // Button nav
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+  </script>
+)}
+
+</body>
+</html>
