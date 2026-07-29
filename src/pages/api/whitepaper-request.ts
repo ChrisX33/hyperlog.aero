@@ -37,6 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
       const verifyData = await verifyRes.json();
       if (!verifyData.success) {
+        console.error('Turnstile verification failed:', verifyData['error-codes']);
         return new Response(JSON.stringify({ error: 'Verification failed. Please try again.' }), {
           status: 403,
           headers: { 'Content-Type': 'application/json' },
