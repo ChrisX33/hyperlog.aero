@@ -6,7 +6,7 @@
    ============================================================ */
 
 @theme {
-  /* Surface hierarchy (deep → raised) */
+  /* Surface hierarchy — dark navy */
   --color-surface-lowest: #030e20;
   --color-surface-base: #071325;
   --color-surface-low: #101c2e;
@@ -14,18 +14,18 @@
   --color-surface-high: #1f2a3d;
   --color-surface-highest: #2a3548;
 
-  /* Primary (periwinkle-silver) */
+  /* Primary — periwinkle */
   --color-primary: #b2c5ff;
   --color-primary-container: #5b8cff;
   --color-on-primary: #002b73;
-  --color-on-primary-container: #002565;
+  --color-on-primary-container: #d6e3ff;
 
-  /* Secondary */
+  /* Secondary — slate blue */
   --color-secondary: #b4c8e5;
-  --color-secondary-container: #374a63;
-  --color-on-secondary: #1e3249;
+  --color-secondary-container: #1f2a3d;
+  --color-on-secondary: #071325;
 
-  /* Tertiary (warning amber) */
+  /* Tertiary — warm amber */
   --color-tertiary: #ffb598;
 
   /* On-surface */
@@ -37,11 +37,11 @@
   --color-outline-variant: #424655;
 
   /* Error */
-  --color-error: #ffb4ab;
-  --color-error-container: #93000a;
+  --color-error: #dc2626;
+  --color-error-container: #fef2f2;
 
   /* Inverse */
-  --color-inverse-surface: #d7e3fc;
+  --color-inverse-surface: #0f172a;
 
   /* Typography */
   --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -92,25 +92,25 @@ body {
   border: 1px solid rgb(66 70 85 / 0.15);
 }
 
-/* Glass cockpit effect */
+/* Glass cockpit effect — intentionally dark, used on cockpit image backgrounds */
 .glass-cockpit {
-  background: rgb(20 32 50 / 0.6);
+  background: rgb(7 19 37 / 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
 /* Beacon glow (cockpit LED effect) */
 .beacon-glow {
-  box-shadow: 0 0 8px 2px rgb(178 197 255 / 0.2);
+  box-shadow: 0 0 8px 2px rgb(91 140 255 / 0.4);
 }
 
 .beacon-glow-tertiary {
-  box-shadow: 0 0 8px 2px rgb(255 181 152 / 0.2);
+  box-shadow: 0 0 8px 2px rgb(180 83 9 / 0.25);
 }
 
 /* Ambient shadow (for modals/floating elements) */
 .ambient-shadow {
-  box-shadow: 0 8px 40px rgb(3 14 32 / 0.4);
+  box-shadow: 0 8px 40px rgb(3 14 32 / 0.6);
 }
 
 /* Primary gradient (135 deg, primary to primary-container) */

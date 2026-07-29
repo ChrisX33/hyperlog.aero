@@ -29,7 +29,8 @@ HyperLog marketing website, brochure, and whitepaper for hyperlog.aero. Built wi
 ## Pages
 
 - `src/pages/index.astro` — Home (hero, problem, solution, evidence layer, credential layer, architecture, CTA)
-- `src/pages/pitch.astro` — 11-slide brochure (printable as PDF via PitchLayout). Previously called "briefing" — now called "brochure" everywhere.
+- `src/pages/brochure.astro` — 10-slide brochure (printable as PDF via PitchLayout). Served at `/brochure`. Previously `pitch.astro` at `/pitch`.
+- `src/pages/presentation.astro` — Gated presentation (auth via `src/pages/api/presentation-auth.ts`)
 - `src/pages/about.astro` — About JetLink, founder profiles
 - `src/pages/contact.astro` — Contact form with Cloudflare Turnstile CAPTCHA + privacy policy checkbox
 - `src/pages/whitepaper.astro` — Whitepaper request form (name, email, LinkedIn, reason). Requests stored in JetLink admin DB via internal API call. Whitepaper document itself lives behind JetLink admin auth at `/admin/hyperlog-wp/document`.
@@ -47,12 +48,12 @@ npm run build      # Build for production
 
 ## Deployment
 
-**VPS:** 46.224.186.226 (Hetzner — JetLink VPS)
-**SSH:** `ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226`
+**VPS:** 46.225.4.20 (SSH alias: `hyperlog-vps`)
+**SSH:** `ssh hyperlog-vps` (uses `id_jetlink_tech_deploy`, user `root`)
 **Container:** `hyperlog-website` on port 4000, on `hyperlog_prod` + `jetlink_internal` Docker networks
 
 ```bash
-ssh -i ~/.ssh/id_jetlink-deploy admin@46.224.186.226 "cd ~/hyperlog.aero && git pull && docker compose up -d --build"
+ssh hyperlog-vps "cd ~/hyperlog.aero && git pull && docker compose up -d --build"
 ```
 
 ## Key Integrations
@@ -89,15 +90,17 @@ All three must be consistent. The brochure is a higher-level public document ali
 
 This section is the authoritative reference for all content. The whitepaper is the most detailed source. The website and brochure must be consistent with this at a higher level.
 
-### Two Layers, One Platform
+### Two Phases, One Platform
 
-**Evidence Layer — Hyperledger Fabric (bottom-up trust):**
-Pilot creates flight records, trust builds through independent verification sources. This is HyperLog's core innovation. No ICAO standard exists for digital logbooks — this is greenfield.
+**IMPORTANT: HyperLog is pre-development stage. Nothing is built or deployed. Source: whitepaper v3.6.9 (June 2026).**
 
-**Credential Layer — W3C Verifiable Credentials / Aries-derived (top-down trust):**
-Authority issues credentials (licence, medical, ratings), trust comes from the issuer's digital signature. ICAO-aligned via Amendment 178.
+**Phase 1 — EPL Credential Layer (W3C VCs, standard PKI, no blockchain):**
+Top-down trust. Authority issues credentials (licence, medical, ratings), trust comes from the issuer's digital signature. Deliberately ledger-independent. Technology: W3C VC Data Model 2.0, ECDSA P-256, did:web for NAAs, React Native pilot wallet.
 
-**The logbook is the evidence base that supports credential issuance.** A licence is only meaningful if the flight hours behind it are real.
+**Phase 2 — Logbook Layer (permissioned distributed ledger, TBD technology):**
+Bottom-up trust. Pilot creates flight records, trust builds through independent verification sources. Technology TBD during Phase 2 design: Hyperledger Fabric, Besu, or custom. No ICAO standard exists for digital logbooks — greenfield.
+
+**The logbook is the evidence base that supports credential issuance.** A licence is only meaningful if the flight hours behind it are real. Phase 1 works independently of Phase 2.
 
 ### Logbook Verification Spectrum (5 levels, Level 5 aspirational)
 
@@ -109,7 +112,7 @@ Authority issues credentials (licence, medical, ratings), trust comes from the i
 
 **Website/brochure show 4 levels** (omit Level 5). **Whitepaper shows all 5** with Level 5 clearly marked aspirational.
 
-### Channel Architecture (Hyperledger Fabric)
+### Channel Architecture (Phase 2 — proposed)
 
 **NAA Channel (one per authority — standard template):**
 - On-chain: credential issuance records, revocation registry, logbook entry hashes (SHA-256)
@@ -133,12 +136,12 @@ Authority issues credentials (licence, medical, ratings), trust comes from the i
 
 ### Cryptographic Architecture
 
-- **Fabric network identity:** X.509 certificates, ECDSA P-256
-- **Pilot device key:** ECDSA P-256, generated in secure enclave (iOS/Android), biometric-protected, never transmitted
-- **Logbook entry hash:** SHA-256 of canonical JSON
-- **VC signatures:** ECDSA P-256 (aligned with ICAO recommended algorithms)
-- **DID methods:** did:web for NAA issuers, did:key for pilots
-- **ICAO PKD compatibility:** verification channel designed for future integration with ICAO Public Key Directory
+- **Phase 1 VC signatures:** ECDSA P-256, DataIntegrityProof (ecdsa-rdfc-2019) — aligned with ICAO recommended algorithms
+- **Pilot device key:** ECDSA P-256, generated in hardware secure enclave (Apple Secure Enclave / Android StrongBox), biometric-protected, non-exportable
+- **Phase 2 logbook entry hash:** SHA-256 of canonical JSON
+- **Phase 2 network identity:** X.509 certificates, ECDSA P-256
+- **DID methods:** did:web for NAA issuers, did:key for pilots (per-device)
+- **ICAO PKD compatibility:** future integration target
 
 ### Dual-Store Data Model
 
@@ -254,13 +257,15 @@ Sandbox environment → channel provisioning → CA setup → chaincode deployme
 - **EASA NPA 2024-08** — transposing Amendment 178 in Europe
 - **ISO/IEC 18013-5** — preferred VC implementation standard (digital wallet)
 - **W3C VC / DIF DIDComm** — open web standards for credentials and identity
-- **SITA/CAAC PoC (2020)** — proved offline peer-to-peer licence verification
+- **SITA/CAAC PoC (2020)** — historical precedent for offline EPL verification; not the primary architectural reference
+- **DGCA India eGCA** — first production EPL system (CPL/FRTOL Feb 2025, ATPL Jan 2026); single-authority, no cross-border interop
+- **HR 2247 (Airmen Certificate Accessibility Act)** — passed US House 24 March 2026; requires FAA to accept digital airmen certificates with authentication/verification methods by 30 November 2028; S. 4256 is the Senate companion bill
 - **ICAO PKD** — existing Public Key Directory for ePassports; future integration target
 
 **Framing:** "architecture designed with ACCP/MAIS alignment as the target" — never claim compliance.
 **Engagement:** NAAs implement and mandate. IATA advocates. ICAO sets the framework we align with.
 
-**Why blockchain (not a central database):** No centralised government database exists for pilot logbooks because no single state wants another state or private company controlling their pilot data. Data sovereignty is the fundamental reason a distributed architecture is required. HyperLog provides everything existing logbook apps (LogTen Pro, ForeFlight, mccPILOTLOG) offer, plus blockchain-backed verification that no other product can match.
+**Why distributed (not a central database):** No centralised government database exists for pilot logbooks because no single state wants another state or private company controlling their pilot data. Data sovereignty is the fundamental reason a distributed architecture is required.
 
 ## IATA Context
 
@@ -275,27 +280,30 @@ Dejan Damjanovic (founder of The FANS Group, senior ICAO AIM working group membe
 - Never use placeholder statistics.
 - Never imply CAAs will sign logbook entries in the near term (authority certification is aspirational).
 - Always distinguish logbook verification (spectrum, mostly automated, no ICAO guidance) from credential issuance (authority-issued, ICAO-aligned).
-- Be honest about what is built (logbook MVP, Fabric backend) and what is in architecture phase (credentials layer).
+- Be honest that nothing is built — HyperLog is pre-development, proposed architecture only.
 - Use "tamper-evident" not "immutable". Use "permanent" for on-chain. Use "append-only" for the ledger model.
 - No em dashes in the whitepaper.
 - The audience is IATA licensing experts and ICAO working group members — they will see through any overclaiming.
 
-## Current Status (as of April 2026)
+## Current Status (as of June 2026)
 
-- Hyperledger Fabric backend: **Built & deployed**
-- Mobile app: **In development** (Flutter)
-- Verifiable credentials layer: **Architecture phase**
+**HyperLog is pre-development stage. No components are built or deployed.**
+
+- Phase 1 (EPL Credential Layer): **Design and research** — not yet built
+- Phase 2 (Logbook Layer): **Architecture proposed** — technology TBD
+- Mobile app: **Not started** (React Native planned)
 - Website: **Live at hyperlog.aero**
-- Brochure: **Live at hyperlog.aero/pitch** (11 slides, print-to-PDF)
-- Whitepaper: **Complete, 24 sections** (behind JetLink admin auth at /admin/hyperlog-wp/document)
+- Brochure: **Live at hyperlog.aero/brochure** (10 slides, print-to-PDF)
+- Presentation: **Live at hyperlog.aero/presentation** (gated, auth required)
+- Whitepaper: **Complete, 88 pages, v3.6.9** (behind JetLink admin auth at /admin/hyperlog-wp/document)
 - Whitepaper request system: **Live** (form at /whitepaper, admin management at JetLink /admin/hyperlog-wp)
-- Seeking NAA & IATA engagement
+- Seeking NAA engagement and regulatory conversation (UK CAA primary, FAA also compelling via HR 2247)
 
 ## Reference Repos (READ ONLY — do not push changes)
 
-- `C:\Dev\Hyperlog\Reference\hyperlog-app` — Flutter mobile app (https://github.com/vmalterre/hyperlog-app)
-- `C:\Dev\Hyperlog\Reference\hyperlog-backend` — Hyperledger Fabric backend (https://github.com/vmalterre/hyperlog-backend)
 - `C:\Dev\Hyperlog\Reference\hyperlog_website` — Old website (https://github.com/vmalterre/hyperlog_website)
+
+Note: hyperlog-app and hyperlog-backend repos exist but reflect the previous (now superseded) architecture. Do not use them as a reference for current architecture decisions.
 
 ## Reference Documents
 
