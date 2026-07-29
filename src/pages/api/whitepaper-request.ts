@@ -26,7 +26,6 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Verify Turnstile token
     const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
-    console.error('DEBUG turnstileSecret len:', turnstileSecret?.length, JSON.stringify(turnstileSecret), 'tokenLen:', turnstileToken?.length);
     if (turnstileSecret && turnstileToken) {
       const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST',
